@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f213848a599440e49928709cea64c07f" Name="Diagram1">
+        <EntityTypeShape EntityType="CLTDataModel.Competitions" Width="1.5" PointX="0.625" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.CompTeams" Width="1.5" PointX="4.875" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.Fixtures" Width="1.5" PointX="5.625" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.Groups" Width="1.5" PointX="2.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.Log" Width="1.5" PointX="0.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.Matches" Width="1.5" PointX="12.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.MatchEvents" Width="1.5" PointX="7.625" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.Players" Width="1.5" PointX="9.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.PlayerSkills" Width="1.5" PointX="12" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.PlayerTypes" Width="1.5" PointX="7.125" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.TeamInducements" Width="1.5" PointX="12.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.TeamMatchData" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.Teams" Width="1.5" PointX="2.875" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CLTDataModel.Users" Width="1.5" PointX="0.625" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="CLTDataModel.FK_Groups_Competitions" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Matches_Competitions" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_CompTeams_Competitions" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_CompTeams_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Fixtures_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Fixtures_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Fixtures_Teams1" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Matches_TeamMatchData" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Matches_TeamMatchData1" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_MatchEvents_Matches" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_MatchEvents_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_MatchEvents_Players1" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_MatchEvents_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Players_PlayerTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Players_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_PlayerSkills_Players" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_TeamInducements_TeamMatchData" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_TeamMatchData_Teams" ManuallyRouted="false" />
+        <AssociationConnector Association="CLTDataModel.FK_Teams_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
