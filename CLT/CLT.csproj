@@ -99,6 +99,10 @@
     <Compile Include="Data\Races.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Repositories\IPlayerRepository.cs" />
+    <Compile Include="Data\Repositories\ITeamRepository.cs" />
+    <Compile Include="Data\Repositories\PlayerRepository.cs" />
+    <Compile Include="Data\Repositories\TeamRepository.cs" />
     <Compile Include="Data\SkillGroups.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
