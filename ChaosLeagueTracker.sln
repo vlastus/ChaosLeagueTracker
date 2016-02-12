@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLTWebUI", "CLTWebUI\CLTWeb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLT", "CLT\CLT.csproj", "{BD6E2200-E691-4100-85E9-BFF1B2EC7625}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CLTDatabase", "CLTDatabase\CLTDatabase.sqlproj", "{0EBEF5F4-193E-4FCC-A701-67E094E8FC14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{BD6E2200-E691-4100-85E9-BFF1B2EC7625}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6E2200-E691-4100-85E9-BFF1B2EC7625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6E2200-E691-4100-85E9-BFF1B2EC7625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EBEF5F4-193E-4FCC-A701-67E094E8FC14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EBEF5F4-193E-4FCC-A701-67E094E8FC14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EBEF5F4-193E-4FCC-A701-67E094E8FC14}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0EBEF5F4-193E-4FCC-A701-67E094E8FC14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EBEF5F4-193E-4FCC-A701-67E094E8FC14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EBEF5F4-193E-4FCC-A701-67E094E8FC14}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
