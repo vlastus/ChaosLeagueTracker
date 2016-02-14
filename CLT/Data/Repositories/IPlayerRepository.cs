@@ -4,15 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CLT.Data.Repositories
+namespace CLT.Data
 {
-    interface IPlayerRepository : IDisposable
+    interface IPlayerRepository : IDisposable, IGenericRepository<Players>
     {
         IEnumerable<Players> GetPlayers(int teamId);
-        Players GetPlayerByID(int playerId);
-        void AddPlayer(Players player);
-        void UpdatePlayer(Players player);
-        void DeactivatePlayer(int playerId);
-        void Save();
     }
 }

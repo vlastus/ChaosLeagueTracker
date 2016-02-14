@@ -12,22 +12,28 @@ namespace CLTWebUI.Controllers
 {
     public class TeamController : Controller
     {
+        IUnitOfWork unitOfWork;
+
+        public TeamController(IUnitOfWork uow)
+        {
+            unitOfWork = uow;
+        }
         // GET: Team
         public ActionResult Index()
         {
-            using (var ctx = new CLTEntities())
-            {
-                List<Teams> Teams = ctx.Teams
-                    .Where(t => t.Status == Status.Active)
-                    .ToList();
-                ViewBag.Teams = Teams;
-            }
+            ViewBag.Teams = unitOfWork.TeamRepository.GetTeams();
             return View();
         }
 
         public ActionResult Detail(int teamid)
         {
             TeamDetailViewModel model = new TeamDetailViewModel();
+            model.Team = unitOfWork.TeamRepository
+                .Get(
+                    filter: t => (t.ID == teamid && t.Status == Status.Active), 
+                    includeProperties: "Users,Players")
+                .FirstOrDefault();
+            /*
             using (var ctx = new CLTEntities())
             {
                 Teams Team = ctx.Teams
@@ -36,7 +42,6 @@ namespace CLTWebUI.Controllers
                     .Include(t => t.Users)
                     .Where(t => t.Status == Status.Active && t.ID == teamid)
                     .FirstOrDefault();
-                /*
                 string cosi = "";
                 foreach (Players player in Team.Players)
                 {
@@ -44,9 +49,9 @@ namespace CLTWebUI.Controllers
                     foreach (var ts in typeskills)
                         cosi += Enum.Parse(typeof(Skills),ts);
                 }
-                */
                 model.Team = Team;
             }
+            */
             return View(model);
         }
     }

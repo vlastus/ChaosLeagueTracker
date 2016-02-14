@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CLT.Data.Repositories
+namespace CLT.Data
 {
-    interface ITeamRepository : IDisposable
+    interface ITeamRepository : IDisposable, IGenericRepository<Teams>
     {
         IEnumerable<Teams> GetTeamsByGroup(int groupId);
-
-        Teams GetTeamById(int teamId);
-
-        IEnumerable<Teams> GetTeams();
     }
 }

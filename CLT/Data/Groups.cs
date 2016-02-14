@@ -24,6 +24,7 @@ namespace CLT.Data
         public int ID { get; set; }
         public int Competition { get; set; }
         public Nullable<int> Playoff { get; set; }
+        public string Name { get; set; }
     
         public virtual Competitions Competitions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
