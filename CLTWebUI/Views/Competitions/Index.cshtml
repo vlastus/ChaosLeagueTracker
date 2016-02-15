@@ -1,0 +1,43 @@
+﻿@model CLTWebUI.Models.Competitions.CompetitionsViewModel
+
+@{
+    ViewBag.Title = "Competitions Index Page";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Název soutěže</th>
+            <th>aktivní</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1;}
+        @foreach (var comp in Model.Competitions)
+        {
+            <tr>
+                <td>@i</td><td><a href="#group_@comp.ID" data-toggle="collapse" aria-expanded="false" aria-controls="group_@comp.ID">@comp.Name</a></td>
+                <td>@if (comp.Status == CLT.Data.Status.Active)
+                        { <span class="glyphicon glyphicon-ok"></span>}
+                    else { <span class="glyphicon glyphicon-remove"></span>} 
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colsan="2">
+                    <ul class="list-group collapse" id="group_@comp.ID">
+                        <li class="list-group-item" style="background-color: #f5f5f5">Skupiny</li>
+                        @foreach(var group in comp.Groups)
+                        {
+                            <li class="list-group-item">
+                                @Html.ActionLink((string)group.Name, "Group", "Team", new {  groupid = group.ID }, null)
+                            </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
