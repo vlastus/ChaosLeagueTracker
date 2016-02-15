@@ -18,6 +18,7 @@ namespace CLT.Data
         public PlayerTypes()
         {
             this.Players = new HashSet<Players>();
+            this.TypeGroups = new HashSet<TypeGroups>();
         }
     
         public int ID { get; set; }
@@ -32,5 +33,7 @@ namespace CLT.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Players> Players { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TypeGroups> TypeGroups { get; set; }
     }
 }

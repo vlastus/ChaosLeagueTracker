@@ -39,5 +39,6 @@ namespace CLT.Data
         public virtual DbSet<TeamMatchData> TeamMatchData { get; set; }
         public virtual DbSet<Teams> Teams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<TypeGroups> TypeGroups { get; set; }
     }
 }

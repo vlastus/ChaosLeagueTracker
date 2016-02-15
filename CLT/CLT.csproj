@@ -137,6 +137,9 @@
     <Compile Include="Data\Teams.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\TypeGroups.cs">
+      <DependentUpon>CLTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Users.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>

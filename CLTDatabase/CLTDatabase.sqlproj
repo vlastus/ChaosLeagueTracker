@@ -60,6 +60,7 @@
     <Folder Include="web\" />
     <Folder Include="web\Tables\" />
     <Folder Include="Security\" />
+    <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="web\Tables\Players.sql" />
@@ -78,5 +79,8 @@
     <Build Include="web\Tables\Competitions.sql" />
     <Build Include="Security\bbowl.sql" />
     <Build Include="Security\web.sql" />
+    <Build Include="web\Tables\TypeGroups.sql" />
+    <Build Include="Data\PlayerTypes.sql" />
+    <Build Include="Data\TypeGroups.sql" />
   </ItemGroup>
 </Project>

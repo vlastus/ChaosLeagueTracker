@@ -38,6 +38,8 @@
         <AssociationConnector Association="CLTDataModel.FK_TeamInducements_TeamMatchData" ManuallyRouted="false" />
         <AssociationConnector Association="CLTDataModel.FK_TeamMatchData_Teams" ManuallyRouted="false" />
         <AssociationConnector Association="CLTDataModel.FK_Teams_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CLTDataModel.TypeGroups" Width="1.5" PointX="7.375" PointY="9.25" />
+        <AssociationConnector Association="CLTDataModel.FK_TypeGroups_PlayerTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
