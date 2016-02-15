@@ -1,4 +1,5 @@
-﻿USE [BLOODBOWL]
+﻿/*
+USE [BLOODBOWL]
 GO
 SET IDENTITY_INSERT [web].[PlayerTypes] ON 
 
@@ -15,3 +16,4 @@ INSERT [web].[PlayerTypes] ([ID], [Race], [Name], [MA], [ST], [AG], [AV], [Value
 GO
 SET IDENTITY_INSERT [web].[PlayerTypes] OFF
 GO
+*/

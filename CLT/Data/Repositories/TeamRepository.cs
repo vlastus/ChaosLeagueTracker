@@ -21,6 +21,7 @@ namespace CLT.Data
                 .Where(t => t.CompTeams
                     .Any(ct => ct.Groups.ID == groupId)
                 )
+                .Include(t => t.Users)
                 .ToList();
         }
 
@@ -30,6 +31,5 @@ namespace CLT.Data
                 .Where(t => t.Status == Status.Active)
                 .ToList();
         }
-
     }
 }

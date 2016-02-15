@@ -1,0 +1,28 @@
+﻿@model CLTWebUI.Models.Team.TeamListViewModel
+
+
+<h2>Soutěž: @Model.group.Competitions.Name</h2>
+<h3>Skupina: @Model.group.Name</h3>
+<ul class="list-group">
+    <li class="list-group-item" style="background-color: #f5f5f5">
+        <div class="row">
+            <div class="col-md-1">#</div>
+            <div class="col-md-4">Jméno týmu</div>
+            <div class="col-md-4">Vlastník</div>
+            <div class="col-md-3"></div>
+        </div>
+    </li>
+    @{int i = 1;}
+    @foreach(var team in Model.teams)
+    {
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-1">@i</div>
+                <div class="col-md-4">@Html.ActionLink((string)team.Name, "Detail", "Team", new { teamid = team.ID }, null)</div>
+                <div class="col-md-4">@team.Users.Name</div>
+                <div class="col-md-3"></div>
+            </div>
+        </li>
+        i++;
+    }
+</ul>

@@ -25,8 +25,24 @@ namespace CLTWebUI.Controllers
             return View();
         }
 
-        public ActionResult Detail(int teamid)
+        public ActionResult Group(int groupid)
         {
+            TeamListViewModel model = new TeamListViewModel();
+
+            model.group = unitOfWork.GroupRepository.GetByID(groupid);
+            model.teams = unitOfWork.TeamRepository.GetTeamsByGroup(groupid).ToList();
+
+            return View(model);
+        }
+
+        public ActionResult Detail(int? teamid)
+        {
+            if (teamid == null)
+            {
+                ViewBag.Message = "Id týmu nebylo uvedeno.";
+                return View();
+            }
+                 
             TeamDetailViewModel model = new TeamDetailViewModel();
             model.Team = unitOfWork.TeamRepository
                 .Get(

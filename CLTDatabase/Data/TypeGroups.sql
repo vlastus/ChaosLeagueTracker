@@ -1,4 +1,5 @@
-﻿SET IDENTITY_INSERT [web].[TypeGroups] ON 
+﻿/*
+SET IDENTITY_INSERT [web].[TypeGroups] ON 
 
 GO
 INSERT [web].[TypeGroups] ([ID], [PlayerType], [SkillGroup], [IsDouble]) VALUES (1, 1, 1, 0)
@@ -43,3 +44,4 @@ INSERT [web].[TypeGroups] ([ID], [PlayerType], [SkillGroup], [IsDouble]) VALUES 
 GO
 SET IDENTITY_INSERT [web].[TypeGroups] OFF
 GO
+*/

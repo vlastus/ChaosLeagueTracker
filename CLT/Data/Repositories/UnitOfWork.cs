@@ -8,6 +8,8 @@ namespace CLT.Data
         private CLTEntities context = new CLTEntities();
         private PlayerRepository playerRepository;
         private TeamRepository teamRepository;
+        private GenericRepository<Competitions> competitionRepository;
+        private GenericRepository<Groups> groupRepository;
 
         public PlayerRepository PlayerRepository
         {
@@ -30,6 +32,30 @@ namespace CLT.Data
                     this.teamRepository = new TeamRepository(context);
                 }
                 return teamRepository;
+            }
+        }
+
+        public GenericRepository<Competitions> CompetitionRepository
+        {
+            get
+            {
+                if (this.competitionRepository == null)
+                {
+                    this.competitionRepository = new GenericRepository<Competitions>(context);
+                }
+                return competitionRepository;
+            }
+        }
+
+        public GenericRepository<Groups> GroupRepository
+        {
+            get
+            {
+                if (this.groupRepository == null)
+                {
+                    this.groupRepository = new GenericRepository<Groups>(context);
+                }
+                return groupRepository;
             }
         }
 
