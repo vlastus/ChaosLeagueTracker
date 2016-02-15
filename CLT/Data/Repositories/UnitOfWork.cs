@@ -10,6 +10,7 @@ namespace CLT.Data
         private TeamRepository teamRepository;
         private GenericRepository<Competitions> competitionRepository;
         private GenericRepository<Groups> groupRepository;
+        private GenericRepository<PlayerTypes> playerTypeRepository;
 
         public PlayerRepository PlayerRepository
         {
@@ -56,6 +57,18 @@ namespace CLT.Data
                     this.groupRepository = new GenericRepository<Groups>(context);
                 }
                 return groupRepository;
+            }
+        }
+
+        public GenericRepository<PlayerTypes> PlayerTypeRepository
+        {
+            get
+            {
+                if (this.playerTypeRepository == null)
+                {
+                    this.playerTypeRepository = new GenericRepository<PlayerTypes>(context);
+                }
+                return playerTypeRepository;
             }
         }
 

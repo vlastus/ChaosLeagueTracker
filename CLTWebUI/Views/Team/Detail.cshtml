@@ -106,5 +106,39 @@ else
             </li>
                             }
     </ul>
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
+        <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    @*<form action="@Html.Action("Add","Player")" method="post">*@
+                    <form action="#">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="addPlayerModalLabel">Přidání hráče</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-2">Rasa</div><div class="col-md-10">@Model.Team.Race</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">Typ</div><div class="col-md-10">@Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="newPlayerName">Jméno hráče</label>
+                                    <input type="text" class="form-control" id="newPlayerName" placeholder="Jméno" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+                            <button type="button" class="btn btn-primary">Uložit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 }

@@ -49,6 +49,9 @@ namespace CLTWebUI.Controllers
                     filter: t => (t.ID == teamid && t.Status == Status.Active), 
                     includeProperties: "Users,Players")
                 .FirstOrDefault();
+            var playerTypes = unitOfWork.PlayerTypeRepository.Get(filter: pt => pt.Race == model.Team.Race).ToList();
+            model.playertypes = new SelectList(playerTypes, "ID", "Name");
+
             /*
             using (var ctx = new CLTEntities())
             {
