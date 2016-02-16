@@ -174,10 +174,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AppMessage.cs" />
     <Compile Include="Models\Competitions\CompetitionsViewModel.cs" />
     <Compile Include="Models\Team\TeamDetailViewModel.cs" />
     <Compile Include="Models\Team\TeamListViewModel.cs" />
@@ -244,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Player\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

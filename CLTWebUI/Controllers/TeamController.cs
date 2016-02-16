@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Entity;
 using CLT.Data;
 using CLTWebUI.Models.Team;
+using CLTWebUI.Models;
 
 namespace CLTWebUI.Controllers
 {
@@ -42,7 +43,11 @@ namespace CLTWebUI.Controllers
                 ViewBag.Message = "Id týmu nebylo uvedeno.";
                 return View();
             }
-                 
+
+            var msgs = new List<AppMessage>();
+            msgs.Add(new AppMessage("cosi", MessageSeverity.Info));
+            ViewBag.AppMessages = msgs;
+
             TeamDetailViewModel model = new TeamDetailViewModel();
             model.Team = unitOfWork.TeamRepository
                 .Get(

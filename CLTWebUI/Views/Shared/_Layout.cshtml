@@ -28,7 +28,33 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div class="row">
+            <div id="applicationMessages">
+                @foreach (var message in ViewBag.AppMessages)
+                {
+                    string cssclass = "alert";
+                    switch ((int)message.Severity)
+                    {
+                        case 1:
+                            cssclass += " alert-success";
+                            break;
+                        case 2:
+                            cssclass += " alert-info";
+                            break;
+                        case 3:
+                            cssclass += " alert-warning";
+                            break;
+                        case 4:
+                            cssclass = "alert alert-danger";
+                            break;
+                    }
+                    <div class="@cssclass">@message.Text</div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Chaos League Tracker App by Vlastus</p>

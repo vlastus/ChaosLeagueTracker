@@ -119,15 +119,22 @@ else
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-2">Rasa</div><div class="col-md-10">@Model.Team.Race</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">Typ</div><div class="col-md-10">@Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes)</div>
+                                <div class="col-md-12">
+                                    <label>Rasa</label>
+                                    <span>@Model.Team.Race</span>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="newPlayerName">Jméno hráče</label>
-                                    <input type="text" class="form-control" id="newPlayerName" placeholder="Jméno" />
+                                    @Html.LabelFor(m => m.SelectedPlayerTypeId)
+                                    @Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(m => m.NewPlayerName)
+                                    @Html.TextBoxFor(m => m.NewPlayerName)
+                                    @Html.ValidationMessageFor(m => m.NewPlayerName)
                                 </div>
                             </div>
                         </div>
