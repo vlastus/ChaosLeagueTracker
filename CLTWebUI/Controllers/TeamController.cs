@@ -44,38 +44,17 @@ namespace CLTWebUI.Controllers
                 return View();
             }
 
-            var msgs = new List<AppMessage>();
-            msgs.Add(new AppMessage("cosi", MessageSeverity.Info));
-            ViewBag.AppMessages = msgs;
-
             TeamDetailViewModel model = new TeamDetailViewModel();
             model.Team = unitOfWork.TeamRepository
                 .Get(
                     filter: t => (t.ID == teamid && t.Status == Status.Active), 
                     includeProperties: "Users,Players")
                 .FirstOrDefault();
+            model.TeamId = model.Team.ID;
+
             var playerTypes = unitOfWork.PlayerTypeRepository.Get(filter: pt => pt.Race == model.Team.Race).ToList();
             model.playertypes = new SelectList(playerTypes, "ID", "Name");
 
-            /*
-            using (var ctx = new CLTEntities())
-            {
-                Teams Team = ctx.Teams
-                    .Include(t => t.Players.Select(p => p.PlayerTypes))
-                    .Include(t => t.Players.Select(p => p.PlayerSkills))
-                    .Include(t => t.Users)
-                    .Where(t => t.Status == Status.Active && t.ID == teamid)
-                    .FirstOrDefault();
-                string cosi = "";
-                foreach (Players player in Team.Players)
-                {
-                    var typeskills = player.PlayerTypes.Skillset.Split('|').ToList();
-                    foreach (var ts in typeskills)
-                        cosi += Enum.Parse(typeof(Skills),ts);
-                }
-                model.Team = Team;
-            }
-            */
             return View(model);
         }
     }

@@ -30,6 +30,7 @@ namespace CLT.Data
         public Nullable<int> AV { get; set; }
         public Nullable<int> Value { get; set; }
         public string Skillset { get; set; }
+        public Nullable<int> Limit { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Players> Players { get; set; }

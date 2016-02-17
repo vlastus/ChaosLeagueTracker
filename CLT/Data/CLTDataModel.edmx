@@ -118,6 +118,7 @@
           <Property Name="AV" Type="int" />
           <Property Name="Value" Type="int" />
           <Property Name="Skillset" Type="varchar" MaxLength="50" />
+          <Property Name="Limit" Type="int" />
         </EntityType>
         <EntityType Name="TeamInducements">
           <Key>
@@ -656,6 +657,7 @@
           <Property Name="Skillset" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Players" Relationship="Self.FK_Players_PlayerTypes" FromRole="PlayerTypes" ToRole="Players" />
           <NavigationProperty Name="TypeGroups" Relationship="CLTDataModel.FK_TypeGroups_PlayerTypes" FromRole="PlayerTypes" ToRole="TypeGroups" />
+          <Property Name="Limit" Type="Int32" />
         </EntityType>
         <EntityType Name="TeamInducements">
           <Key>
@@ -1298,6 +1300,7 @@
           <EntitySetMapping Name="PlayerTypes">
             <EntityTypeMapping TypeName="CLTDataModel.PlayerTypes">
               <MappingFragment StoreEntitySet="PlayerTypes">
+                <ScalarProperty Name="Limit" ColumnName="Limit" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Race" ColumnName="Race" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

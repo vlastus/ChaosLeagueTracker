@@ -8,6 +8,9 @@
     [AV]       INT          CONSTRAINT [DF_PlayerTypes_AV] DEFAULT ((0)) NULL,
     [Value]    INT          CONSTRAINT [DF_PlayerTypes_Value] DEFAULT ((0)) NULL,
     [Skillset] VARCHAR (50) NULL,
+    [Limit]    INT          CONSTRAINT [DF_PlayerTypes_Limit] DEFAULT ((0)) NULL,
     CONSTRAINT [PK_PlayerTypes] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 

@@ -6,6 +6,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -30,25 +34,28 @@
     <div class="container body-content">
         <div class="row">
             <div id="applicationMessages">
-                @foreach (var message in ViewBag.AppMessages)
+                @if (ViewBag.AppMessages != null)
                 {
-                    string cssclass = "alert";
-                    switch ((int)message.Severity)
+                    foreach (var message in ViewBag.AppMessages)
                     {
-                        case 1:
-                            cssclass += " alert-success";
-                            break;
-                        case 2:
-                            cssclass += " alert-info";
-                            break;
-                        case 3:
-                            cssclass += " alert-warning";
-                            break;
-                        case 4:
-                            cssclass = "alert alert-danger";
-                            break;
+                        string cssclass = "alert";
+                        switch ((int)message.Severity)
+                        {
+                            case 1:
+                                cssclass += " alert-success";
+                                break;
+                            case 2:
+                                cssclass += " alert-info";
+                                break;
+                            case 3:
+                                cssclass += " alert-warning";
+                                break;
+                            case 4:
+                                cssclass = "alert alert-danger";
+                                break;
+                        }
+                        <div class="@cssclass">@message.Text</div>
                     }
-                    <div class="@cssclass">@message.Text</div>
                 }
             </div>
         </div>
@@ -60,9 +67,5 @@
             <p>&copy; @DateTime.Now.Year - Chaos League Tracker App by Vlastus</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -17,10 +17,14 @@ namespace CLTWebUI.Models.Team
         [Display(Name="Typ hráče")]
         public int SelectedPlayerTypeId { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage ="Pole Jméno hráče je nutné vyplnit")]
+        [StringLength(50, ErrorMessage ="Jméno může mít maximálně {1} znaků")]
         [Display(Name = "Jméno")]
         public string NewPlayerName {get; set; }
 
+        public Boolean viewAddPlayerModal { get; set; }
+        public List<string> AddNewPlayerErrors { get; set; }
+
+        public int TeamId { get; set; }
     }
 }
