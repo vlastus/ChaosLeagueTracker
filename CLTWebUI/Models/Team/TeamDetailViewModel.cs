@@ -11,6 +11,7 @@ namespace CLTWebUI.Models.Team
     public class TeamDetailViewModel
     {
         public Teams Team { get; set; }
+
         public IEnumerable<SelectListItem> playertypes { get; set; }
 
         [Required]
@@ -22,9 +23,9 @@ namespace CLTWebUI.Models.Team
         [Display(Name = "Jméno")]
         public string NewPlayerName {get; set; }
 
+        public int TeamId { get; set; }
+
         public Boolean viewAddPlayerModal { get; set; }
         public List<string> AddNewPlayerErrors { get; set; }
-
-        public int TeamId { get; set; }
     }
 }

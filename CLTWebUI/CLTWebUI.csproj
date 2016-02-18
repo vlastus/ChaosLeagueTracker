@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Models\AppMessage.cs" />
     <Compile Include="Models\Competitions\CompetitionsViewModel.cs" />
+    <Compile Include="Models\Helpers\AppMessageHelper.cs" />
     <Compile Include="Models\Team\TeamDetailViewModel.cs" />
     <Compile Include="Models\Team\TeamListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -29,7 +29,7 @@ namespace CLTWebUI.Controllers
                 ModelState.AddModelError("Treasury", "Team nemá dostatek peněz na nákup.");
             }
 
-            if (model.Team.Players.Count(p => p.Type == model.SelectedPlayerTypeId) >= selectedType.Limit)
+            if (model.Team.Players.Count(p => (p.Type == model.SelectedPlayerTypeId && p.Status == Status.Active)) >= selectedType.Limit)
             {
                 ModelState.AddModelError("Limit", "Team dosáhl limitu hráčů tohoto typu v rosteru.");
             }
@@ -86,6 +86,31 @@ namespace CLTWebUI.Controllers
             unitOfWork.Save();
 
             return RedirectToAction("Detail", "Team", new { teamid = model.TeamId });
+        }
+
+        public ActionResult Delete(int playerId)
+        {
+            if (playerId == null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+
+            Players player = unitOfWork.PlayerRepository.GetByID(playerId);
+
+            if (player == null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+
+            Teams team = unitOfWork.TeamRepository.GetByID(player.Team);
+
+            player.Status = Status.Inactive;
+            unitOfWork.PlayerRepository.Update(player);
+            team.Value -= player.Value;
+            unitOfWork.TeamRepository.Update(team);
+            unitOfWork.Save();
+
+            return RedirectToAction("Detail", "Team", new { teamid = player.Team });
         }
     }
 }
