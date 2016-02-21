@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using CLT.Data;
 using CLTWebUI.Models.Team;
+using CLTWebUI.Models;
 
 namespace CLTWebUI.Controllers
 {
-    public class PlayerController : Controller
+    public class PlayerController : BaseController
     {
         IUnitOfWork unitOfWork;
 
@@ -17,9 +18,16 @@ namespace CLTWebUI.Controllers
             unitOfWork = uow;
         }
         // GET: Player
+        [Authorize]
         public ActionResult Add(TeamDetailViewModel model)
         {
             model.Team = unitOfWork.TeamRepository.GetByID(model.TeamId);
+            if (User.Identity.Name != model.Team.Users.Name && User.IsInRole("Common"))
+            {
+                AddApplicationMessage("Na tuto akci nemáte oprávnění", MessageSeverity.Warning);
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+
             var playerTypes = unitOfWork.PlayerTypeRepository.Get(filter: pt => pt.Race == model.Team.Race).ToList();
             model.playertypes = new SelectList(playerTypes, "ID", "Name");
             var selectedType = playerTypes.First(pt => pt.ID == model.SelectedPlayerTypeId);
@@ -84,14 +92,17 @@ namespace CLTWebUI.Controllers
             unitOfWork.TeamRepository.Update(model.Team);
             unitOfWork.PlayerRepository.Insert(newPlayer);
             unitOfWork.Save();
+            AddApplicationMessage("Hráč byl přidán", MessageSeverity.Success);
 
             return RedirectToAction("Detail", "Team", new { teamid = model.TeamId });
         }
 
-        public ActionResult Delete(int playerId)
+        [Authorize]
+        public ActionResult Delete(int? playerId)
         {
             if (playerId == null)
             {
+                AddApplicationMessage("Neudáno ID hráče", MessageSeverity.Success);
                 return Redirect(Request.UrlReferrer.ToString());
             }
 
@@ -99,16 +110,24 @@ namespace CLTWebUI.Controllers
 
             if (player == null)
             {
+                AddApplicationMessage("Hráč nebyl nalezen", MessageSeverity.Success);
                 return Redirect(Request.UrlReferrer.ToString());
             }
 
             Teams team = unitOfWork.TeamRepository.GetByID(player.Team);
+
+            if (User.Identity.Name != team.Users.Name && User.IsInRole("Common"))
+            {
+                AddApplicationMessage("Na tuto akci nemáte oprávnění", MessageSeverity.Warning);
+                return Redirect(Request.UrlReferrer.ToString());
+            }
 
             player.Status = Status.Inactive;
             unitOfWork.PlayerRepository.Update(player);
             team.Value -= player.Value;
             unitOfWork.TeamRepository.Update(team);
             unitOfWork.Save();
+            AddApplicationMessage("Hráč byl odstraněn",MessageSeverity.Success);
 
             return RedirectToAction("Detail", "Team", new { teamid = player.Team });
         }

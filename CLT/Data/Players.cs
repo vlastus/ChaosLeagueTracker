@@ -42,6 +42,7 @@ namespace CLT.Data
         public Nullable<int> MNG { get; set; }
         public Nullable<int> Journeyman { get; set; }
         public Nullable<Status> Status { get; set; }
+        public Nullable<int> Level { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MatchEvents> MatchEvents { get; set; }

@@ -3,6 +3,9 @@
     [Name]           VARCHAR (50)  NOT NULL,
     [Status]         INT           CONSTRAINT [DF_Users_Status] DEFAULT ((1)) NOT NULL,
     [Authentication] VARCHAR (100) NULL,
+    [Role]           INT           CONSTRAINT [DF_Users_Role] DEFAULT ((1)) NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 

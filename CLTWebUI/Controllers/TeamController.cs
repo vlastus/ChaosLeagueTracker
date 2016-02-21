@@ -11,7 +11,7 @@ using CLTWebUI.Models;
 
 namespace CLTWebUI.Controllers
 {
-    public class TeamController : Controller
+    public class TeamController : BaseController
     {
         IUnitOfWork unitOfWork;
 

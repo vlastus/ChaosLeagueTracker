@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace CLTWebUI.Controllers
 {
-    public class CompetitionsController : Controller
+    public class CompetitionsController : BaseController
     {
         IUnitOfWork unitOfWork;
         public CompetitionsController(IUnitOfWork uow)

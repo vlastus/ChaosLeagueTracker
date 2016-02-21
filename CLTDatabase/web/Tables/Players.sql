@@ -19,8 +19,11 @@
     [MNG]        INT           CONSTRAINT [DF_Players_MNG] DEFAULT ((0)) NULL,
     [Journeyman] INT           CONSTRAINT [DF_Players_Journeyman] DEFAULT ((0)) NULL,
     [Status]     INT           CONSTRAINT [DF_Players_Status] DEFAULT ((1)) NULL,
+    [Level]      INT           CONSTRAINT [DF_Players_Level] DEFAULT ((0)) NULL,
     CONSTRAINT [PK_Players] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_Players_PlayerTypes] FOREIGN KEY ([Type]) REFERENCES [web].[PlayerTypes] ([ID]),
     CONSTRAINT [FK_Players_Teams] FOREIGN KEY ([Team]) REFERENCES [web].[Teams] ([ID])
 );
+
+
 

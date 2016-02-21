@@ -96,6 +96,7 @@
           <Property Name="MNG" Type="int" />
           <Property Name="Journeyman" Type="int" />
           <Property Name="Status" Type="int" />
+          <Property Name="Level" Type="int" />
         </EntityType>
         <EntityType Name="PlayerSkills">
           <Key>
@@ -176,6 +177,7 @@
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="Authentication" Type="varchar" MaxLength="100" />
+          <Property Name="Role" Type="int" />
         </EntityType>
         <Association Name="FK_CompTeams_Competitions">
           <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
@@ -632,6 +634,7 @@
           <NavigationProperty Name="PlayerTypes" Relationship="Self.FK_Players_PlayerTypes" FromRole="Players" ToRole="PlayerTypes" />
           <NavigationProperty Name="Teams" Relationship="Self.FK_Players_Teams" FromRole="Players" ToRole="Teams" />
           <NavigationProperty Name="PlayerSkills" Relationship="Self.FK_PlayerSkills_Players" FromRole="Players" ToRole="PlayerSkills" />
+          <Property Name="Level" Type="Int32" />
         </EntityType>
         <EntityType Name="PlayerSkills">
           <Key>
@@ -719,6 +722,7 @@
           <Property Name="Status" Type="CLTDataModel.Status" Nullable="false" />
           <Property Name="Authentication" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Teams" Relationship="Self.FK_Teams_Users" FromRole="Users" ToRole="Teams" />
+          <Property Name="Role" Type="CLTDataModel.UserRoles" />
         </EntityType>
         <Association Name="FK_Groups_Competitions">
           <End Role="Competitions" Type="Self.Competitions" Multiplicity="1" />
@@ -1182,6 +1186,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="UserRoles">
+          <Member Name="Common" Value="1" />
+          <Member Name="Admin" Value="5" />
+          <Member Name="SuperAdmin" Value="10" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1265,6 +1274,7 @@
           <EntitySetMapping Name="Players">
             <EntityTypeMapping TypeName="CLTDataModel.Players">
               <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Team" ColumnName="Team" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -1358,6 +1368,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="CLTDataModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

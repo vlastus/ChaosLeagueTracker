@@ -24,6 +24,7 @@ namespace CLT.Data
         public string Name { get; set; }
         public Status Status { get; set; }
         public string Authentication { get; set; }
+        public Nullable<UserRoles> Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Teams> Teams { get; set; }

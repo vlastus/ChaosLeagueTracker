@@ -10,6 +10,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <meta name="description" content="The description of my page" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -28,37 +29,12 @@
                     <li>@Html.ActionLink("Soutěže", "Index", "Competitions")</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
                 </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
-        <div class="row">
-            <div id="applicationMessages">
-                @if (ViewBag.AppMessages != null)
-                {
-                    foreach (var message in ViewBag.AppMessages)
-                    {
-                        string cssclass = "alert";
-                        switch ((int)message.Severity)
-                        {
-                            case 1:
-                                cssclass += " alert-success";
-                                break;
-                            case 2:
-                                cssclass += " alert-info";
-                                break;
-                            case 3:
-                                cssclass += " alert-warning";
-                                break;
-                            case 4:
-                                cssclass = "alert alert-danger";
-                                break;
-                        }
-                        <div class="@cssclass">@message.Text</div>
-                    }
-                }
-            </div>
-        </div>
+        @Html.Partial("_AppMessagePartial")
         <div class="row">
             @RenderBody()
         </div>
