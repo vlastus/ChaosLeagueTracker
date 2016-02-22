@@ -1,6 +1,10 @@
 ﻿@{
-    ViewBag.Title = "Teams Index Page";
+    ViewBag.Title = "Přehled týmů";
 }
+
+<div>
+    <a class="btn btn-default" href="/Team/Add">Přidat nový tým</a>
+</div>
 
 <table class="table">
     <thead>
@@ -15,7 +19,13 @@
         @{ int i = 1;}
         @foreach (var team in ViewBag.Teams)
         {
-            <tr><td>@i</td><td>@Html.ActionLink((string)team.Name, "Detail", "Team", new { teamid = team.ID }, null)</td><td>@team.Owner</td><td>...</td></tr>
+            <tr>
+                <td>@i</td>
+                <td>@Html.ActionLink((string)team.Name, "Detail", "Team", new { teamid = team.ID }, null)</td>
+                <td>@team.Users.Name</td>
+                <td>...
+                </td>
+            </tr>
             i++;
         }
     </tbody>

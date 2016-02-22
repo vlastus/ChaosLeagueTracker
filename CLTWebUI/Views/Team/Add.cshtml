@@ -1,0 +1,27 @@
+﻿@model CLTWebUI.Models.Team.AddTeamViewModel
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("Add", "Team"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.name)
+                @Html.TextBoxFor(m => m.name, new { @Class="form-control"})
+                @Html.ValidationMessageFor(m => m.name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.owner)
+                @Html.DropDownListFor(m => m.owner, Model.users, new { @Class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.race)
+                @Html.DropDownListFor(m => m.race, Model.races, new { @Class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.startValue)
+                @Html.TextBoxFor(m => m.startValue, new { @Value = 1000000, @Class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-default">Přidat</button>
+        }
+    </div>
+</div>

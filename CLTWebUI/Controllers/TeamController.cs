@@ -20,9 +20,12 @@ namespace CLTWebUI.Controllers
             unitOfWork = uow;
         }
         // GET: Team
+        [RoleAuthorize(Roles="Admin,SuperAdmin")]
         public ActionResult Index()
         {
             ViewBag.Teams = unitOfWork.TeamRepository.GetTeams();
+            ViewBag.Competitions = unitOfWork.CompetitionRepository.Get(filter: c => c.Status == Status.Active).ToDictionary(c => c.ID, c => c.Name);
+            ViewBag.Groups = unitOfWork.GroupRepository.Get().ToDictionary(c => c.ID, c => c.Name);
             return View();
         }
 
@@ -55,6 +58,16 @@ namespace CLTWebUI.Controllers
             var playerTypes = unitOfWork.PlayerTypeRepository.Get(filter: pt => pt.Race == model.Team.Race).ToList();
             model.playertypes = new SelectList(playerTypes, "ID", "Name");
 
+            return View(model);
+        }
+
+        [RoleAuthorize(Roles = "Admin, SuperAdmin")]
+        public ActionResult Add(AddTeamViewModel model)
+        {
+            var races = from Races r in Enum.GetValues(typeof(Races)) select new { ID = (int)r, Name = r.ToString()};
+            model.races = new SelectList(races, "ID","Name");
+            var users = unitOfWork.UserRepository.Get(filter: u => u.Status == Status.Active).ToList();
+            model.users = new SelectList(users, "ID", "Name");
             return View(model);
         }
     }

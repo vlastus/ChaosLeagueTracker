@@ -181,6 +181,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -192,6 +193,8 @@
     <Compile Include="Models\Account\User.cs" />
     <Compile Include="Models\AppMessage.cs" />
     <Compile Include="Models\Competitions\CompetitionsViewModel.cs" />
+    <Compile Include="Models\RoleAuthorizeAttribute.cs" />
+    <Compile Include="Models\Team\AddTeamViewModel.cs" />
     <Compile Include="Models\Team\TeamDetailViewModel.cs" />
     <Compile Include="Models\Team\TeamListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -257,6 +260,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AppMessagePartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\Unauthorized.cshtml" />
+    <Content Include="Views\Team\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

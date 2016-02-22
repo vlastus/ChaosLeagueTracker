@@ -1,13 +1,8 @@
-﻿
-@model CLTWebUI.Models.Team.TeamDetailViewModel
-
-<br />
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-danger">@ViewBag.Message</div>
+﻿@model CLTWebUI.Models.Team.TeamDetailViewModel
+@{ 
+    ViewBag.Title = "Detail týmu";
 }
-else
-{
+<br />
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading"><b>@Model.Team.Name</b></div>
@@ -68,7 +63,7 @@ else
                 <li class="list-group-item">
                     <div class="row ">
                         <div class="col-md-3">
-                            @if (User.IsInRole("Common") && Model.Team.Users.Name != User.Identity.Name)
+                            @if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin") && Model.Team.Users.Name != User.Identity.Name)
                             {
                                 <span>@player.Name</span>
                             }
@@ -132,53 +127,55 @@ else
         <script>$(window).load(function () { $('#addPlayerModal').modal('show'); });</script>
     }
 
-    <div class="col-md-12">
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
-        <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form action="@Url.Action("Add","Player")" method="post">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="addPlayerModalLabel">Přidání hráče</h4>
-                        </div>
-                        <div class="modal-body">
-                            @if (Model.AddNewPlayerErrors != null)
-                            {
-                                <div class="">
-                                    @foreach (var error in Model.AddNewPlayerErrors)
-                                    {
-                                        <div class="alert alert-danger alert-dismissible shorteralert" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            @error
-                                        </div>
-                                    }
+    @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
+    {
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
+            <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="@Url.Action("Add","Player")" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="addPlayerModalLabel">Přidání hráče</h4>
+                            </div>
+                            <div class="modal-body">
+                                @if (Model.AddNewPlayerErrors != null)
+                                {
+                                    <div class="">
+                                        @foreach (var error in Model.AddNewPlayerErrors)
+                                        {
+                                            <div class="alert alert-danger alert-dismissible shorteralert" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                @error
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label>Rasa</label>
+                                    <span class="form-control">@Model.Team.Race</span>
                                 </div>
-                            }
-                            <div class="form-group">
-                                <label>Rasa</label>
-                                <span>@Model.Team.Race</span>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.SelectedPlayerTypeId)
-                                @Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes)
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.NewPlayerName)
-                                @Html.TextBoxFor(m => m.NewPlayerName)
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SelectedPlayerTypeId)
+                                    @Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes, new { @Class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.NewPlayerName)
+                                    @Html.TextBoxFor(m => m.NewPlayerName, new { @Class = "form-control" })
 
-                                @Html.HiddenFor(m => m.TeamId)
+                                    @Html.HiddenFor(m => m.TeamId)
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
-                            <button type="submit" class="btn btn-primary">Uložit</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+                                <button type="submit" class="btn btn-primary">Uložit</button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </div>
-}
