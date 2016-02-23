@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CLTWebUI.Models.Team
 {
@@ -10,5 +11,6 @@ namespace CLTWebUI.Models.Team
     {
         public Groups group { get; set; }
         public List<Teams> teams { get; set; }
+        public List<Teams> teams2join { get; set; }
     }
 }

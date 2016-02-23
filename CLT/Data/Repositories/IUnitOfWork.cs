@@ -14,6 +14,7 @@ namespace CLT.Data
         GenericRepository<Groups> GroupRepository { get;  }
         GenericRepository<PlayerTypes>PlayerTypeRepository { get; }
         GenericRepository<Users> UserRepository { get; }
+        GenericRepository<CompTeams> CompTeamRepository { get; }
         void Save();
         void Dispose(bool disposing);
         void Dispose();

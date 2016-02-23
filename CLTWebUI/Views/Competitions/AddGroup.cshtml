@@ -1,0 +1,40 @@
+﻿@model CLTWebUI.Models.Competitions.AddGroupViewModel
+
+@if (Model.groupid == null)
+{
+    <h2>Přidání skupiny k soutěži @Model.competition.Name</h2>
+}
+else
+{
+    <h2>Editace skupiny soutěže @Model.competition.Name</h2>
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @{ 
+            string action = Model.groupid == null ? "AddGroup" : "EditGroup";
+        }
+        @using (Html.BeginForm(action, "Competitions"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.name)
+                @Html.TextBoxFor(m => m.name, new { @Class = "form-control" })
+                @Html.ValidationMessageFor(m => m.name)
+            </div>
+            <div class="form-group">
+                @Html.CheckBoxFor(m => m.playoff)
+                @Html.LabelFor(m => m.playoff)
+                @Html.HiddenFor(m => m.compid, new { @Value = Model.competition.ID})
+                @Html.HiddenFor(m => m.groupid, new { @Value = Model.groupid })
+            </div>
+            if (Model.groupid == null)
+            {
+               <button type="submit" class="btn btn-primary">Přidat</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary">Uložit</button>
+            }
+        }
+</div>
+</div>
