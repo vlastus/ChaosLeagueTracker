@@ -1,0 +1,87 @@
+﻿@model CLTWebUI.Models.Team.AddTeamViewModel
+<h2>Editace týmu</h2>
+<div class="panel panel-default">
+    <div class="panel-body">
+    @using (Html.BeginForm("Edit", "Team"))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.name)
+                    @Html.TextBoxFor(m => m.name, new { @Class = "form-control", @Value = Model.team.Name })
+                    @Html.ValidationMessageFor(m => m.name)
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.owner)
+                    @Html.DropDownListFor(m => m.owner, Model.users, new { @Class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.race)
+                    @Html.DropDownListFor(m => m.race, Model.races, new { @Class = "form-control", @disabled = "disabled"})
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.rerolls)
+                    @Html.TextBoxFor(m => m.rerolls, new { @Class = "form-control", @Value = Model.team.Rerolls })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.fanfactor)
+                    @Html.TextBoxFor(m => m.fanfactor, new { @Class = "form-control", @Value = Model.team.Fanfactor })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.asscoaches)
+                    @Html.TextBoxFor(m => m.asscoaches, new { @Class = "form-control", @Value = Model.team.Asscoaches })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.cheerleaders)
+                    @Html.TextBoxFor(m => m.cheerleaders, new { @Class = "form-control", @Value = Model.team.Cheerleaders })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.apothecary)
+                    @Html.TextBoxFor(m => m.apothecary, new { @Class = "form-control", @Value = Model.team.Apothecary })
+                </div>
+            </div>
+            <div class="col-md-4">
+                &nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.value)
+                    @Html.TextBoxFor(m => m.value, new { @Class = "form-control", @Value = Model.team.Value })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.treasury)
+                    @Html.TextBoxFor(m => m.treasury, new { @Class = "form-control", @Value = Model.team.Treasury })
+                </div>
+            </div>
+            <div class="col-md-4">
+                @Html.HiddenFor(m => m.teamid, new { @Value = Model.team.ID })
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary">Uložit</button>
+    }
+    </div>
+</div>

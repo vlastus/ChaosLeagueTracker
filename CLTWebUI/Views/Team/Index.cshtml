@@ -30,6 +30,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dlabel_@team.ID">
                             <li>@Html.ActionLink("Detail", "Detail", "Team", new { teamid = team.ID }, null)</li>
+                            <li>@Html.ActionLink("Editace", "Edit", "Team", new { teamid = team.ID }, null)</li>
                             <li><a href="@Url.Action("Delete","Team", new { teamid = team.ID })">Deaktivovat tým</a></li>
                         </ul>
                     </div>

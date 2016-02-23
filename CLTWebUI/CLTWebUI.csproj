@@ -263,6 +263,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />
     <Content Include="Views\Team\Add.cshtml" />
+    <Content Include="Views\Team\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

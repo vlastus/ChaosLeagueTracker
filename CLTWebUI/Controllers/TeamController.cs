@@ -20,7 +20,7 @@ namespace CLTWebUI.Controllers
             unitOfWork = uow;
         }
         // GET: Team
-        [RoleAuthorize(Roles="Admin,SuperAdmin")]
+        [RoleAuthorize(Roles = "Admin,SuperAdmin")]
         public ActionResult Index()
         {
             var model = new TeamListViewModel()
@@ -51,7 +51,7 @@ namespace CLTWebUI.Controllers
             TeamDetailViewModel model = new TeamDetailViewModel();
             model.Team = unitOfWork.TeamRepository
                 .Get(
-                    filter: t => (t.ID == teamid && t.Status == Status.Active), 
+                    filter: t => (t.ID == teamid && t.Status == Status.Active),
                     includeProperties: "Users,Players")
                 .FirstOrDefault();
             model.TeamId = model.Team.ID;
@@ -67,8 +67,8 @@ namespace CLTWebUI.Controllers
         public ActionResult Add()
         {
             var model = new AddTeamViewModel();
-            var races = from Races r in Enum.GetValues(typeof(Races)) select new { ID = (int)r, Name = r.ToString()};
-            model.races = new SelectList(races, "ID","Name");
+            var races = from Races r in Enum.GetValues(typeof(Races)) select new { ID = (int)r, Name = r.ToString() };
+            model.races = new SelectList(races, "ID", "Name");
             var users = unitOfWork.UserRepository.Get(filter: u => u.Status == Status.Active).ToList();
             model.users = new SelectList(users, "ID", "Name");
             return View(model);
@@ -125,6 +125,71 @@ namespace CLTWebUI.Controllers
                     AddApplicationMessage("Tým byl deaktivován", MessageSeverity.Success);
                 }
             }
+            return RedirectToAction("Index", "Team");
+        }
+
+        [HttpGet]
+        [RoleAuthorize(Roles = "Admin, SuperAdmin")]
+        public ActionResult Edit(int? teamid)
+        {
+            if (teamid == null)
+            {
+                AddApplicationMessage("Je třeba zadat ID týmu", MessageSeverity.Danger);
+                return RedirectToAction("Index", "Team");
+            }
+            var team = unitOfWork.TeamRepository.GetByID(teamid);
+            if (team == null)
+            {
+                AddApplicationMessage("Tým nebyl nalezen", MessageSeverity.Danger);
+                return RedirectToAction("Index", "Team");
+            }
+
+            var races = from Races r in Enum.GetValues(typeof(Races)) select new { ID = (int)r, Name = r.ToString() };
+            var users = unitOfWork.UserRepository.Get(filter: u => u.Status == Status.Active).ToList();
+
+            var model = new AddTeamViewModel()
+            {
+               team = team,
+               owner = team.Owner,
+               race = (int)team.Race,
+               races = new SelectList(races, "ID", "Name"),
+               users = new SelectList(users, "ID", "Name")
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [RoleAuthorize(Roles = "Admin, SuperAdmin")]
+        public ActionResult Edit(AddTeamViewModel model)
+        {
+            var team = unitOfWork.TeamRepository.GetByID(model.teamid);
+            var races = from Races r in Enum.GetValues(typeof(Races)) select new { ID = (int)r, Name = r.ToString() };
+            var users = unitOfWork.UserRepository.Get(filter: u => u.Status == Status.Active).ToList();
+
+            if (!ModelState.IsValid)
+            {
+                model.team = team;
+                model.races = new SelectList(races, "ID", "Name");
+                model.users = new SelectList(users, "ID", "Name");
+                AddApplicationMessage("Tým se nepodařilo uložit, zkontrolujte formulář", MessageSeverity.Danger);
+                return View(model);
+            }
+
+            team.Name = model.name;
+            team.Owner = model.owner;
+            //team.Race = model.race;
+            team.Rerolls = model.rerolls;
+            team.Fanfactor = model.fanfactor;
+            team.Asscoaches = model.asscoaches;
+            team.Cheerleaders = model.cheerleaders;
+            team.Apothecary = model.apothecary == 1 ? model.apothecary : 0;
+            team.Value = model.value;
+            team.Treasury = model.treasury;
+
+            unitOfWork.TeamRepository.Update(team);
+            unitOfWork.Save();
+            AddApplicationMessage("Tým byl uložen", MessageSeverity.Success);
+
             return RedirectToAction("Index", "Team");
         }
     }
