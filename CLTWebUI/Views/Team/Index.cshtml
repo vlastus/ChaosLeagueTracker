@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CLTWebUI.Models.Team.TeamListViewModel
+@{
     ViewBag.Title = "Přehled týmů";
 }
 
@@ -12,18 +13,36 @@
             <th>#</th>
             <th>Jméno týmu</th>
             <th>Vlastník</th>
-            <th>Soutěž</th>
+            <th>Aktivní soutěž</th>
         </tr>
     </thead>
     <tbody>
         @{ int i = 1;}
-        @foreach (var team in ViewBag.Teams)
+        @foreach (var team in Model.teams)
         {
             <tr>
                 <td>@i</td>
-                <td>@Html.ActionLink((string)team.Name, "Detail", "Team", new { teamid = team.ID }, null)</td>
+                <td>
+                    <div class="dropdown">
+                        <a id="dlabel_@team.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            @team.Name
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dlabel_@team.ID">
+                            <li>@Html.ActionLink("Detail", "Detail", "Team", new { teamid = team.ID }, null)</li>
+                            <li><a href="@Url.Action("Delete","Team", new { teamid = team.ID })">Deaktivovat tým</a></li>
+                        </ul>
+                    </div>
+                </td>
                 <td>@team.Users.Name</td>
-                <td>...
+                <td>
+                    @foreach(var ct in team.CompTeams)
+                    {
+                        if(ct.Groups.Competitions.Status == CLT.Data.Status.Active)
+                        {
+                            <span>@ct.Groups.Competitions.Name</span>
+                        }
+                    }
                 </td>
             </tr>
             i++;

@@ -19,7 +19,7 @@ namespace CLTWebUI.Models.Team
         public int race { get; set; }
 
         [Display(Name = "Počáteční hodnota")]
-        public int startValue { get; set; }
+        public int? startValue { get; set; }
 
         [Display(Name = "Jméno týmu")]
         [Required(ErrorMessage = "Je třeba zadat jméno týmu")]
