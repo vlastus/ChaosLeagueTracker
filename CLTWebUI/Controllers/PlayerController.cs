@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CLT.Data;
 using CLTWebUI.Models.Team;
 using CLTWebUI.Models;
+using CLTWebUI.Models.Player;
 
 namespace CLTWebUI.Controllers
 {
@@ -76,6 +77,7 @@ namespace CLTWebUI.Controllers
                 SPP = 0,
                 TD = 0,
                 Journeyman = 0,
+                Level = 0,
                 Status = Status.Active
             };
 
@@ -125,11 +127,48 @@ namespace CLTWebUI.Controllers
             player.Status = Status.Inactive;
             unitOfWork.PlayerRepository.Update(player);
             team.Value -= player.Value;
+
             unitOfWork.TeamRepository.Update(team);
             unitOfWork.Save();
             AddApplicationMessage("Hráč byl odstraněn",MessageSeverity.Success);
 
             return RedirectToAction("Detail", "Team", new { teamid = player.Team });
+        }
+
+        [Authorize]
+        public ActionResult LevelUp(int? roll1, int? roll2, int? playerId)
+        {
+            if (playerId == null)
+            {
+                AddApplicationMessage("Neudáno ID hráče", MessageSeverity.Success);
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+
+            Players player = unitOfWork.PlayerRepository.GetByID(playerId);
+
+            if (player == null)
+            {
+                AddApplicationMessage("Hráč nebyl nalezen", MessageSeverity.Success);
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+
+            var model = new PlayerViewModel()
+            {
+                player = player,
+                roll1 = roll1,
+                roll2 = roll2
+            };
+            var skills = from Skills s in Enum.GetValues(typeof(Skills)) select new { ID = (int)s, Name = s.ToString() };
+            var availablegroups = unitOfWork.TypeGroupRepository.Get(filter: tg => tg.PlayerType == player.PlayerTypes.ID);
+            foreach(var agrp in availablegroups)
+            {
+                //foreach 
+            }
+            //var skills = from Skills s in Enum.GetValues(typeof(Skills)) select new { ID = (int)s, Name = s.ToString() };
+
+            model.skills = new SelectList(skills, "ID", "Name");
+
+            return View(model);
         }
     }
 }

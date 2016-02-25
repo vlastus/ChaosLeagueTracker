@@ -196,6 +196,7 @@
     <Compile Include="Models\Competitions\AddCompetitionViewModel.cs" />
     <Compile Include="Models\Competitions\AddGroupViewModel.cs" />
     <Compile Include="Models\Competitions\CompetitionsViewModel.cs" />
+    <Compile Include="Models\Player\PlayerViewModel.cs" />
     <Compile Include="Models\RoleAuthorizeAttribute.cs" />
     <Compile Include="Models\Team\AddTeamViewModel.cs" />
     <Compile Include="Models\Team\TeamDetailViewModel.cs" />
@@ -272,11 +273,11 @@
     <Content Include="Views\Competitions\AddGroup.cshtml" />
     <Content Include="Views\Group\Admin.cshtml" />
     <Content Include="Views\Competitions\Edit.cshtml" />
+    <Content Include="Views\Player\LevelUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Helpers\" />
-    <Folder Include="Views\Player\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -13,6 +13,7 @@ namespace CLT.Data
         private GenericRepository<PlayerTypes> playerTypeRepository;
         private GenericRepository<Users> userRepository;
         private GenericRepository<CompTeams> compTeamRepository;
+        private GenericRepository<TypeGroups> typeGroupRepository;
 
         public PlayerRepository PlayerRepository
         {
@@ -94,6 +95,17 @@ namespace CLT.Data
                     this.compTeamRepository = new GenericRepository<CompTeams>(context);
                 }
                 return compTeamRepository;
+            }
+        }
+        public GenericRepository<TypeGroups> TypeGroupRepository
+        {
+            get
+            {
+                if (this.typeGroupRepository == null)
+                {
+                    this.typeGroupRepository = new GenericRepository<TypeGroups>(context);
+                }
+                return typeGroupRepository;
             }
         }
 

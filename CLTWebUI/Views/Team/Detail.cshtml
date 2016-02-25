@@ -75,8 +75,15 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dlabel_@player.ID">
-                                        <li><a href="@Url.Action("Delete","Player", new { playerId = player.ID })">Propustit hráče</a></li>
-                                        <li class="disabled"><a href="#">Zvýšit úroveň</a></li>
+                                        <li><a href="@Url.Action("Delete", "Player", new { playerId = player.ID })">Propustit hráče</a></li>
+                                        @if (player.SPP >= (player.Level + 1) * (player.Level + 2) * 5 / 2 + 1)
+                                        {
+                                            <li><a href="#" class="set-player-id" data-toggle="modal" data-target="#lvlPlayerModal" data-id="@player.ID">Zvýšit úroveň</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="disabled"><a href="#">Zvýšit úroveň</a></li>
+                                        }
                                     </ul>
                                 </div>
                             }
@@ -126,6 +133,69 @@
     {
         <script>$(window).load(function () { $('#addPlayerModal').modal('show'); });</script>
     }
+
+    <div class="modal fade" id="lvlPlayerModal" tabindex="-1" role="dialog" aria-labelledby="lvlPlayerModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="@Url.Action("LevelUp","Player")" method="post" onsubmit="return validaterollform()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addPlayerModalLabel">LevelUp hráče</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="roll1">Hodnota první kostky hodu na postup</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">d6</span>
+                                <input class="form-control" type="text" name="roll1" id="roll1" onkeypress="validate(event)"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="roll2">Hodnota druhé kostky hodu na postup</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">d6</span>
+                                <input class="form-control" type="text" name="roll2" id="roll2" onkeypress="validate(event)"/>
+                            </div>
+                            <input type="hidden" name="playerId" id="rollmodalplayerid" value=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+                        <button type="submit" class="btn btn-primary">Pokračovat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function validate(evt) {
+            var theEvent = evt || window.event;
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+            var regex = /[1-6]|\./;
+            if (!regex.test(key)) {
+                theEvent.returnValue = false;
+                if (theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+
+        function validaterollform() {
+            var roll1 = $('#roll1').val();
+            var roll2 = $('#roll2').val();
+            var regex = /[1-6]|\./;
+            if (!regex.test(roll1) || !regex.test(roll2)) {
+                alert("Hody nejsou vyplněny správně.")
+                return false;
+            }
+            return true;
+        }
+
+        $(document).on("click", ".set-player-id", function () {
+            var playerId = $(this).data('id');
+            $('#rollmodalplayerid').val(playerId);
+        });
+    </script>
+
 
     @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
     {
