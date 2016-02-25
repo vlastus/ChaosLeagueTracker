@@ -65,9 +65,56 @@ namespace CLTWebUI.Controllers
                 unitOfWork.Save();
                 AddApplicationMessage("Soutěž byla úspešně založena", MessageSeverity.Success);
 
-                return RedirectToAction("Admin","Competitions");
+                return RedirectToAction("Admin", "Competitions");
             }
             AddApplicationMessage("Nepodařilo se založit soutěž, zkontrolujte formulář", MessageSeverity.Danger);
+            return View(model);
+        }
+
+        [HttpGet]
+        [RoleAuthorize(Roles = "Admin, SuperAdmin")]
+        public ActionResult Edit(int? compid)
+        {
+            if (compid == null)
+            {
+                AddApplicationMessage("Nebyl uveden identifikátor soutěže", MessageSeverity.Danger);
+                return RedirectToAction("Admin", "Competitions");
+            }
+
+            Competitions comp = unitOfWork.CompetitionRepository.GetByID(compid);
+            if (comp == null)
+            {
+                AddApplicationMessage("Id neodpovídá žádné soutěži", MessageSeverity.Danger);
+                return RedirectToAction("Admin", "Competitions");
+            }
+
+            var model = new AddCompetitionViewModel()
+            {
+                compid = compid,
+                name = comp.Name
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [RoleAuthorize(Roles = "Admin, SuperAdmin")]
+        public ActionResult Edit(AddCompetitionViewModel model)
+        {
+            if (ModelState.IsValid && model.compid != null)
+            {
+                var comp = unitOfWork.CompetitionRepository.GetByID(model.compid);
+                if (comp != null)
+                {
+                    comp.Name = model.name;
+
+                    unitOfWork.CompetitionRepository.Update(comp);
+                    unitOfWork.Save();
+                    AddApplicationMessage("Soutěž byla úspešně změněna", MessageSeverity.Success);
+
+                    return RedirectToAction("Admin", "Competitions");
+                }
+            }
+            AddApplicationMessage("Nepodařilo se uložit soutěž, zkontrolujte formulář", MessageSeverity.Danger);
             return View(model);
         }
 

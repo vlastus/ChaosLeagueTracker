@@ -11,5 +11,7 @@ namespace CLTWebUI.Models.Competitions
         [Required(ErrorMessage = "Je třeba uvést název soutěže")]
         [Display(Name = "Název soutěže")]
         public string name { get; set; }
+
+        public int? compid { get; set; }
     }
 }

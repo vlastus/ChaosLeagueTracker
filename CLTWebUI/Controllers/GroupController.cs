@@ -91,5 +91,34 @@ namespace CLTWebUI.Controllers
 
             return RedirectToAction("Admin", "Group", new { groupid = groupid });
         }
+
+        [RoleAuthorize("Admin, SuperAdmin")]
+        public ActionResult Delete(int? groupid)
+        {
+            if (groupid == null)
+            {
+                AddApplicationMessage("Nebyl uveden identifikátor skupiny", MessageSeverity.Danger);
+            }
+            else
+            {
+                var group = unitOfWork.GroupRepository.GetByID(groupid);
+                if (group == null)
+                {
+                    AddApplicationMessage("Skupina nenalezena", MessageSeverity.Danger);
+                }
+                else
+                {
+                    unitOfWork.GroupRepository.Delete(group);
+
+                    var cts = unitOfWork.CompTeamRepository.Get(filter: ct => ct.Competititon == groupid);
+                    foreach( var ct in cts)
+                        unitOfWork.CompTeamRepository.Delete(ct);
+
+                    unitOfWork.Save();
+                    AddApplicationMessage("Skupina byla smazána", MessageSeverity.Success);
+                }
+            }
+            return RedirectToAction("Admin","Competitions");
+        }
     }
 }

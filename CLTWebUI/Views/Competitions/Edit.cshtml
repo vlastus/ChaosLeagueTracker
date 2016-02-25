@@ -1,0 +1,17 @@
+﻿@model CLTWebUI.Models.Competitions.AddCompetitionViewModel
+
+<h2>Editace soutěže</h2>
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("Edit", "Competitions"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.name)
+                @Html.TextBoxFor(m => m.name, new { @Class = "form-control" })
+                @Html.ValidationMessageFor(m => m.name)
+                @Html.HiddenFor(m => m.compid)
+            </div>
+            <button type="submit" class="btn btn-primary">Uložit</button>
+        }
+    </div>
+</div>
