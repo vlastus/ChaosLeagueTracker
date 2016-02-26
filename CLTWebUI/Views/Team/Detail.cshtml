@@ -76,7 +76,8 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dlabel_@player.ID">
                                         <li><a href="@Url.Action("Delete", "Player", new { playerId = player.ID })">Propustit hráče</a></li>
-                                        @if (player.SPP >= (player.Level + 1) * (player.Level + 2) * 5 / 2 + 1)
+                                        @if (((player.SPP >= (player.Level + 1) * (player.Level + 2) * 5 / 2 + 1) && player.Level < 5)
+                                            || (player.Level == 5 && player.SPP > 175))
                                         {
                                             <li><a href="#" class="set-player-id" data-toggle="modal" data-target="#lvlPlayerModal" data-id="@player.ID">Zvýšit úroveň</a></li>
                                         }
