@@ -12,8 +12,8 @@
     @RenderSection("scripts", required: false)
     <meta name="description" content="The description of my page" />
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body style="background-image: url('/Content/images/pitch.jpg')">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #004400; color: #8DCF8A !important;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -35,11 +35,11 @@
     </div>
     <div class="container body-content">
         @Html.Partial("_AppMessagePartial")
-        <div class="row">
+        <div class="row well" style="background-color: #8DCF8A;">
             @RenderBody()
         </div>
         <hr />
-        <footer>
+        <footer class="well" style="background-color: #8DCF8A;">
             <p>&copy; @DateTime.Now.Year - Chaos League Tracker App by Vlastus</p>
         </footer>
     </div>

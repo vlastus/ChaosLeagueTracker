@@ -57,5 +57,24 @@ namespace CLTWebUI.Controllers
 
             return View(model);
         }
+
+        public ActionResult DetailForPrint(int? teamid)
+        {
+            if (teamid == null)
+            {
+                ViewBag.Message = "Id týmu nebylo uvedeno.";
+                return View();
+            }
+
+            TeamDetailViewModel model = new TeamDetailViewModel();
+            model.Team = unitOfWork.TeamRepository
+                .Get(
+                    filter: t => (t.ID == teamid && t.Status == Status.Active),
+                    includeProperties: "Users,Players")
+                .FirstOrDefault();
+            model.TeamId = model.Team.ID;
+
+            return View(model);
+        }
     }
 }

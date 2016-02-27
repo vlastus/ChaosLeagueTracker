@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    color: #004400;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -27,4 +28,24 @@ textarea {
     padding-top: 5px;
     padding-bottom: 5px;
     margin-bottom: 10px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #8DCF8A;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #8DCF8A;
+}
+/* 5AAC56 */
+.btn-primary {
+    color: #8DCF8A;
+    background-color: #004400;
+    border-color: #156711;
+}
+
+.btn-primary:focus, .btn-primary:hover, .btn-primary:active {
+    color: #ffffff;
+    background-color: #156711;
+    border-color: #156711;
 }

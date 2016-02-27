@@ -8,177 +8,183 @@
 }
 else
 {
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading"><b>@Model.Team.Name</b></div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-2">Vlastník: @Model.Team.Users.Name</div>
-                <div class="col-md-2">Rasa: @Model.Team.Race</div>
-                <div class="col-md-2">Team Value: @Model.Team.Value</div>
-                <div class="col-md-2">Treasury: @Model.Team.Treasury</div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">Rerolls: @Model.Team.Rerolls</div>
-                <div class="col-md-2">Fan factor: @Model.Team.Fanfactor</div>
-                <div class="col-md-2">Assist. coaches: @Model.Team.Asscoaches</div>
-                <div class="col-md-2">Cheerleaders: @Model.Team.Cheerleaders</div>
-                <div class="col-md-2"><span>Apothecary: </span>@if (Model.Team.Apothecary == 1)
-                {<span class="glyphicon glyphicon-ok label label-success"> </span>}</div>
-                <div class="col-md-2"></div>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>@Model.Team.Name</b></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">Vlastník: @Model.Team.Users.Name</div>
+                    <div class="col-md-2">Rasa: @Model.Team.Race</div>
+                    <div class="col-md-2">Team Value: @Model.Team.Value</div>
+                    <div class="col-md-2">Treasury: @Model.Team.Treasury</div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Rerolls: @Model.Team.Rerolls</div>
+                    <div class="col-md-2">Fan factor: @Model.Team.Fanfactor</div>
+                    <div class="col-md-2">Assist. coaches: @Model.Team.Asscoaches</div>
+                    <div class="col-md-2">Cheerleaders: @Model.Team.Cheerleaders</div>
+                    <div class="col-md-2">
+                        <span>Apothecary: </span>@if (Model.Team.Apothecary == 1)
+                {<span class="glyphicon glyphicon-ok label label-success"> </span>}
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
             </div>
         </div>
-    </div>
-    <ul class="list-group">
-        <li class="list-group-item" style="background-color: #f5f5f5;">
-            <div class="row"><div class="col-md-2"><b>Seznam hráčů</b></div></div>
-            <div class="row ">
-                <div class="col-md-3">Jméno</div>
-                <div class="col-md-1">Pozice</div>
-                <div class="col-md-5">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-xs-1">MA</div>
-                                <div class="col-xs-1">ST</div>
-                                <div class="col-xs-1">AG</div>
-                                <div class="col-xs-1">AV</div>
-                                <div class="col-xs-1">INT</div>
-                                <div class="col-xs-1">CMP</div>
-                                <div class="col-xs-1">TD</div>
-                                <div class="col-xs-1">CAS</div>
-                                <div class="col-xs-1">KIL</div>
-                                <div class="col-xs-1">SPP</div>
-                                <div class="col-xs-1">MNG</div>
-                                <div class="col-xs-1">NI</div>
+        <ul class="list-group">
+            <li class="list-group-item" style="background-color: #f5f5f5;">
+                <div class="row"><div class="col-md-2"><b>Seznam hráčů</b></div></div>
+                <div class="row ">
+                    <div class="col-md-3">Jméno</div>
+                    <div class="col-md-1">Pozice</div>
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-xs-1">MA</div>
+                                    <div class="col-xs-1">ST</div>
+                                    <div class="col-xs-1">AG</div>
+                                    <div class="col-xs-1">AV</div>
+                                    <div class="col-xs-1">INT</div>
+                                    <div class="col-xs-1">CMP</div>
+                                    <div class="col-xs-1">TD</div>
+                                    <div class="col-xs-1">CAS</div>
+                                    <div class="col-xs-1">KIL</div>
+                                    <div class="col-xs-1">SPP</div>
+                                    <div class="col-xs-1">MNG</div>
+                                    <div class="col-xs-1">NI</div>
+                                </div>
                             </div>
+                            <div class="col-md-2">Value</div>
                         </div>
-                        <div class="col-md-2">Value</div>
                     </div>
+                    <div class="col-md-3">Skilly</div>
                 </div>
-                <div class="col-md-3">Skilly</div>
-            </div>
-        </li>
-        @foreach (var player in Model.Team.Players)
-        {
-            if (player.Status == CLT.Data.Status.Active)
+            </li>
+            @foreach (var player in Model.Team.Players)
             {
-                <li class="list-group-item">
-                    <div class="row ">
-                        <div class="col-md-3">
-                            @if (User.IsInRole("Common") && Model.Team.Users.Name != User.Identity.Name)
-                            {
-                                <span>@player.Name</span>
-                            }
-                            else
-                            {
-                                <div class="dropdown">
-                                    <a id="dlabel_@player.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        @player.Name
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dlabel_@player.ID">
-                                        <li><a href="@Url.Action("Delete","Player", new { playerId = player.ID })">Propustit hráče</a></li>
-                                        <li class="disabled"><a href="#">Zvýšit úroveň</a></li>
-                                    </ul>
-                                </div>
-                            }
-                        </div>
-                        <div class="col-md-1">@player.PlayerTypes.Name</div>
-                        <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <div class="row">
-                                        <div class="col-xs-1"><span class="badge">@player.MA</span></div>
-                                        <div class="col-xs-1"><span class="badge">@player.ST</span></div>
-                                        <div class="col-xs-1"><span class="badge">@player.AG</span></div>
-                                        <div class="col-xs-1"><span class="badge">@player.AV</span></div>
-                                        <div class="col-xs-1">@player.INT</div>
-                                        <div class="col-xs-1">@player.COMP</div>
-                                        <div class="col-xs-1">@player.TD</div>
-                                        <div class="col-xs-1">@player.CAS</div>
-                                        <div class="col-xs-1">@player.Kills</div>
-                                        <div class="col-xs-1 label label-success" style="font-size: 90%;">@player.SPP</div>
-                                        @if (player.MNG == 1)
-                                        { <div class="col-xs-1 glyphicon glyphicon-remove"> </div>}
-                                        else { <div class="col-xs-1"></div>}
-                                        @if (player.NI == 1)
-                                        { <div class="col-xs-1 glyphicon glyphicon-ok"> </div>}
-                                        else { <div class="col-xs-1"></div>}
+                if (player.Status == CLT.Data.Status.Active)
+                {
+                    <li class="list-group-item">
+                        <div class="row ">
+                            <div class="col-md-3">
+                                @if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin") && Model.Team.Users.Name != User.Identity.Name)
+                                {
+                                    <span>@player.Name</span>
+                                }
+                                else
+                                {
+                                    <div class="dropdown">
+                                        <a id="dlabel_@player.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            @player.Name
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dlabel_@player.ID">
+                                            <li><a href="@Url.Action("Delete","Player", new { playerId = player.ID })">Propustit hráče</a></li>
+                                            <li class="disabled"><a href="#">Zvýšit úroveň</a></li>
+                                        </ul>
                                     </div>
-                                </div>
-                                <div class="col-md-2">@player.Value</div>
+                                }
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            @{ int i = 0;}
-                            @foreach (var skill in player.PlayerSkills)
+                            <div class="col-md-1">@player.PlayerTypes.Name</div>
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-xs-1"><span class="badge">@player.MA</span></div>
+                                            <div class="col-xs-1"><span class="badge">@player.ST</span></div>
+                                            <div class="col-xs-1"><span class="badge">@player.AG</span></div>
+                                            <div class="col-xs-1"><span class="badge">@player.AV</span></div>
+                                            <div class="col-xs-1">@player.INT</div>
+                                            <div class="col-xs-1">@player.COMP</div>
+                                            <div class="col-xs-1">@player.TD</div>
+                                            <div class="col-xs-1">@player.CAS</div>
+                                            <div class="col-xs-1">@player.Kills</div>
+                                            <div class="col-xs-1 label label-success" style="font-size: 90%;">@player.SPP</div>
+                                            @if (player.MNG == 1)
+                                            { <div class="col-xs-1 glyphicon glyphicon-remove"> </div>}
+                                            else { <div class="col-xs-1"></div>}
+                                            @if (player.NI == 1)
+                                            { <div class="col-xs-1 glyphicon glyphicon-ok"> </div>}
+                                            else { <div class="col-xs-1"></div>}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">@player.Value</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                @{ int i = 0;}
+                                @foreach (var skill in player.PlayerSkills)
                         {
                             if (i > 0)
                             {<span>, </span>};
-                                @skill.Skill
-                                i++;
-                            }
-                        </div>
-                    </div>
-                </li>
-                                    }
+                                    @skill.Skill
+                                    i++;
                                 }
-    </ul>
-    @if (Model.viewAddPlayerModal)
-    {
-        <script>$(window).load(function () { $('#addPlayerModal').modal('show'); });</script>
-    }
-
-    <div class="col-md-12">
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
-        <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form action="@Url.Action("Add","Player")" method="post">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="addPlayerModalLabel">Přidání hráče</h4>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            @if (Model.AddNewPlayerErrors != null)
-                            {
-                                <div class="">
-                                    @foreach (var error in Model.AddNewPlayerErrors)
-                                    {
-                                        <div class="alert alert-danger alert-dismissible shorteralert" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            @error
-                                        </div>
+                    </li>
+                                        }
                                     }
+        </ul>
+        @if (Model.viewAddPlayerModal)
+        {
+            <script>$(window).load(function () { $('#addPlayerModal').modal('show'); });</script>
+        }
+
+        <div class="col-md-12">
+            @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
+            {
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
+            }
+            <a href="@Url.Action("DetailForPrint","Team", new { teamid = Model.Team.ID})" class="btn btn-primary">Vytisknout</a>
+            <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="@Url.Action("Add","Player")" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="addPlayerModalLabel">Přidání hráče</h4>
+                            </div>
+                            <div class="modal-body">
+                                @if (Model.AddNewPlayerErrors != null)
+                                {
+                                    <div class="">
+                                        @foreach (var error in Model.AddNewPlayerErrors)
+                                        {
+                                            <div class="alert alert-danger alert-dismissible shorteralert" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                @error
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label>Rasa</label>
+                                    <span>@Model.Team.Race</span>
                                 </div>
-                            }
-                            <div class="form-group">
-                                <label>Rasa</label>
-                                <span>@Model.Team.Race</span>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.SelectedPlayerTypeId)
-                                @Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes)
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.NewPlayerName)
-                                @Html.TextBoxFor(m => m.NewPlayerName)
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SelectedPlayerTypeId)
+                                    @Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.NewPlayerName)
+                                    @Html.TextBoxFor(m => m.NewPlayerName)
 
-                                @Html.HiddenFor(m => m.TeamId)
+                                    @Html.HiddenFor(m => m.TeamId)
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
-                            <button type="submit" class="btn btn-primary">Uložit</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+                                <button type="submit" class="btn btn-primary">Uložit</button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 }
