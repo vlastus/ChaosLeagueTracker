@@ -1,0 +1,89 @@
+﻿@model CLTWebUI.Models.Player.PlayerViewModel
+
+<script type="text/javascript">
+    function toggleMode(mode)
+    {
+        if (mode == 'skill')
+        {
+            $('#statDiv').hide();
+            $('#skillDiv').show();
+        }
+        else
+        {
+            $('#statDiv').show();
+            $('#skillDiv').hide();
+        }
+    }
+</script>
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm("LevelUpFinal", "Player"))
+        {
+            <div class="input-group">
+                Postupové kostky: <span class="badge">@Model.roll1</span>&nbsp;<span class="badge">@Model.roll2</span>
+            </div>
+            <div class="input-group">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="selectLUMode" id="skillMode" value="skillmode" checked onchange="toggleMode('skill')"/>
+                        Přidat nový skill
+                    </label>
+                </div>
+                @if (Model.roll1 + Model.roll2 >= 10)
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectLUMode" id="statMode" value="statmode" onchange="toggleMode('stat')"/>
+                            Zvýšit stat hráče
+                        </label>
+                    </div>
+                }
+            </div>
+
+            <div class="input-group" id="skillDiv">
+                @Html.LabelFor(m => m.SelectedSkillID)
+                @Html.DropDownListFor(m => m.SelectedSkillID, Model.skills, new { @Class = "form-control" })
+            </div>
+
+            <div class="input-group" style="display: none;" id="statDiv">
+                <label>Zvýšení statu</label>
+                @if (Model.roll1 + Model.roll2 == 12)
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectStat" id="selectStrength" value="str"  checked/>
+                            +1 STR
+                        </label>
+                    </div>
+                }
+                else if (Model.roll1 + Model.roll2 == 11)
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectStat" id="selectAgility" value="agi" checked />
+                            +1 AGI
+                        </label>
+                    </div>
+                }
+                else if (Model.roll1 + Model.roll2 == 10)
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectStat" id="selectMovement" value="mov" checked />
+                            +1 MA
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectStat" id="selectArmor" value="arm" />
+                            +1 AV
+                        </label>
+                    </div>
+                }
+                <input type="hidden" name="playerid" value="@Model.player.ID"/>
+            </div>
+            <hr />
+            <button type="submit" class="btn btn-primary">Pokračovat</button>
+        }
+    </div>
+</div>

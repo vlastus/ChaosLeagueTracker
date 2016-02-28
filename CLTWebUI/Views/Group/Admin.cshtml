@@ -1,0 +1,62 @@
+﻿@model CLTWebUI.Models.Team.TeamListViewModel
+@{
+    ViewBag.Title = "Detail skupiny";
+}
+
+<h2>Soutěž: @Model.group.Competitions.Name</h2>
+<h3>Skupina: @Model.group.Name</h3>
+
+@if(Model.group.Competitions.Status == CLT.Data.Status.Active)
+{
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="assignTeam" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Přidat tým k této skupině
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="assignTeam">
+            @foreach(var team2join in Model.teams2join)
+            {
+                <li>@Html.ActionLink(team2join.Name, "AssignTeam", "Group", new { teamid = team2join.ID, groupid = Model.group.ID }, null)</li>
+            }
+            <li role="separator" class="divider"></li>
+        </ul>       
+    </div>
+    <br />
+}
+
+<ul class="list-group">
+    <li class="list-group-item" style="background-color: #f5f5f5">
+        <div class="row">
+            <div class="col-md-1">#</div>
+            <div class="col-md-4">Jméno týmu</div>
+            <div class="col-md-4">Vlastník</div>
+            <div class="col-md-3"></div>
+        </div>
+    </li>
+    @{int i = 1;}
+    @foreach (var team in Model.teams)
+    {
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-1">@i</div>
+                <div class="col-md-4">
+                    <div class="dropdown">
+                        <a id="dlabel_@team.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            @team.Name
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dlabel_@team.ID">
+                            <li>@Html.ActionLink("Detail", "Detail", "Team", new { teamid = team.ID }, null)</li>
+                            <li>@Html.ActionLink("Vyřadit tým ze skupiny", "DeassignTeam", "Group", new { teamid = team.ID, groupid = Model.group.ID }, null)</li>
+                        </ul>
+                    </div>
+                
+               </div>
+                <div class="col-md-4">@team.Users.Name</div>
+                <div class="col-md-3"></div>
+            </div>
+        </li>
+        i++;
+    }
+</ul>
+

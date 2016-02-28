@@ -181,8 +181,10 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompetitionsController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
@@ -191,7 +193,12 @@
     </Compile>
     <Compile Include="Models\Account\User.cs" />
     <Compile Include="Models\AppMessage.cs" />
+    <Compile Include="Models\Competitions\AddCompetitionViewModel.cs" />
+    <Compile Include="Models\Competitions\AddGroupViewModel.cs" />
     <Compile Include="Models\Competitions\CompetitionsViewModel.cs" />
+    <Compile Include="Models\Player\PlayerViewModel.cs" />
+    <Compile Include="Models\RoleAuthorizeAttribute.cs" />
+    <Compile Include="Models\Team\AddTeamViewModel.cs" />
     <Compile Include="Models\Team\TeamDetailViewModel.cs" />
     <Compile Include="Models\Team\TeamListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,6 +208,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\cl-logo.jpg" />
     <Content Include="Content\images\pitch.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -258,12 +266,21 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AppMessagePartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\Unauthorized.cshtml" />
+    <Content Include="Views\Team\Add.cshtml" />
+    <Content Include="Views\Team\Edit.cshtml" />
+    <Content Include="Views\Competitions\Admin.cshtml" />
+    <Content Include="Views\Competitions\Add.cshtml" />
+    <Content Include="Views\Competitions\AddGroup.cshtml" />
+    <Content Include="Views\Group\Admin.cshtml" />
+    <Content Include="Views\Competitions\Edit.cshtml" />
+    <Content Include="Views\Player\LevelUp.cshtml" />
     <Content Include="Views\Team\DetailForPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Helpers\" />
-    <Folder Include="Views\Player\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

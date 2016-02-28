@@ -30,6 +30,10 @@ textarea {
     margin-bottom: 10px;
 }
 
+.marginRight30{
+    margin-right: 30px;
+}
+
 .navbar-inverse .navbar-brand {
     color: #8DCF8A;
 }
@@ -48,4 +52,21 @@ textarea {
     color: #ffffff;
     background-color: #156711;
     border-color: #156711;
+}
+
+.panel-default > .panel-heading {
+    background-color: #156711;
+    color: #8DCF8A;
+}
+
+a, a:hover, a:active, a:focus {
+    color: #004400;
+}
+
+.badge {
+    background-color: #004400;
+}
+
+.lightest-green, .list-group-item, .panel-default, .dropdown-menu{
+    background-color: #d7ebd6;
 }

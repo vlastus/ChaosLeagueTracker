@@ -1,0 +1,66 @@
+﻿@model CLTWebUI.Models.Competitions.CompetitionsViewModel
+
+@{
+    ViewBag.Title = "Administrace soutěží";
+}
+
+<div>
+    <a class="btn btn-primary" href="@Url.Action("Add","Competitions")">Přidat novou soutěž</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Název soutěže</th>
+            <th>Skupiny</th>
+            <th>aktivní</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1;}
+        @foreach (var comp in Model.Competitions)
+        {
+            <tr>
+                <td>@i</td>
+                <td>
+                    <div class="dropdown">
+                        <a id="dlabel_@comp.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            @comp.Name
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dlabel_@comp.ID">
+                            <li><a href="@Url.Action("Edit","Competitions", new { compid = comp.ID })">Editovat</a></li>
+                            <li><a href="@Url.Action("Delete","Competitions", new { compid = comp.ID })">Ukončit soutěž</a></li>
+                            <li><a href="@Url.Action("AddGroup","Competitions", new { compid = comp.ID })">Přidat skupinu</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    @foreach (var group in comp.Groups)
+                    {
+                        <div class="dropdown">
+                            <a id="dlabel_@group.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                @group.Name
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dlabel_@group.ID">
+                                <li>@Html.ActionLink("Detail", "Admin", "Group", new { groupid = group.ID }, null) </li>
+                                <li>@Html.ActionLink("Editovat", "EditGroup", "Competitions", new { groupid = group.ID }, null) </li>
+                                <li>@Html.ActionLink("Smazat", "Delete", "Group", new { groupid = group.ID }, null) </li>
+                            </ul>
+                        </div>
+                    }
+                </td>
+                <td>
+                    @if (comp.Status == CLT.Data.Status.Active)
+                    { <span class="glyphicon glyphicon-ok"></span>}
+                    else { <span class="glyphicon glyphicon-remove"></span>}
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+
+

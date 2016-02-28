@@ -1,8 +1,9 @@
 ﻿@model CLTWebUI.Models.Competitions.CompetitionsViewModel
 
 @{
-    ViewBag.Title = "Competitions Index Page";
+    ViewBag.Title = "Přehled soutěží";
 }
+
 
 <table class="table">
     <thead>
@@ -27,7 +28,7 @@
                 <td></td>
                 <td colsan="2">
                     <ul class="list-group collapse" id="group_@comp.ID">
-                        <li class="list-group-item" style="background-color: #f5f5f5">Skupiny</li>
+                        <li class="list-group-item">Skupiny</li>
                         @foreach(var group in comp.Groups)
                         {
                             <li class="list-group-item">
