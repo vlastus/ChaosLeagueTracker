@@ -200,14 +200,12 @@
     </script>
 
 
-    @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
-    {
     <div class="col-md-12">
-            @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
-            {
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
-            }
-            <a href="@Url.Action("DetailForPrint","Team", new { teamid = Model.Team.ID})" class="btn btn-primary btn-lg">Vytisknout</a>
+        @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
+        {
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
+        }
+        <a href="@Url.Action("DetailForPrint","Team", new { teamid = Model.Team.ID})" class="btn btn-primary btn-lg" target="_blank">Vytisknout</a>
         <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content lightest-green">
@@ -254,5 +252,4 @@
             </div>
         </div>
     </div>
-}
 </div>
