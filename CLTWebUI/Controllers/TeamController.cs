@@ -45,7 +45,7 @@ namespace CLTWebUI.Controllers
             if (teamid == null)
             {
                 ViewBag.Message = "Id týmu nebylo uvedeno.";
-                return View();
+                return RedirectToAction("Error","Home");
             }
 
             TeamDetailViewModel model = new TeamDetailViewModel();

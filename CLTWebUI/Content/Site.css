@@ -34,13 +34,10 @@ textarea {
     margin-right: 30px;
 }
 
-.navbar-inverse .navbar-brand {
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a{
     color: #8DCF8A;
 }
 
-.navbar-inverse .navbar-nav > li > a {
-    color: #8DCF8A;
-}
 /* 5AAC56 */
 .btn-primary {
     color: #8DCF8A;
@@ -67,6 +64,20 @@ a, a:hover, a:active, a:focus {
     background-color: #004400;
 }
 
+.bggreen {
+    background-color: #338A2E;
+}
+
 .lightest-green, .list-group-item, .panel-default, .dropdown-menu{
     background-color: #d7ebd6;
+}
+
+footer {
+    background-color: #8DCF8A !important; 
+    padding-top: 10px !important; 
+    padding-bottom: 4px !important;
+}
+
+.well {
+    border-color: #338A2E;
 }
