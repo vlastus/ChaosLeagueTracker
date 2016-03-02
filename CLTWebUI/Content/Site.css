@@ -55,6 +55,18 @@ textarea {
     background-color: #156711;
     color: #8DCF8A;
 }
+.logo {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.panel {
+    border: none;
+}
+
+.panel-default {
+    border: 1px solid #5cb85c;
+}
 
 a, a:hover, a:active, a:focus {
     color: #004400;
@@ -73,11 +85,11 @@ a, a:hover, a:active, a:focus {
 }
 
 footer {
-    background-color: #8DCF8A !important; 
+    background-color: white !important; 
     padding-top: 10px !important; 
     padding-bottom: 4px !important;
 }
 
-.well {
-    border-color: #338A2E;
+.well, .list-group-item {
+    border-color: #5cb85c;
 }
