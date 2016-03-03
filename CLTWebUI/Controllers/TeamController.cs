@@ -35,7 +35,8 @@ namespace CLTWebUI.Controllers
             TeamListViewModel model = new TeamListViewModel()
             {
                 group = unitOfWork.GroupRepository.GetByID(groupid),
-                teams = unitOfWork.TeamRepository.GetTeamsByGroup(groupid).ToList()
+                teams = unitOfWork.TeamRepository.GetTeamsByGroup(groupid).ToList(),
+                fixtures = unitOfWork.FixtureRepository.Get(filter: f => f.Group == groupid).GroupBy(f => f.Round)
             };
             return View(model);
         }

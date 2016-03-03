@@ -5,7 +5,8 @@
 
 <h2>Soutěž: @Model.group.Competitions.Name</h2>
 <h3>Skupina: @Model.group.Name</h3>
-<ul class="list-group">
+<h4><a href="#teamlist" data-toggle="collapse" aria-expanded="false" aria-controls="teamlist">Týmy</a></h4>
+<ul class="list-group collapse.in" id="teamlist">
     <li class="list-group-item">
         <div class="row">
             <div class="col-md-1">#</div>
@@ -28,3 +29,23 @@
         i++;
     }
 </ul>
+<h4><a href="#matchlist" data-toggle="collapse" aria-expanded="false" aria-controls="matchlist">Zápasy</a></h4>
+<div class="collapse" id="matchlist">
+    @if (Model.fixtures != null)
+    {
+        foreach (var fgroup in Model.fixtures)
+        {
+            <ul class="list-group">
+                <li class="list-group-item"><b>Kolo: @fgroup.Key</b></li>
+                @foreach (var fixture in fgroup)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2">@fixture.Teams.Name</div><div class="col-md-1"> vs </div><div class="col-md-2"> @fixture.Teams1.Name</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+    }
+</div>    

@@ -30,7 +30,8 @@ namespace CLTWebUI.Controllers
             {
                 group = unitOfWork.GroupRepository.GetByID(groupid),
                 teams = teams,
-                teams2join = availableTeams
+                teams2join = availableTeams,
+                fixtures = unitOfWork.FixtureRepository.Get(filter: f => f.Group == groupid).GroupBy(f => f.Round)
             };
             return View(model);
         }

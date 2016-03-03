@@ -12,5 +12,7 @@ namespace CLTWebUI.Models.Team
         public Groups group { get; set; }
         public List<Teams> teams { get; set; }
         public List<Teams> teams2join { get; set; }
+
+        public IEnumerable<IGrouping<int?, Fixtures>> fixtures { get; set; }
     }
 }

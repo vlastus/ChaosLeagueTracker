@@ -8,24 +8,38 @@
 
 @if(Model.group.Competitions.Status == CLT.Data.Status.Active)
 {
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="assignTeam" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Přidat tým k této skupině
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="assignTeam">
-            @foreach(var team2join in Model.teams2join)
+    <div class="row">
+        <div class="col-md-3">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="assignTeam" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Přidat tým k této skupině
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="assignTeam">
+                    @foreach (var team2join in Model.teams2join)
+                    {
+                        <li>@Html.ActionLink(team2join.Name, "AssignTeam", "Group", new { teamid = team2join.ID, groupid = Model.group.ID }, null)</li>
+                    }
+                    <li role="separator" class="divider"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            @if (Model.fixtures.Count() == 0)
             {
-                <li>@Html.ActionLink(team2join.Name, "AssignTeam", "Group", new { teamid = team2join.ID, groupid = Model.group.ID }, null)</li>
+                <a class="btn btn-primary" href="@Url.Action("GenerateFixtures","Fixture",new { groupid = Model.group.ID})">Provést rozlosování</a>
             }
-            <li role="separator" class="divider"></li>
-        </ul>       
+            else
+            {
+                <a class="btn btn-primary" href="@Url.Action("Delete","Fixture",new { groupid = Model.group.ID})">Smazat rozlosování</a>
+            }
+        </div>
     </div>
     <br />
 }
 
 <ul class="list-group">
-    <li class="list-group-item" style="background-color: #f5f5f5">
+    <li class="list-group-item">
         <div class="row">
             <div class="col-md-1">#</div>
             <div class="col-md-4">Jméno týmu</div>
@@ -59,4 +73,22 @@
         i++;
     }
 </ul>
+
+@if (Model.fixtures != null)
+{
+    foreach (var fgroup in Model.fixtures)
+    {
+        <ul class="list-group">
+            <li class="list-group-item"><b>Kolo: @fgroup.Key</b></li>
+            @foreach (var fixture in fgroup)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2">@fixture.Teams.Name</div><div class="col-md-1"> vs </div><div class="col-md-2"> @fixture.Teams1.Name</div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+}
 

@@ -15,6 +15,8 @@ namespace CLT.Data
         private GenericRepository<CompTeams> compTeamRepository;
         private GenericRepository<TypeGroups> typeGroupRepository;
         private GenericRepository<PlayerSkills> playerSkillRepository;
+        private GenericRepository<Fixtures> fixtureRepository;
+        private GenericRepository<Matches> matchRepository;
 
         public PlayerRepository PlayerRepository
         {
@@ -119,6 +121,28 @@ namespace CLT.Data
                     this.playerSkillRepository = new GenericRepository<PlayerSkills>(context);
                 }
                 return playerSkillRepository;
+            }
+        }
+        public GenericRepository<Fixtures> FixtureRepository
+        {
+            get
+            {
+                if (this.fixtureRepository == null)
+                {
+                    this.fixtureRepository = new GenericRepository<Fixtures>(context);
+                }
+                return fixtureRepository;
+            }
+        }
+        public GenericRepository<Matches> MatchRepository
+        {
+            get
+            {
+                if (this.matchRepository == null)
+                {
+                    this.matchRepository = new GenericRepository<Matches>(context);
+                }
+                return matchRepository;
             }
         }
 
