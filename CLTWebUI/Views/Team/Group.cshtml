@@ -41,7 +41,22 @@
                 {
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-2">@fixture.Teams.Name</div><div class="col-md-1"> vs </div><div class="col-md-2"> @fixture.Teams1.Name</div>
+                            <div class="col-md-2">@fixture.Teams.Name</div>
+                            <div class="col-md-1"> vs </div>
+                            <div class="col-md-2"> @fixture.Teams1.Name</div>
+                            <div class="col-md-5">
+                                @if (fixture.Matches.Count > 0)
+                                {
+                                    <span>@fixture.Matches.FirstOrDefault().TeamMatchData.Score : @fixture.Matches.FirstOrDefault().TeamMatchData1.Score - odehráno @fixture.Matches.FirstOrDefault().Date.ToShortDateString()</span>
+                                }
+                                else if (User.Identity.Name == fixture.Teams.Users.Name
+                                    || User.Identity.Name == fixture.Teams1.Users.Name
+                                    || User.IsInRole("Admin")
+                                    || User.IsInRole("SuperAdmin"))
+                                {
+                                    <a class="btn btn-primary" href="@Url.Action("Add", "Match", new { fixtureId = fixture.ID })">Přidat zápis o utkání</a>
+                                }
+                            </div>
                         </div>
                     </li>
                 }

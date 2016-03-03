@@ -14,6 +14,12 @@ namespace CLT.Data
     
     public partial class Fixtures
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Fixtures()
+        {
+            this.Matches = new HashSet<Matches>();
+        }
+    
         public int ID { get; set; }
         public int Group { get; set; }
         public Nullable<int> Round { get; set; }
@@ -23,5 +29,7 @@ namespace CLT.Data
         public virtual Groups Groups { get; set; }
         public virtual Teams Teams { get; set; }
         public virtual Teams Teams1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Matches> Matches { get; set; }
     }
 }

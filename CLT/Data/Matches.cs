@@ -26,11 +26,13 @@ namespace CLT.Data
         public int Team1Data { get; set; }
         public int Team2Data { get; set; }
         public System.DateTime Date { get; set; }
+        public int Fixture { get; set; }
     
         public virtual Competitions Competitions { get; set; }
         public virtual TeamMatchData TeamMatchData { get; set; }
         public virtual TeamMatchData TeamMatchData1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MatchEvents> MatchEvents { get; set; }
+        public virtual Fixtures Fixtures { get; set; }
     }
 }

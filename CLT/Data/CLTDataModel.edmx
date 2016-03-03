@@ -59,6 +59,7 @@
           <Property Name="Team1Data" Type="int" Nullable="false" />
           <Property Name="Team2Data" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Fixture" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MatchEvents">
           <Key>
@@ -263,6 +264,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Matches_Fixtures">
+          <End Role="Fixtures" Type="Self.Fixtures" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fixtures">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="Fixture" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Matches_TeamMatchData">
           <End Role="TeamMatchData" Type="Self.TeamMatchData" Multiplicity="1" />
           <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
@@ -463,6 +476,10 @@
             <End Role="Competitions" EntitySet="Competitions" />
             <End Role="Matches" EntitySet="Matches" />
           </AssociationSet>
+          <AssociationSet Name="FK_Matches_Fixtures" Association="Self.FK_Matches_Fixtures">
+            <End Role="Fixtures" EntitySet="Fixtures" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
           <AssociationSet Name="FK_Matches_TeamMatchData" Association="Self.FK_Matches_TeamMatchData">
             <End Role="TeamMatchData" EntitySet="TeamMatchData" />
             <End Role="Matches" EntitySet="Matches" />
@@ -552,6 +569,7 @@
           <NavigationProperty Name="Groups" Relationship="Self.FK_Fixtures_Groups" FromRole="Fixtures" ToRole="Groups" />
           <NavigationProperty Name="Teams" Relationship="Self.FK_Fixtures_Teams" FromRole="Fixtures" ToRole="Teams" />
           <NavigationProperty Name="Teams1" Relationship="Self.FK_Fixtures_Teams1" FromRole="Fixtures" ToRole="Teams" />
+          <NavigationProperty Name="Matches" Relationship="CLTDataModel.FK_Matches_Fixtures" FromRole="Fixtures" ToRole="Matches" />
         </EntityType>
         <EntityType Name="Groups">
           <Key>
@@ -588,6 +606,8 @@
           <NavigationProperty Name="TeamMatchData" Relationship="Self.FK_Matches_TeamMatchData" FromRole="Matches" ToRole="TeamMatchData" />
           <NavigationProperty Name="TeamMatchData1" Relationship="Self.FK_Matches_TeamMatchData1" FromRole="Matches" ToRole="TeamMatchData" />
           <NavigationProperty Name="MatchEvents" Relationship="Self.FK_MatchEvents_Matches" FromRole="Matches" ToRole="MatchEvents" />
+          <Property Name="Fixture" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fixtures" Relationship="CLTDataModel.FK_Matches_Fixtures" FromRole="Matches" ToRole="Fixtures" />
         </EntityType>
         <EntityType Name="MatchEvents">
           <Key>
@@ -1048,6 +1068,10 @@
             <End Role="PlayerTypes" EntitySet="PlayerTypes" />
             <End Role="TypeGroups" EntitySet="TypeGroups" />
           </AssociationSet>
+          <AssociationSet Name="FK_Matches_Fixtures" Association="CLTDataModel.FK_Matches_Fixtures">
+            <End Role="Fixtures" EntitySet="Fixtures" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
         </EntityContainer>
         <EnumType Name="Races">
           <Member Name="Amazon" Value="1" />
@@ -1191,6 +1215,18 @@
           <Member Name="Admin" Value="5" />
           <Member Name="SuperAdmin" Value="10" />
         </EnumType>
+        <Association Name="FK_Matches_Fixtures">
+          <End Type="CLTDataModel.Fixtures" Role="Fixtures" Multiplicity="1" />
+          <End Type="CLTDataModel.Matches" Role="Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fixtures">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="Fixture" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1249,6 +1285,7 @@
           <EntitySetMapping Name="Matches">
             <EntityTypeMapping TypeName="CLTDataModel.Matches">
               <MappingFragment StoreEntitySet="Matches">
+                <ScalarProperty Name="Fixture" ColumnName="Fixture" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Competition" ColumnName="Competition" />
                 <ScalarProperty Name="Round" ColumnName="Round" />
