@@ -40,5 +40,6 @@ namespace CLT.Data
         public virtual DbSet<Teams> Teams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<TypeGroups> TypeGroups { get; set; }
+        public virtual DbSet<GroupTables> GroupTables { get; set; }
     }
 }

@@ -90,6 +90,9 @@
     <Compile Include="Data\Groups.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\GroupTables.cs">
+      <DependentUpon>CLTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Log.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
@@ -97,6 +100,9 @@
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\MatchEvents.cs">
+      <DependentUpon>CLTDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\MatchEventsTypes.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Players.cs">
@@ -111,7 +117,9 @@
     <Compile Include="Data\Races.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Repositories\GenericViewRepository.cs" />
     <Compile Include="Data\Repositories\IGenericRepository.cs" />
+    <Compile Include="Data\Repositories\IGenericViewRepository.cs" />
     <Compile Include="Data\Repositories\IUnitOfWork.cs" />
     <Compile Include="Data\Repositories\UnitOfWork.cs" />
     <Compile Include="Data\Repositories\GenericRepository.cs" />

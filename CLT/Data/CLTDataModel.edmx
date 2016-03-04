@@ -180,6 +180,29 @@
           <Property Name="Authentication" Type="varchar" MaxLength="100" />
           <Property Name="Role" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="GroupTables">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Team" />
+            <PropertyRef Name="Body" />
+            <PropertyRef Name="TDfor" />
+            <PropertyRef Name="TDagainst" />
+            <PropertyRef Name="Zapasy" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Teamname" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Team" Type="int" Nullable="false" />
+          <Property Name="Poradi" Type="bigint" />
+          <Property Name="Body" Type="int" Nullable="false" />
+          <Property Name="TDfor" Type="int" Nullable="false" />
+          <Property Name="TDagainst" Type="int" Nullable="false" />
+          <Property Name="Zapasy" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Teamname" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="FK_CompTeams_Competitions">
           <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
           <End Role="CompTeams" Type="Self.CompTeams" Multiplicity="*" />
@@ -448,6 +471,19 @@
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="web" store:Type="Tables" />
           <EntitySet Name="TypeGroups" EntityType="Self.TypeGroups" Schema="web" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="web" store:Type="Tables" />
+          <EntitySet Name="GroupTables" EntityType="Self.GroupTables" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [GroupTables].[ID] AS [ID], 
+    [GroupTables].[Team] AS [Team], 
+    [GroupTables].[Poradi] AS [Poradi], 
+    [GroupTables].[Body] AS [Body], 
+    [GroupTables].[TDfor] AS [TDfor], 
+    [GroupTables].[TDagainst] AS [TDagainst], 
+    [GroupTables].[Zapasy] AS [Zapasy], 
+    [GroupTables].[Username] AS [Username], 
+    [GroupTables].[Teamname] AS [Teamname]
+    FROM [web].[GroupTables] AS [GroupTables]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CompTeams_Competitions" Association="Self.FK_CompTeams_Competitions">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="CompTeams" EntitySet="CompTeams" />
@@ -1072,6 +1108,7 @@
             <End Role="Fixtures" EntitySet="Fixtures" />
             <End Role="Matches" EntitySet="Matches" />
           </AssociationSet>
+          <EntitySet Name="GroupTables" EntityType="CLTDataModel.GroupTables" />
         </EntityContainer>
         <EnumType Name="Races">
           <Member Name="Amazon" Value="1" />
@@ -1227,6 +1264,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="GroupTables">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Team" />
+            <PropertyRef Name="Body" />
+            <PropertyRef Name="TDfor" />
+            <PropertyRef Name="TDagainst" />
+            <PropertyRef Name="Zapasy" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Teamname" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Team" Type="Int32" Nullable="false" />
+          <Property Name="Poradi" Type="Int64" />
+          <Property Name="Body" Type="Int32" Nullable="false" />
+          <Property Name="TDfor" Type="Int32" Nullable="false" />
+          <Property Name="TDagainst" Type="Int32" Nullable="false" />
+          <Property Name="Zapasy" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Teamname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EnumType Name="MatchEventsTypes">
+          <Member Name="Touchdown" Value="1" />
+          <Member Name="Casualty" Value="2" />
+          <Member Name="Completion" Value="3" />
+          <Member Name="Injury" Value="4" />
+          <Member Name="Interception" Value="5" />
+          <Member Name="MVP" Value="6" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1419,6 +1485,21 @@
                 <ScalarProperty Name="IsDouble" ColumnName="IsDouble" />
                 <ScalarProperty Name="SkillGroup" ColumnName="SkillGroup" />
                 <ScalarProperty Name="PlayerType" ColumnName="PlayerType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupTables">
+            <EntityTypeMapping TypeName="CLTDataModel.GroupTables">
+              <MappingFragment StoreEntitySet="GroupTables">
+                <ScalarProperty Name="Teamname" ColumnName="Teamname" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Zapasy" ColumnName="Zapasy" />
+                <ScalarProperty Name="TDagainst" ColumnName="TDagainst" />
+                <ScalarProperty Name="TDfor" ColumnName="TDfor" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Poradi" ColumnName="Poradi" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

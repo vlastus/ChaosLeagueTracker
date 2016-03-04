@@ -4,8 +4,55 @@
     <div class="panel-body">
         @using (Html.BeginForm("Add", "Match"))
         {
+            <h2>@Model.fixture.Groups.Competitions.Name - skupina @Model.fixture.Groups.Name - @Model.fixture.Round . kolo</h2>
+            <h3>@Model.fixture.Teams.Name vs @Model.fixture.Teams1.Name</h3>
             <div class="form-group">
-                
+                @Html.LabelFor(m => m.matchDate)
+                <input class="form-control" type="date" name="matchDate" value="@DateTime.Today.ToString("yyyy-MM-dd")"/><br />
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4"><h4>@Model.fixture.Teams.Name</h4></div>
+                    <div class="col-md-4"><h4>@Model.fixture.Teams1.Name</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><b>Skóre</b></div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.score1, new { @Class = "form-control" })</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.score2, new { @Class = "form-control" })</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><b>Gate</b></div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.gate1, new { @Class="form-control"})</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.gate2, new { @Class = "form-control" })</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><b>Fame</b></div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.fame1, new { @Class = "form-control" })</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.fame2, new { @Class = "form-control" })</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><b>Winning</b></div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.winning1, new { @Class = "form-control" })</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.winning2, new { @Class = "form-control" })</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><b>Fan factor</b></div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.fanfactor1, new { @Class = "form-control" })</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.fanfactor2, new { @Class = "form-control" })</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><b></b></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button id="addEventButtonLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Přidat událost zápasu
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="addEventButtonLabel">
+
+                </ul>
             </div>
             <button type="submit" class="btn btn-primary disabled" disabled>Přidat</button>
         }
