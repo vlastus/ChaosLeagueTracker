@@ -1,0 +1,42 @@
+﻿@model CLTWebUI.Models.Match.MatchEventModel
+@{
+    Layout = null;
+}
+
+<div id="event_@Model.eventNo">
+    <h5>
+        Událost č.@Model.eventNo - Casualty (@if (Model.events[0].sourcePlayerTeam == Model.fixture.Team1)
+        { <span>@Model.fixture.Teams.Name</span>}
+        else { <span>@Model.fixture.Teams1.Name</span>} )
+    </h5>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-4">
+                <label for="spselect_events_@Model.eventNo">Kdo blokoval</label>
+                <select id="spselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].sourcePlayer">
+                    @foreach (var player in Model.players)
+                    {
+                        <option value="@player.ID">@player.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="tpselect_events_@Model.eventNo">Kdo byl zraněn</label>
+                <select id="tpselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].targetPlayer">
+                    @foreach (var player in Model.players2)
+                    {
+                        <option value="@player.ID">@player.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Hod na zranění</label>
+                <input type="text" class="form-control" name="events[@Model.eventNo].result" value="@Model.events[0].result" />
+                <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
+                <input type="hidden" name="events[@Model.eventNo].type" value="@Model.events[0].type" />
+                <input type="hidden" name="events[@Model.eventNo].sourcePlayerTeam" value="@Model.events[0].sourcePlayerTeam" />
+                <input type="hidden" name="events[@Model.eventNo].targetPlayerTeam" value="@Model.events[0].targetPlayerTeam" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@model CLTWebUI.Models.Match.MatchEventModel
+@{
+    Layout = null;
+}
+
+<div id="event_@Model.eventNo">
+    <h5>
+        Událost č.@Model.eventNo - Touchdown (@if (Model.events[0].sourcePlayerTeam == Model.fixture.Team1)
+        {<span>@Model.fixture.Teams.Name</span>}
+        else {<span>@Model.fixture.Teams1.Name</span>})
+    </h5>
+    <div class="form-group">
+        <label for="spselect_events_@Model.eventNo">Kdo skóroval</label>
+        <select id="spselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].sourcePlayer">
+            @foreach (var player in Model.players)
+            {
+                <option value="@player.ID">@player.Name</option>
+            }
+        </select>
+        <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
+        <input type="hidden" name="events[@Model.eventNo].type" value="@Model.events[0].type" />
+        <input type="hidden" name="events[@Model.eventNo].sourcePlayerTeam" value="@Model.events[0].sourcePlayerTeam" />
+    </div>
+</div>

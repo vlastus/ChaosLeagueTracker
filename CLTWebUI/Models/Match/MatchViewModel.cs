@@ -24,5 +24,6 @@ namespace CLTWebUI.Models.Match
         public int winning2 { get; set; }
         public int fanfactor1 { get; set; }
         public int fanfactor2 { get; set; }
+        public List<MatchEventModel.EventDetailModel> events { get; set; }
     }
 }

@@ -21,5 +21,14 @@ namespace CLT.Data
                 .Where(p => p.Team == teamId)
                 .ToList();
         }
+
+        public IEnumerable<Players> GetPlayersForEvent(int t1)
+        {
+            return this.context.Players
+                .Where(p => p.Status == Status.Active)
+                .Where(p => p.Team == t1)
+                .Where(p => p.MNG == 0)
+                .ToList();
+        }
     }
 }
