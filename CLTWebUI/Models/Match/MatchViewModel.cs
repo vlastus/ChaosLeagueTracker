@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CLTWebUI.Models.Match
 {
@@ -24,6 +25,11 @@ namespace CLTWebUI.Models.Match
         public int winning2 { get; set; }
         public int fanfactor1 { get; set; }
         public int fanfactor2 { get; set; }
+        public int mvp1 { get; set; }
+        public int mvp2 { get; set; }
+        public int fixtureid { get; set; }
         public List<MatchEventModel.EventDetailModel> events { get; set; }
+        public IEnumerable<SelectListItem> players1 { get; set; }
+        public IEnumerable<SelectListItem> players2 { get; set; }
     }
 }

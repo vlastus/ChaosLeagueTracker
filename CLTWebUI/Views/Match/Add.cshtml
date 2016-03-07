@@ -42,13 +42,14 @@
                     <div class="col-md-4">@Html.TextBoxFor(m => m.fanfactor2, new { @Class = "form-control" })</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"><b></b></div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-2"><b>MVP</b></div>
+                    <div class="col-md-4">@Html.DropDownListFor(m => m.mvp1, Model.players1, new { @Class = "form-control"})</div>
+                    <div class="col-md-4">@Html.DropDownListFor(m => m.mvp2, Model.players2, new { @Class = "form-control" })</div>
                 </div>
                 <div id="events">
 
                 </div>
+                @Html.HiddenFor(m => m.fixtureid, new { @Value = Model.fixture.ID})
             </div>
             <div class="row">
                 <div class="col-md-3">
@@ -60,6 +61,9 @@
                         <ul class="dropdown-menu" aria-labelledby="addEventButtonLabel">
                             <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Touchdown, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Touchdown</a></li>
                             <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Casualty, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Casualty</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Completion, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Completion</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Interception, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Interception</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Injury, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Injury</a></li>
                         </ul>
                     </div>
                 </div>
@@ -72,6 +76,9 @@
                         <ul class="dropdown-menu" aria-labelledby="addEventButtonLabel">
                             <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Touchdown, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Touchdown</a></li>
                             <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Casualty, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Casualty</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Completion, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Completion</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Interception, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Interception</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Injury, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Injury</a></li>
                         </ul>
                     </div>
                 </div>
@@ -98,4 +105,10 @@
         //$this.tab('show');
         return false;
     });
+    function cancelEvent(eventNo) {
+        var event = $("#event_" + eventNo);
+        var evCancel = $("#cancel_event_" + eventNo);
+        event.hide();
+        evCancel.val(true);
+    }
 </script>

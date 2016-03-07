@@ -20,6 +20,7 @@ namespace CLT.Data
             this.MatchEvents = new HashSet<MatchEvents>();
             this.MatchEvents1 = new HashSet<MatchEvents>();
             this.PlayerSkills = new HashSet<PlayerSkills>();
+            this.TeamMatchData = new HashSet<TeamMatchData>();
         }
     
         public int ID { get; set; }
@@ -53,5 +54,7 @@ namespace CLT.Data
         public virtual Teams Teams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlayerSkills> PlayerSkills { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TeamMatchData> TeamMatchData { get; set; }
     }
 }

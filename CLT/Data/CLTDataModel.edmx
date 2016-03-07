@@ -144,6 +144,7 @@
           <Property Name="Fame" Type="int" />
           <Property Name="FanFactorMod" Type="int" />
           <Property Name="SpirallingExpense" Type="int" />
+          <Property Name="MVP" Type="int" />
         </EntityType>
         <EntityType Name="Teams">
           <Key>
@@ -420,6 +421,18 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TeamMatchData_Players">
+          <End Role="Players" Type="Self.Players" Multiplicity="0..1" />
+          <End Role="TeamMatchData" Type="Self.TeamMatchData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeamMatchData">
+              <PropertyRef Name="MVP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeamMatchData_Teams">
           <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
           <End Role="TeamMatchData" Type="Self.TeamMatchData" Multiplicity="*" />
@@ -557,6 +570,10 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
             <End Role="TeamMatchData" EntitySet="TeamMatchData" />
             <End Role="TeamInducements" EntitySet="TeamInducements" />
           </AssociationSet>
+          <AssociationSet Name="FK_TeamMatchData_Players" Association="Self.FK_TeamMatchData_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="TeamMatchData" EntitySet="TeamMatchData" />
+          </AssociationSet>
           <AssociationSet Name="FK_TeamMatchData_Teams" Association="Self.FK_TeamMatchData_Teams">
             <End Role="Teams" EntitySet="Teams" />
             <End Role="TeamMatchData" EntitySet="TeamMatchData" />
@@ -693,6 +710,7 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <NavigationProperty Name="PlayerSkills" Relationship="Self.FK_PlayerSkills_Players" FromRole="Players" ToRole="PlayerSkills" />
           <Property Name="Level" Type="Int32" />
           <Property Name="Number" Type="Int32" />
+          <NavigationProperty Name="TeamMatchData" Relationship="CLTDataModel.FK_TeamMatchData_Players" FromRole="Players" ToRole="TeamMatchData" />
         </EntityType>
         <EntityType Name="PlayerSkills">
           <Key>
@@ -746,6 +764,8 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <NavigationProperty Name="Matches1" Relationship="Self.FK_Matches_TeamMatchData1" FromRole="TeamMatchData" ToRole="Matches" />
           <NavigationProperty Name="TeamInducements" Relationship="Self.FK_TeamInducements_TeamMatchData" FromRole="TeamMatchData" ToRole="TeamInducements" />
           <NavigationProperty Name="Teams" Relationship="Self.FK_TeamMatchData_Teams" FromRole="TeamMatchData" ToRole="Teams" />
+          <Property Name="MVP" Type="Int32" />
+          <NavigationProperty Name="Players" Relationship="CLTDataModel.FK_TeamMatchData_Players" FromRole="TeamMatchData" ToRole="Players" />
         </EntityType>
         <EntityType Name="Teams">
           <Key>
@@ -1111,6 +1131,10 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
             <End Role="Matches" EntitySet="Matches" />
           </AssociationSet>
           <EntitySet Name="GroupTables" EntityType="CLTDataModel.GroupTables" />
+          <AssociationSet Name="FK_TeamMatchData_Players" Association="CLTDataModel.FK_TeamMatchData_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="TeamMatchData" EntitySet="TeamMatchData" />
+          </AssociationSet>
         </EntityContainer>
         <EnumType Name="Races">
           <Member Name="Amazon" Value="1" />
@@ -1295,6 +1319,18 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <Member Name="Interception" Value="5" />
           <Member Name="MVP" Value="6" />
         </EnumType>
+        <Association Name="FK_TeamMatchData_Players">
+          <End Type="CLTDataModel.Players" Role="Players" Multiplicity="0..1" />
+          <End Type="CLTDataModel.TeamMatchData" Role="TeamMatchData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeamMatchData">
+              <PropertyRef Name="MVP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1442,6 +1478,7 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <EntitySetMapping Name="TeamMatchData">
             <EntityTypeMapping TypeName="CLTDataModel.TeamMatchData">
               <MappingFragment StoreEntitySet="TeamMatchData">
+                <ScalarProperty Name="MVP" ColumnName="MVP" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Team" ColumnName="Team" />
                 <ScalarProperty Name="Score" ColumnName="Score" />

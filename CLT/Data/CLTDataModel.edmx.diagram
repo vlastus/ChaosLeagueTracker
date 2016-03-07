@@ -42,6 +42,7 @@
         <AssociationConnector Association="CLTDataModel.FK_TypeGroups_PlayerTypes" />
         <AssociationConnector Association="CLTDataModel.FK_Matches_Fixtures" />
         <EntityTypeShape EntityType="CLTDataModel.GroupTables" Width="1.5" PointX="0.75" PointY="8.125" />
+        <AssociationConnector Association="CLTDataModel.FK_TeamMatchData_Players" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

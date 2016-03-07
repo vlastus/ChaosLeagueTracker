@@ -6,8 +6,8 @@
 <div id="event_@Model.eventNo">
     <h5>
         Událost č.@Model.eventNo - Casualty (@if (Model.events[0].sourcePlayerTeam == Model.fixture.Team1)
-        { <span>@Model.fixture.Teams.Name</span>}
-        else { <span>@Model.fixture.Teams1.Name</span>} )
+        {<span>@Model.fixture.Teams.Name</span>}
+        else {<span>@Model.fixture.Teams1.Name</span>})<a href="#" onclick="cancelEvent(@Model.eventNo)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
     </h5>
     <div class="row">
         <div class="form-group">

@@ -30,6 +30,7 @@ namespace CLT.Data
         public Nullable<int> Fame { get; set; }
         public Nullable<int> FanFactorMod { get; set; }
         public Nullable<int> SpirallingExpense { get; set; }
+        public Nullable<int> MVP { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Matches> Matches { get; set; }
@@ -38,5 +39,6 @@ namespace CLT.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamInducements> TeamInducements { get; set; }
         public virtual Teams Teams { get; set; }
+        public virtual Players Players { get; set; }
     }
 }
