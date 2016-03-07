@@ -16,7 +16,7 @@
                 <select id="spselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].sourcePlayer">
                     @foreach (var player in Model.players)
                     {
-                        <option value="@player.ID">@player.Name</option>
+                        <option value="@player.ID">@player.Number - @player.Name</option>
                     }
                 </select>
             </div>
@@ -25,13 +25,18 @@
                 <select id="tpselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].targetPlayer">
                     @foreach (var player in Model.players2)
                     {
-                        <option value="@player.ID">@player.Name</option>
+                        <option value="@player.ID">@player.Number - @player.Name</option>
                     }
                 </select>
             </div>
             <div class="col-md-4">
-                <label>Hod na zranění</label>
-                <input type="text" class="form-control" name="events[@Model.eventNo].result" value="@Model.events[0].result" />
+                <label for="resselect_events_@Model.eventNo">Hod na zranění</label>
+                <select id="resselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].result">
+                    @foreach(var result in Model.CasualtyResult)
+                    {
+                        <option value="@result.Key">@result.Value</option>
+                    }
+                </select>
                 <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
                 <input type="hidden" name="events[@Model.eventNo].type" value="@Model.events[0].type" />
                 <input type="hidden" name="events[@Model.eventNo].sourcePlayerTeam" value="@Model.events[0].sourcePlayerTeam" />

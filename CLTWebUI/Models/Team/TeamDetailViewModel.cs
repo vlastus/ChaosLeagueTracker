@@ -25,6 +25,10 @@ namespace CLTWebUI.Models.Team
 
         public int TeamId { get; set; }
 
+        [Required(ErrorMessage = "Číslo hráče je nutné vyplnit")]
+        [Display(Name = "Číslo hráče na soupisce")]
+        public int PlayerNumber { get; set; }
+
         public Boolean viewAddPlayerModal { get; set; }
         public List<string> AddNewPlayerErrors { get; set; }
     }

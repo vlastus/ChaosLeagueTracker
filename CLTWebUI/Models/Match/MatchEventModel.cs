@@ -36,5 +36,16 @@ namespace CLTWebUI.Models.Match
             public MatchEventsTypes type { get; set; }
             public Boolean canceled { get; set; }
         }
+        public Dictionary<int, string> CasualtyResult = new Dictionary<int, string>
+        {
+            {1, "11-38 Badly hurt"},
+            {2, "41-48 Miss next game" },
+            {3, "51-52 Niggling injury" },
+            {4, "53-54 -1 MA"},
+            {5, "55-56 -1 AV"},
+            {6, "57 -1 AG"},
+            {7, "58 -1 STR"},
+            {8, "61-68 Dead!"}
+        };
     }
 }

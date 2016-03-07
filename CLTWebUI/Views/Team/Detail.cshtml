@@ -236,6 +236,10 @@
                                     @Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes, new { @Class = "form-control" })
                             </div>
                             <div class="form-group">
+                                @Html.LabelFor(m => m.PlayerNumber)
+                                @Html.TextBoxFor(m => m.PlayerNumber, new { @Class = "form-control" })
+                            </div>
+                            <div class="form-group">
                                 @Html.LabelFor(m => m.NewPlayerName)
                                     @Html.TextBoxFor(m => m.NewPlayerName, new { @Class = "form-control" })
 

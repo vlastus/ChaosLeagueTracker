@@ -98,6 +98,7 @@
           <Property Name="Journeyman" Type="int" />
           <Property Name="Status" Type="int" />
           <Property Name="Level" Type="int" />
+          <Property Name="Number" Type="int" />
         </EntityType>
         <EntityType Name="PlayerSkills">
           <Key>
@@ -691,6 +692,7 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <NavigationProperty Name="Teams" Relationship="Self.FK_Players_Teams" FromRole="Players" ToRole="Teams" />
           <NavigationProperty Name="PlayerSkills" Relationship="Self.FK_PlayerSkills_Players" FromRole="Players" ToRole="PlayerSkills" />
           <Property Name="Level" Type="Int32" />
+          <Property Name="Number" Type="Int32" />
         </EntityType>
         <EntityType Name="PlayerSkills">
           <Key>
@@ -1377,6 +1379,7 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <EntitySetMapping Name="Players">
             <EntityTypeMapping TypeName="CLTDataModel.Players">
               <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Team" ColumnName="Team" />

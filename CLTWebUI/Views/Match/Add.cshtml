@@ -50,28 +50,38 @@
 
                 </div>
             </div>
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle"  id="addEventButtonLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Přidat událost zápasu pro @Model.fixture.Teams.Name
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="addEventButtonLabel">
-                    <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Touchdown, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Touchdown</a></li>
-                    <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Casualty, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Casualty</a></li>
-                </ul>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" id="addEventButtonLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Přidat událost pro @Model.fixture.Teams.Name
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="addEventButtonLabel">
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Touchdown, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Touchdown</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Casualty, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team1})" data-toggle="eventajax" data-target="#events">Casualty</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" id="addEventButtonLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Přidat událost pro @Model.fixture.Teams1.Name
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="addEventButtonLabel">
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Touchdown, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Touchdown</a></li>
+                            <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Casualty, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Casualty</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Uložit</button>
+                </div>
             </div>
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" id="addEventButtonLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Přidat událost zápasu pro @Model.fixture.Teams1.Name
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="addEventButtonLabel">
-                    <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Touchdown, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Touchdown</a></li>
-                    <li><a href="@Url.Action("AddMatchEventForm","Match", new { etype = CLT.Data.MatchEventsTypes.Casualty, fixtureid = Model.fixture.ID, teamid = Model.fixture.Team2})" data-toggle="eventajax" data-target="#events">Casualty</a></li>
-                </ul>
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Uložit</button>
         }
     </div>
 </div>

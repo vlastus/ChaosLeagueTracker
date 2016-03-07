@@ -62,6 +62,7 @@ namespace CLTWebUI.Controllers
                 Team = model.Team.ID,
                 Type = model.SelectedPlayerTypeId,
                 Name = model.NewPlayerName,
+                Number = model.PlayerNumber,
                 MA = selectedType.MA,
                 ST = selectedType.ST,
                 AG = selectedType.AG,
@@ -81,13 +82,16 @@ namespace CLTWebUI.Controllers
                 Status = Status.Active
             };
 
-            var typeskills = selectedType.Skillset.Split('|').ToList();
-            foreach (var ts in typeskills)
-                newPlayer.PlayerSkills.Add(new PlayerSkills()
-                {
-                    Skill = (Skills)Enum.Parse(typeof(Skills), ts),
-                    Player = newPlayer.ID
-                });
+            if (selectedType.Skillset != null)
+            {
+                var typeskills = selectedType.Skillset.Split('|').ToList();
+                foreach (var ts in typeskills)
+                    newPlayer.PlayerSkills.Add(new PlayerSkills()
+                    {
+                        Skill = (Skills)Enum.Parse(typeof(Skills), ts),
+                        Player = newPlayer.ID
+                    });
+            }
             model.Team.Treasury -= selectedType.Value;
             model.Team.Value += selectedType.Value;
 

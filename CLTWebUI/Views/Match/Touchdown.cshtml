@@ -14,7 +14,7 @@
         <select id="spselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].sourcePlayer">
             @foreach (var player in Model.players)
             {
-                <option value="@player.ID">@player.Name</option>
+                <option value="@player.ID">@player.Number - @player.Name</option>
             }
         </select>
         <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
