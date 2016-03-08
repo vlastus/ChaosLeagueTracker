@@ -11,6 +11,9 @@ namespace CLTWebUI.Models.Match
     public class MatchViewModel
     {
         public Fixtures fixture { get; set; }
+
+        public Matches match { get; set; }
+
         [Display(Name = "Datum zápasu")]
         [Required(ErrorMessage = "Je třeba uvést datum zápasu")]
         public DateTime matchDate { get; set; }

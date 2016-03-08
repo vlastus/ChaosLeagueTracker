@@ -1,0 +1,71 @@
+﻿@model CLTWebUI.Models.Match.MatchViewModel
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h2>@Model.fixture.Groups.Competitions.Name - skupina @Model.fixture.Groups.Name - @Model.fixture.Round . kolo</h2>
+        <h3>@Model.fixture.Teams.Name vs @Model.fixture.Teams1.Name</h3>
+        <h4>Datum: @Model.match.Date.ToShortDateString()</h4>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4"><h4>@Model.fixture.Teams.Name</h4></div>
+            <div class="col-md-4"><h4>@Model.fixture.Teams1.Name</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Skóre</b></div>
+            <div class="col-md-4">@Model.match.TeamMatchData.Score</div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.Score</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Gate</b></div>
+            <div class="col-md-4">@Model.match.TeamMatchData.Gate</div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.Gate</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Fame</b></div>
+            <div class="col-md-4">@Model.match.TeamMatchData.Fame</div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.Fame</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Winning</b></div>
+            <div class="col-md-4">@Model.match.TeamMatchData.Winnings</div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.Winnings</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Fan factor</b></div>
+            <div class="col-md-4">@Model.match.TeamMatchData.FanFactorMod</div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.FanFactorMod</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>MVP</b></div>
+            <div class="col-md-4">@Model.match.TeamMatchData.Players.Name (@Model.match.TeamMatchData.Players.Number)</div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.Players.Name (@Model.match.TeamMatchData1.Players.Number)</div>
+        </div>
+        <div id="events" class="">
+            <h5><b>Události</b></h5>
+            @foreach(var mevent in Model.match.MatchEvents)
+            {
+                <div class="row">
+                    @switch(mevent.EventType)
+                    {
+                        case (int)CLT.Data.MatchEventsTypes.Touchdown:
+                            <div class="col-md-1"><b>Touchdown</b></div><div class="col-md-11">@mevent.Teams.Name: <b>@mevent.Players.Name (@mevent.Players.Number)</b></div>
+                            break;
+                        case (int)CLT.Data.MatchEventsTypes.Completion:
+                            <div class="col-md-1"><b>Completion</b></div><div class="col-md-11">@mevent.Teams.Name: <b>@mevent.Players.Name (@mevent.Players.Number)</b></div>
+                            break;
+                        case (int)CLT.Data.MatchEventsTypes.Interception:
+                            <div class="col-md-1"><b>Interception</b></div><div class="col-md-11">@mevent.Teams.Name: <b>@mevent.Players.Name (@mevent.Players.Number)</b></div>
+                            break;
+                        case (int)CLT.Data.MatchEventsTypes.Injury:
+                            <div class="col-md-1"><b>Injury</b></div><div class="col-md-11">@mevent.Teams.Name: <b>@mevent.Players.Name (@mevent.Players.Number)</b> (@CLTWebUI.Models.Match.MatchEventModel.CasualtyResult[(int)mevent.Result])</div>
+                            break;
+                        case (int)CLT.Data.MatchEventsTypes.Casualty:
+                            <div class="col-md-1"><b>Casualty</b></div><div class="col-md-11">@mevent.Teams.Name: <b>@mevent.Players.Name (@mevent.Players.Number)</b> zranil @mevent.Players1.Teams.Name: <b>@mevent.Players1.Name (@mevent.Players1.Number)</b> (@CLTWebUI.Models.Match.MatchEventModel.CasualtyResult[(int)mevent.Result])</div>
+                            break;
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<a class="btn btn-primary" href="@Url.Action("Group","Team",new { groupid = Model.fixture.Group})">Zpět na výpis skupiny</a>

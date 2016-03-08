@@ -20,6 +20,7 @@ namespace CLT.Data
         GenericRepository<Fixtures> FixtureRepository { get; }
         GenericRepository<Matches> MatchRepository { get; }
         GenericRepository<TeamMatchData> TeamMatchDataRepository { get; }
+        GenericRepository<MatchEvents> MatchEventRepository { get; }
         GenericViewRepository<GroupTables> GroupTableRepository { get; }
         void Save();
         void Dispose(bool disposing);

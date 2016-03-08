@@ -93,3 +93,8 @@ footer {
 .well, .list-group-item {
     border-color: #5cb85c;
 }
+
+.list-group-item.first {
+    background-color: #156711;
+    color: #8DCF8A;
+}

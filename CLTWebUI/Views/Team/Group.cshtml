@@ -5,66 +5,80 @@
 
 <h2>Soutěž: @Model.group.Competitions.Name</h2>
 <h3>Skupina: @Model.group.Name</h3>
-<h4><a href="#teamlist" data-toggle="collapse" aria-expanded="false" aria-controls="teamlist">Tabulka skupiny</a></h4>
-<ul class="list-group collapse.in" id="teamlist">
-    <li class="list-group-item">
-        <div class="row">
-            <div class="col-md-1">Pořadí</div>
-            <div class="col-md-4">Jméno týmu</div>
-            <div class="col-md-4">Vlastník</div>
-            <div class="col-md-1">Zápasy</div>
-            <div class="col-md-1">Skore</div>
-            <div class="col-md-1">Body</div>
-        </div>
-    </li>
-    @{int i = 1;}
-    @foreach(var team in Model.table)
-    {
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-1">@team.Poradi</div>
-                <div class="col-md-4">@Html.ActionLink((string)team.Teamname, "Detail", "Team", new { teamid = team.Team }, null)</div>
-                <div class="col-md-4">@team.Username</div>
-                <div class="col-md-1">@team.Zapasy</div>
-                <div class="col-md-1">@team.TDfor : @team.TDagainst</div>
-                <div class="col-md-1">@team.Body</div>
-            </div>
-        </li>
-        i++;
-    }
-</ul>
-<h4><a href="#matchlist" data-toggle="collapse" aria-expanded="false" aria-controls="matchlist">Zápasy</a></h4>
-<div class="collapse" id="matchlist">
-    @if (Model.fixtures != null)
-    {
-        foreach (var fgroup in Model.fixtures)
-        {
-            <ul class="list-group">
-                <li class="list-group-item"><b>Kolo: @fgroup.Key</b></li>
-                @foreach (var fixture in fgroup)
+<div>
+    <ul class="nav nav-tabs" tole="tablist">
+        <li role="presentation" class="active"><a href="#tabulka" aria-controls="tabulka" role="tab" data-toggle="tab">Tabulka skupiny</a></li>
+        <li role="presentation"><a href="#zapasy" aria-controls="zapasy" role="tab" data-toggle="tab">Zápasy</a></li>
+    </ul>
+    <div class="tab-content">
+        <br />
+        <div role="tabpanel" class="tab-pane active" id="tabulka">
+            <ul class="list-group" id="teamlist">
+                <li class="list-group-item first">
+                    <div class="row">
+                        <div class="col-md-1">Pořadí</div>
+                        <div class="col-md-4">Jméno týmu</div>
+                        <div class="col-md-4">Vlastník</div>
+                        <div class="col-md-1">Zápasy</div>
+                        <div class="col-md-1">Skore</div>
+                        <div class="col-md-1">Body</div>
+                    </div>
+                </li>
+                @{int i = 1;}
+                @foreach (var team in Model.table)
                 {
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-2">@fixture.Teams.Name</div>
-                            <div class="col-md-1"> vs </div>
-                            <div class="col-md-2"> @fixture.Teams1.Name</div>
-                            <div class="col-md-5">
-                                @if (fixture.Matches.Count > 0)
-                                {
-                                    <span>@fixture.Matches.FirstOrDefault().TeamMatchData.Score : @fixture.Matches.FirstOrDefault().TeamMatchData1.Score - odehráno @fixture.Matches.FirstOrDefault().Date.ToShortDateString()</span>
-                                }
-                                else if (User.Identity.Name == fixture.Teams.Users.Name
-                                    || User.Identity.Name == fixture.Teams1.Users.Name
-                                    || User.IsInRole("Admin")
-                                    || User.IsInRole("SuperAdmin"))
-                                {
-                                    <a class="btn btn-primary" href="@Url.Action("Add", "Match", new { fixtureId = fixture.ID })">Přidat zápis o utkání</a>
-                                }
-                            </div>
+                            <div class="col-md-1">@team.Poradi</div>
+                            <div class="col-md-4">@Html.ActionLink((string)team.Teamname, "Detail", "Team", new { teamid = team.Team }, null)</div>
+                            <div class="col-md-4">@team.Username</div>
+                            <div class="col-md-1">@team.Zapasy</div>
+                            <div class="col-md-1">@team.TDfor : @team.TDagainst</div>
+                            <div class="col-md-1">@team.Body</div>
                         </div>
                     </li>
+                    i++;
                 }
             </ul>
-        }
-    }
-</div>    
+        </div>
+        <div role="tabpanel" class="tab-pane" id="zapasy">
+            <br />
+            <div id="matchlist">
+                @if (Model.fixtures != null)
+                {
+                    foreach (var fgroup in Model.fixtures)
+                    {
+                        <ul class="list-group">
+                            <li class="list-group-item"><b>Kolo: @fgroup.Key</b></li>
+                            @foreach (var fixture in fgroup)
+                            {
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-md-2">@fixture.Teams.Name</div>
+                                        <div class="col-md-1"> vs </div>
+                                        <div class="col-md-2"> @fixture.Teams1.Name</div>
+                                        <div class="col-md-5">
+                                            @if (fixture.Matches.Count > 0)
+                                            {
+                                                <span>@fixture.Matches.FirstOrDefault().TeamMatchData.Score : @fixture.Matches.FirstOrDefault().TeamMatchData1.Score - odehráno @fixture.Matches.FirstOrDefault().Date.ToShortDateString()</span>
+                                                <span>&nbsp;&nbsp;&nbsp;</span><a class="btn btn-primary" href="@Url.Action("Detail", "Match", new { matchid = fixture.Matches.FirstOrDefault().ID})">Detail utkání</a>
+                                            }
+                                            else if (User.Identity.Name == fixture.Teams.Users.Name
+                                                || User.Identity.Name == fixture.Teams1.Users.Name
+                                                || User.IsInRole("Admin")
+                                                || User.IsInRole("SuperAdmin"))
+                                            {
+                                                <a class="btn btn-primary" href="@Url.Action("Add", "Match", new { fixtureId = fixture.ID })">Přidat zápis o utkání</a>
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

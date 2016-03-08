@@ -7,7 +7,7 @@
     <h5>
         Událost č.@Model.eventNo - Interception (@if (Model.events[0].sourcePlayerTeam == Model.fixture.Team1)
         {<span>@Model.fixture.Teams.Name</span>}
-        else {<span>@Model.fixture.Teams1.Name</span>})<a href="#" onclick="cancelEvent(@Model.eventNo)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
+        else {<span>@Model.fixture.Teams1.Name</span>}) <a href="#" onclick="cancelEvent(@Model.eventNo)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
     </h5>
     <div class="form-group">
         <label for="spselect_events_@Model.eventNo">Kdo zachytil přihrávku</label>

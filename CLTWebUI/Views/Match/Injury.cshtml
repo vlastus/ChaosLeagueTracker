@@ -7,18 +7,30 @@
     <h5>
         Událost č.@Model.eventNo - Zranění (@if (Model.events[0].sourcePlayerTeam == Model.fixture.Team1)
         {<span>@Model.fixture.Teams.Name</span>}
-        else {<span>@Model.fixture.Teams1.Name</span>})<a href="#" onclick="cancelEvent(@Model.eventNo)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
+        else {<span>@Model.fixture.Teams1.Name</span>}) <a href="#" onclick="cancelEvent(@Model.eventNo)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
     </h5>
     <div class="form-group">
-        <label for="spselect_events_@Model.eventNo">Kdo se zranil</label>
-        <select id="spselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].sourcePlayer">
-            @foreach (var player in Model.players)
+        <div class="col-md-4">
+
+            <label for="spselect_events_@Model.eventNo">Kdo se zranil</label>
+            <select id="spselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].sourcePlayer">
+                @foreach (var player in Model.players)
             {
-                <option value="@player.ID">@player.Number - @player.Name</option>
-            }
-        </select>
-        <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
-        <input type="hidden" name="events[@Model.eventNo].type" value="@Model.events[0].type" />
-        <input type="hidden" name="events[@Model.eventNo].sourcePlayerTeam" value="@Model.events[0].sourcePlayerTeam" />
+                    <option value="@player.ID">@player.Number - @player.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="resselect_events_@Model.eventNo">Hod na zranění</label>
+            <select id="resselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].result">
+                @foreach (var result in Model.CasualtyResult)
+            {
+                    <option value="@result.Key">@result.Value</option>
+                }
+            </select>
+            <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
+            <input type="hidden" name="events[@Model.eventNo].type" value="@Model.events[0].type" />
+            <input type="hidden" name="events[@Model.eventNo].sourcePlayerTeam" value="@Model.events[0].sourcePlayerTeam" />
+        </div>
     </div>
 </div>

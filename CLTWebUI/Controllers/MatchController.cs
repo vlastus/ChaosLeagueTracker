@@ -17,6 +17,18 @@ namespace CLTWebUI.Controllers
             unitOfWork = uow;
         }
 
+        public ActionResult Detail(int? matchid)
+        {
+            var match = unitOfWork.MatchRepository.GetByID(matchid);
+            var fixture = unitOfWork.FixtureRepository.GetByID(match.Fixture);
+            var model = new MatchViewModel()
+            {
+                match = match,
+                fixture = fixture
+            };
+            return View(model);
+        }
+
         [HttpGet]
         [Authorize]
         public ActionResult Add(int? fixtureId)
@@ -62,33 +74,55 @@ namespace CLTWebUI.Controllers
         public ActionResult Add(MatchViewModel model)
         {
             var fixture = unitOfWork.FixtureRepository.GetByID(model.fixtureid);
+            Players player1 = null;
+            Players player2 = null;
+
             if (ModelState.IsValid)
             {
+                Teams team1 = unitOfWork.TeamRepository.GetByID(fixture.Team1);
+                Teams team2 = unitOfWork.TeamRepository.GetByID(fixture.Team2);
+
+                //odstraneni MNG flagu
+                RemovePlayerInjuries(team1);
+                RemovePlayerInjuries(team2);
+
+                // nove detaily zapasu
                 var teamData1 = new TeamMatchData()
                 {
-                    Team = model.fixture.Team1,
+                    Team = fixture.Team1,
                     Fame = model.fame1,
                     Gate = model.gate1,
                     Winnings = model.winning1,
                     FanFactorMod = model.fanfactor1,
                     MVP = model.mvp1,
-                    Score = model.score1
+                    Score = model.score1,
+                    SpirallingExpense = CalculateRollingExpenses(fixture.Teams)
                     //teaminducements
-                    //spirallingexpense
                 };
                 var teamData2 = new TeamMatchData()
                 {
-                    Team = model.fixture.Team2,
+                    Team = fixture.Team2,
                     Fame = model.fame2,
                     Gate = model.gate2,
                     Winnings = model.winning2,
                     FanFactorMod = model.fanfactor2,
                     MVP = model.mvp2,
-                    Score = model.score2
+                    Score = model.score2,
+                    SpirallingExpense = CalculateRollingExpenses(fixture.Teams1)
                     //teaminducements
-                    //spirallingexpense
                 };
 
+                // pricteni penez, update ff, rolling expense
+                team1.Treasury += model.winning1;
+                team2.Treasury += model.winning2;
+                if (CalculateRollingExpenses(team1)>0)
+                    team1.Treasury = (team1.Treasury- CalculateRollingExpenses(team1) >0) ? team1.Treasury -= CalculateRollingExpenses(team1) : 0;
+                if (CalculateRollingExpenses(team2) > 0)
+                    team2.Treasury = (team2.Treasury - CalculateRollingExpenses(team2) > 0) ? team2.Treasury -= CalculateRollingExpenses(team2) : 0;
+                team1.Fanfactor += model.fanfactor1;
+                team2.Fanfactor += model.fanfactor2;
+
+                // vlozeni zapasu
                 var match = new Matches()
                 {
                     TeamMatchData = teamData1,
@@ -99,32 +133,143 @@ namespace CLTWebUI.Controllers
                     Round = fixture.Round
                 };
 
+                // pridani MVP 
                 if (model.mvp1 > 0)
                 {
-                    var mvp1 = unitOfWork.PlayerRepository.GetByID(model.mvp1);
-                    mvp1.SPP += 5;
-                    mvp1.MVP++;
-                    unitOfWork.PlayerRepository.Update(mvp1);
+                    player1 = unitOfWork.PlayerRepository.GetByID(model.mvp1);
+                    player1.SPP += 5;
+                    player1.MVP++;
+                    unitOfWork.PlayerRepository.Update(player1);
                 }
                 if (model.mvp2 > 0)
                 {
-                    var mvp2 = unitOfWork.PlayerRepository.GetByID(model.mvp2);
-                    mvp2.SPP += 5;
-                    mvp2.MVP++;
-                    unitOfWork.PlayerRepository.Update(mvp2);
+                    player2 = unitOfWork.PlayerRepository.GetByID(model.mvp2);
+                    player2.SPP += 5;
+                    player2.MVP++;
+                    unitOfWork.PlayerRepository.Update(player2);
                 }
 
                 unitOfWork.TeamMatchDataRepository.Insert(teamData1);
                 unitOfWork.TeamMatchDataRepository.Insert(teamData2);
+                unitOfWork.TeamRepository.Update(team1);
+                unitOfWork.TeamRepository.Update(team2);
                 unitOfWork.MatchRepository.Insert(match);
 
                 unitOfWork.Save();
 
-                foreach(var mevent in model.events)
+                // vyreseni match eventu
+                foreach (var mevent in model.events)
                 {
-                    //TODO
+                    if (mevent.canceled)
+                        continue;
+
+                    player1 = unitOfWork.PlayerRepository.GetByID(mevent.sourcePlayer);
+                    MatchEvents newEvent = new MatchEvents()
+                    {
+                        Team = mevent.sourcePlayerTeam,
+                        SourcePlayer = mevent.sourcePlayer,
+                        Match = match.ID,
+                        EventType = (int)mevent.type
+                    };
+                    switch (mevent.type)
+                    {
+                        case MatchEventsTypes.Touchdown:
+                            player1.SPP += 3;
+                            player1.TD++;
+                            break;
+                        case MatchEventsTypes.Completion:
+                            player1.SPP++;
+                            player1.COMP++;
+                            break;
+                        case MatchEventsTypes.Interception:
+                            player1.SPP += 2;
+                            player1.INT++;
+                            break;
+                        case MatchEventsTypes.Injury:
+                            switch(mevent.result)
+                            {
+                                case 1:
+                                    break;
+                                case 2:
+                                    player1.MNG = 1;
+                                    break;
+                                case 3:
+                                    player1.NI = 1;
+                                    player1.MNG = 1;
+                                    break;
+                                case 4:
+                                    player1.MA--;
+                                    player1.MNG = 1;
+                                    break;
+                                case 5:
+                                    player1.AV--;
+                                    player1.MNG = 1;
+                                    break;
+                                case 6:
+                                    player1.AG--;
+                                    player1.MNG = 1;
+                                    break;
+                                case 7:
+                                    player1.ST--;
+                                    player1.MNG = 1;
+                                    break;
+                                case 8:
+                                    player1.Status = Status.Inactive;
+                                    var tteam1 = unitOfWork.TeamRepository.GetByID(player1.Team);
+                                    tteam1.Value -= player1.Value;
+                                    unitOfWork.TeamRepository.Update(tteam1);
+                                    break;
+                            }
+                            break;
+                        case MatchEventsTypes.Casualty:
+                            player1.SPP += 2;
+                            player1.CAS++;
+                            player2 = unitOfWork.PlayerRepository.GetByID(mevent.targetPlayer);
+                            newEvent.TargetPlayer = mevent.targetPlayer;
+                            newEvent.Result = mevent.result;
+                            switch (mevent.result)
+                            {
+                                case 1:
+                                    break;
+                                case 2:
+                                    player2.MNG = 1;
+                                    break;
+                                case 3:
+                                    player2.NI = 1;
+                                    player2.MNG = 1;
+                                    break;
+                                case 4:
+                                    player2.MA--;
+                                    player2.MNG = 1;
+                                    break;
+                                case 5:
+                                    player2.AV--;
+                                    player2.MNG = 1;
+                                    break;
+                                case 6:
+                                    player2.AG--;
+                                    player2.MNG = 1;
+                                    break;
+                                case 7:
+                                    player2.ST--;
+                                    player2.MNG = 1;
+                                    break;
+                                case 8:
+                                    player1.Kills++;
+                                    player2.Status = Status.Inactive;
+                                    var tteam2 = unitOfWork.TeamRepository.GetByID(player2.Team);
+                                    tteam2.Value -= player2.Value;
+                                    unitOfWork.TeamRepository.Update(tteam2);
+                                    break;
+                            }
+                            break;
+                    }
+                    unitOfWork.MatchEventRepository.Insert(newEvent);
+                    unitOfWork.PlayerRepository.Update(player1);
+                    unitOfWork.Save();
                 }
 
+                AddApplicationMessage("Zápas byl uložen", Models.MessageSeverity.Success);
                 return RedirectToAction("Group", "Team", new { groupid = fixture.Group });
             }
             if (fixture == null)
@@ -208,6 +353,22 @@ namespace CLTWebUI.Controllers
             model.events.Add(mevent);
 
             return View(template,model);
+        }
+
+        public int CalculateRollingExpenses(Teams team)
+        {
+            return (team.Value - 1750000 < 0) ? 0 : ((int)team.Value - 1750000) / 150000 * 10000;
+        }
+
+        public void RemovePlayerInjuries(Teams team)
+        {
+            var players = unitOfWork.PlayerRepository.Get(filter: p => p.Team == team.ID && p.MNG == 1);
+            foreach(var player in players)
+            {
+                player.MNG = 0;
+                unitOfWork.PlayerRepository.Update(player);
+            }
+            unitOfWork.Save();
         }
     }
 }

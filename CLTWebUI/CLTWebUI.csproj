@@ -289,6 +289,7 @@
     <Content Include="Views\Match\Interception.cshtml" />
     <Content Include="Views\Match\Completion.cshtml" />
     <Content Include="Views\Match\Injury.cshtml" />
+    <Content Include="Views\Match\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
