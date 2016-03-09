@@ -93,6 +93,9 @@
     <Compile Include="Data\GroupTables.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Inducements.cs">
+      <DependentUpon>CLTDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Log.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>

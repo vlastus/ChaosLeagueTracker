@@ -41,6 +41,8 @@ namespace CLTWebUI.Controllers
             }
             var players1 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team1).ToList();
             var players2 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team2).ToList();
+            var inducements = from Inducements r in Enum.GetValues(typeof(Inducements)) select new { ID = (int)r, Name = r.ToString() };
+
             var i = 0;
             var noplayer = new Players()
             {
@@ -64,7 +66,8 @@ namespace CLTWebUI.Controllers
             {
                 fixture = fixture,
                 players1 = new SelectList(players1.OrderBy(m => m.ID),"ID","Name"),
-                players2 = new SelectList(players2.OrderBy(m => m.ID), "ID", "Name")
+                players2 = new SelectList(players2.OrderBy(m => m.ID), "ID", "Name"),
+                inducements = new SelectList(inducements, "ID", "Name")
             };
             return View(model);
         }

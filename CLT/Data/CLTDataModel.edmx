@@ -1331,6 +1331,15 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="Inducements">
+          <Member Name="BloodweiserBabes" Value="1" />
+          <Member Name="Bribe" Value="2" />
+          <Member Name="ExtraReroll" Value="3" />
+          <Member Name="HalflingMasterChef" Value="4" />
+          <Member Name="Igor" Value="5" />
+          <Member Name="WanderingApothecary" Value="6" />
+          <Member Name="Wizard" Value="7" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
