@@ -19,6 +19,8 @@ namespace CLT.Data
         HalflingMasterChef = 4,
         Igor = 5,
         WanderingApothecary = 6,
-        Wizard = 7
+        Wizard = 7,
+        StarPlayer = 8,
+        Mercenary = 9
     }
 }

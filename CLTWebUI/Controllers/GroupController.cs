@@ -47,7 +47,11 @@ namespace CLTWebUI.Controllers
             {
                 var team = unitOfWork.TeamRepository.GetByID(teamid);
                 var group = unitOfWork.GroupRepository.GetByID(groupid);
-                if (team == null || group == null)
+                if (team.Race == Races.Special)
+                {
+                    AddApplicationMessage("Tento tým nelze přiřazovat", MessageSeverity.Danger);
+                }
+                else if (team == null || group == null)
                 {
                     AddApplicationMessage("Tým nebo skupinu se nepodařilo nalézt", MessageSeverity.Danger);
                 }

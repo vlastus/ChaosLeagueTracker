@@ -36,6 +36,7 @@ namespace CLT.Data
         WoodElf = 21,
         ChaosPact = 22,
         Slann = 23,
-        Underworld = 24
+        Underworld = 24,
+        Special = 999
     }
 }

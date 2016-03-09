@@ -41,6 +41,7 @@ namespace CLTWebUI.Controllers
             }
             var players1 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team1).ToList();
             var players2 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team2).ToList();
+            var starplayers = unitOfWork.PlayerRepository.Get(filter: p => p.PlayerTypes.Race == Races.Special).ToList();
             var inducements = from Inducements r in Enum.GetValues(typeof(Inducements)) select new { ID = (int)r, Name = r.ToString() };
 
             var i = 0;
@@ -67,7 +68,8 @@ namespace CLTWebUI.Controllers
                 fixture = fixture,
                 players1 = new SelectList(players1.OrderBy(m => m.ID),"ID","Name"),
                 players2 = new SelectList(players2.OrderBy(m => m.ID), "ID", "Name"),
-                inducements = new SelectList(inducements, "ID", "Name")
+                inducements = new SelectList(inducements, "ID", "Name"),
+                starplayers = new SelectList(starplayers, "ID", "Name")
             };
             return View(model);
         }
@@ -150,6 +152,44 @@ namespace CLTWebUI.Controllers
                     player2.SPP += 5;
                     player2.MVP++;
                     unitOfWork.PlayerRepository.Update(player2);
+                }
+
+                //Inducementy
+                foreach(var ind in model.selectedInducements1)
+                {
+                    var inducement = new TeamInducements()
+                    {
+                        Type = ind,
+                        Value = 0
+                    };
+                    teamData1.TeamInducements.Add(inducement);
+                }
+                foreach (var ind in model.selectedStarplayers1)
+                {
+                    var inducement = new TeamInducements()
+                    {
+                        Type = 8,
+                        Value = ind
+                    };
+                    teamData1.TeamInducements.Add(inducement);
+                }
+                foreach (var ind in model.selectedInducements2)
+                {
+                    var inducement = new TeamInducements()
+                    {
+                        Type = ind,
+                        Value = 0
+                    };
+                    teamData2.TeamInducements.Add(inducement);
+                }
+                foreach (var ind in model.selectedInducements2)
+                {
+                    var inducement = new TeamInducements()
+                    {
+                        Type = 8,
+                        Value = ind
+                    };
+                    teamData2.TeamInducements.Add(inducement);
                 }
 
                 unitOfWork.TeamMatchDataRepository.Insert(teamData1);

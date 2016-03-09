@@ -1161,6 +1161,7 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <Member Name="ChaosPact" Value="22" />
           <Member Name="Slann" Value="23" />
           <Member Name="Underworld" Value="24" />
+          <Member Name="Special" Value="999" />
         </EnumType>
         <EnumType Name="SkillGroups">
           <Member Name="General" Value="1" />
@@ -1339,6 +1340,8 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <Member Name="Igor" Value="5" />
           <Member Name="WanderingApothecary" Value="6" />
           <Member Name="Wizard" Value="7" />
+          <Member Name="StarPlayer" Value="8" />
+          <Member Name="Mercenary" Value="9" />
         </EnumType>
       </Schema>
     </edmx:ConceptualModels>
