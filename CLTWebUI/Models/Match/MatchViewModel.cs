@@ -35,8 +35,8 @@ namespace CLTWebUI.Models.Match
         public IEnumerable<SelectListItem> players1 { get; set; }
         public IEnumerable<SelectListItem> players2 { get; set; }
         public IEnumerable<SelectListItem> inducements { get; set; }
-        public int[] selectedInducements1 { get; set; }
-        public int[] selectedInducements2 { get; set; }
+        public Inducements[] selectedInducements1 { get; set; }
+        public Inducements[] selectedInducements2 { get; set; }
         public IEnumerable<SelectListItem> starplayers { get; set; }
         public int[] selectedStarplayers1 { get; set; }
         public int[] selectedStarplayers2 { get; set; }

@@ -40,6 +40,24 @@
             <div class="col-md-4">@Model.match.TeamMatchData.Players.Name (@Model.match.TeamMatchData.Players.Number)</div>
             <div class="col-md-4">@Model.match.TeamMatchData1.Players.Name (@Model.match.TeamMatchData1.Players.Number)</div>
         </div>
+        <div class="row">
+            <div class="col-md-2"><b>Inducements</b></div>
+            <div class="col-md-4">
+                @foreach(var inducement in Model.match.TeamMatchData.TeamInducements)
+                {
+                    if ((int)inducement.Type < 8)
+                    {
+                        <span>@inducement.Type.ToString() &nbsp;</span>
+                    }
+                }
+            </div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.Players.Name (@Model.match.TeamMatchData1.Players.Number)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><b>Star players</b></div>
+            <div class="col-md-4">@Model.match.TeamMatchData.Players.Name (@Model.match.TeamMatchData.Players.Number)</div>
+            <div class="col-md-4">@Model.match.TeamMatchData1.Players.Name (@Model.match.TeamMatchData1.Players.Number)</div>
+        </div>
         <div id="events" class="">
             <h5><b>Události</b></h5>
             @foreach(var mevent in Model.match.MatchEvents)

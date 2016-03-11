@@ -16,7 +16,7 @@ namespace CLT.Data
     {
         public int ID { get; set; }
         public int TeamMatchData { get; set; }
-        public int Type { get; set; }
+        public Inducements Type { get; set; }
         public Nullable<int> Value { get; set; }
     
         public virtual TeamMatchData TeamMatchData1 { get; set; }

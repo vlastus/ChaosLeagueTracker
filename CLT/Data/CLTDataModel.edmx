@@ -744,7 +744,7 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeamMatchData" Type="Int32" Nullable="false" />
-          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="CLTDataModel.Inducements" Nullable="false" />
           <Property Name="Value" Type="Int32" />
           <NavigationProperty Name="TeamMatchData1" Relationship="Self.FK_TeamInducements_TeamMatchData" FromRole="TeamInducements" ToRole="TeamMatchData" />
         </EntityType>

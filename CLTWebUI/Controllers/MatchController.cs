@@ -168,7 +168,7 @@ namespace CLTWebUI.Controllers
                 {
                     var inducement = new TeamInducements()
                     {
-                        Type = 8,
+                        Type = Inducements.StarPlayer,
                         Value = ind
                     };
                     teamData1.TeamInducements.Add(inducement);
@@ -182,11 +182,11 @@ namespace CLTWebUI.Controllers
                     };
                     teamData2.TeamInducements.Add(inducement);
                 }
-                foreach (var ind in model.selectedInducements2)
+                foreach (var ind in model.selectedStarplayers2)
                 {
                     var inducement = new TeamInducements()
                     {
-                        Type = 8,
+                        Type = Inducements.StarPlayer,
                         Value = ind
                     };
                     teamData2.TeamInducements.Add(inducement);
