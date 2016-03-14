@@ -30,5 +30,12 @@ namespace CLT.Data
                 .Where(p => p.MNG == 0)
                 .ToList();
         }
+
+        public IEnumerable<Players> GetSpecialsForEvent()
+        {
+            return this.context.Players
+                .Where(p => p.Teams.Race == Races.Special)
+                .Where(p => p.Number == 888 || p.Number == 999).ToList();
+        }
     }
 }

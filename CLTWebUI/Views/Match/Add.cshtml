@@ -57,7 +57,56 @@
                     <div class="col-md-4">@Html.ListBoxFor(m => m.selectedStarplayers2, Model.starplayers, new { @Class = "form-control" })</div>
                 </div>
                 <div id="events">
+                    @ViewBag.evcnt = 0;
+                    @foreach (var evnt in Model.events)
+                    {
+                        if (evnt.type == CLT.Data.MatchEventsTypes.Casualty)
+                        {
 
+                            <div id="event_@ViewBag.evcnt">
+                                <h5>
+                                    Událost č.@ViewBag.evcnt - Casualty (@if (Model.events[0].sourcePlayerTeam == Model.fixture.Team1)
+                                    {<span>@Model.fixture.Teams.Name</span>}
+                                    else {<span>@Model.fixture.Teams1.Name</span>}) <a href="#" onclick="cancelEvent(@ViewBag.evcnt)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
+                                </h5>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label for="spselect_events_@ViewBag.evcnt">Kdo blokoval</label>
+                                            <select id="spselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].sourcePlayer">
+                                                @foreach (var player in Model.players1)
+                                                {
+                                                    <option value="@player.ID">@player.Number - @player.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="tpselect_events_@Model.eventNo">Kdo byl zraněn</label>
+                                            <select id="tpselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].targetPlayer">
+                                                @foreach (var player in Model.players2)
+                                                {
+                                                    <option value="@player.ID">@player.Number - @player.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="resselect_events_@Model.eventNo">Hod na zranění</label>
+                                            <select id="resselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].result">
+                                                @foreach (var result in CLTWebUI.Models.Match.MatchEventModel.CasualtyResult)
+                                                {
+                                                    <option value="@result.Key">@result.Value</option>
+                                                }
+                                            </select>
+                                            <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
+                                            <input type="hidden" name="events[@Model.eventNo].type" value="@Model.events[0].type" />
+                                            <input type="hidden" name="events[@Model.eventNo].sourcePlayerTeam" value="@Model.events[0].sourcePlayerTeam" />
+                                            <input type="hidden" name="events[@Model.eventNo].targetPlayerTeam" value="@Model.events[0].targetPlayerTeam" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
                 @Html.HiddenFor(m => m.fixtureid, new { @Value = Model.fixture.ID})
             </div>
@@ -103,22 +152,22 @@
     </div>
 </div>
 <script type="text/javascript">
-    var $eventNo = 0;
+    var $eventNo = @ViewBag.evcnt;
     $('[data-toggle="eventajax"]').click(function (e) {
-        var $this = $(this),
+            var $this = $(this),
             loadurl = $this.attr('href') + "&order=" + $eventNo,
             targ = $this.attr('data-target');
         $.get(loadurl, function (data) {
             $(targ).html($(targ).html() + data);
-        });
+            });
         $eventNo++;
-        //$this.tab('show');
-        return false;
-    });
-    function cancelEvent(eventNo) {
-        var event = $("#event_" + eventNo);
-        var evCancel = $("#cancel_event_" + eventNo);
+            //$this.tab('show');
+            return false;
+        });
+        function cancelEvent(eventNo) {
+            var event = $("#event_" + eventNo);
+    var evCancel = $("#cancel_event_" + eventNo);
         event.hide();
-        evCancel.val(true);
+    evCancel.val(true);
     }
 </script>

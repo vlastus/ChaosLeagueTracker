@@ -42,6 +42,7 @@ namespace CLTWebUI.Controllers
             var players1 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team1).ToList();
             var players2 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team2).ToList();
             var starplayers = unitOfWork.PlayerRepository.Get(filter: p => p.PlayerTypes.Race == Races.Special).ToList();
+            starplayers.Concat(unitOfWork.PlayerRepository.GetSpecialsForEvent());
             var inducements = from Inducements r in Enum.GetValues(typeof(Inducements)) select new { ID = (int)r, Name = r.ToString() };
 
             var i = 0;
@@ -320,6 +321,7 @@ namespace CLTWebUI.Controllers
                 AddApplicationMessage("Neznámý zápas.", Models.MessageSeverity.Danger);
                 return RedirectToAction("Index", "Competitions");
             }
+            AddApplicationMessage("Formulář obsahuje chyby, zkontrolujte prosím obsah",Models.MessageSeverity.Danger);
             var players1 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team1).ToList();
             var players2 = unitOfWork.PlayerRepository.GetPlayersForEvent(fixture.Team2).ToList();
             var i = 0;
@@ -344,6 +346,11 @@ namespace CLTWebUI.Controllers
             model.fixture = fixture;
             model.players1 = new SelectList(players1.OrderBy(m => m.ID), "ID", "Name");
             model.players2 = new SelectList(players2.OrderBy(m => m.ID), "ID", "Name");
+            var starplayers = unitOfWork.PlayerRepository.Get(filter: p => p.PlayerTypes.Race == Races.Special).ToList();
+            starplayers.Concat(unitOfWork.PlayerRepository.GetSpecialsForEvent());
+            var inducements = from Inducements r in Enum.GetValues(typeof(Inducements)) select new { ID = (int)r, Name = r.ToString() };
+            model.inducements = new SelectList(inducements, "ID", "Name");
+            model.starplayers = new SelectList(starplayers, "ID", "Name");
 
             return View(model);
         }
@@ -352,7 +359,8 @@ namespace CLTWebUI.Controllers
         public ActionResult AddMatchEventForm(MatchEventsTypes etype, int? teamid, int? fixtureid, int? order)
         {
             var fixture = unitOfWork.FixtureRepository.GetByID(fixtureid);
-            var players = unitOfWork.PlayerRepository.GetPlayersForEvent((int)teamid);
+            var players = unitOfWork.PlayerRepository.GetPlayersForEvent((int)teamid).ToList();
+            players.AddRange(unitOfWork.PlayerRepository.GetSpecialsForEvent());
             var model = new MatchEventModel()
             {
                 players = players.ToList(),
@@ -377,7 +385,8 @@ namespace CLTWebUI.Controllers
                     break;
                 case MatchEventsTypes.Casualty:
                     template = "Casualty";
-                    var players2 = unitOfWork.PlayerRepository.GetPlayersForEvent((int)targetteam);
+                    var players2 = unitOfWork.PlayerRepository.GetPlayersForEvent((int)targetteam).ToList();
+                    players2.AddRange(unitOfWork.PlayerRepository.GetSpecialsForEvent());
                     model.players2 = players2.ToList();
                     mevent.targetPlayerTeam = (int)targetteam;
                     break;
