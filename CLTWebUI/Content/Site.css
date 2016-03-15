@@ -34,6 +34,10 @@ textarea {
     margin-right: 30px;
 }
 
+.marginRight15{
+    margin-right: 15px;
+}
+
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a{
     color: #8DCF8A;
 }
@@ -97,4 +101,7 @@ footer {
 .list-group-item.first {
     background-color: #156711;
     color: #8DCF8A;
+}
+.float-left {
+    float: left;
 }

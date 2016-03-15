@@ -200,58 +200,73 @@
     </script>
 
 
-    <div class="col-md-12">
-        @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
-        {
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
-        }
-        <a href="@Url.Action("DetailForPrint","Team", new { teamid = Model.Team.ID})" class="btn btn-primary btn-lg" target="_blank">Vytisknout</a>
-        <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content lightest-green">
-                    <form action="@Url.Action("Add","Player")" method="post">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="addPlayerModalLabel">Přidání hráče</h4>
-                        </div>
-                        <div class="modal-body">
-                            @if (Model.AddNewPlayerErrors != null)
-                            {
-                                <div class="">
-                                    @foreach (var error in Model.AddNewPlayerErrors)
-                                    {
-                                        <div class="alert alert-danger alert-dismissible shorteralert" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            @error
-                                        </div>
-                                    }
-                                </div>
-                            }
-                            <div class="form-group">
-                                <label>Rasa</label>
+    <div class="row">
+        <div class="col-md-12">
+            @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin") || Model.Team.Users.Name == User.Identity.Name)
+            {
+                <div class="float-left marginRight15">
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
+                </div>
+            }
+            <div class="float-left marginRight15">
+                <a href="@Url.Action("DetailForPrint","Team", new { teamid = Model.Team.ID})" class="btn btn-primary btn-lg" target="_blank">Vytisknout</a>
+            </div>
+            <div class="dropdown float-left marginRight15">
+                <a id="buyaddon" class="btn btn-primary btn-lg" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Koupit
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="buyaddon">
+                    <li><a href="@Url.Action("Buy", "Team", new { teamid = Model.TeamId, what = "reroll" })">Reroll</a></li>
+                </ul>
+            </div>
+
+            <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content lightest-green">
+                        <form action="@Url.Action("Add","Player")" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="addPlayerModalLabel">Přidání hráče</h4>
+                            </div>
+                            <div class="modal-body">
+                                @if (Model.AddNewPlayerErrors != null)
+                                {
+                                    <div class="">
+                                        @foreach (var error in Model.AddNewPlayerErrors)
+                                        {
+                                            <div class="alert alert-danger alert-dismissible shorteralert" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                @error
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label>Rasa</label>
                                     <span class="form-control">@Model.Team.Race</span>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.SelectedPlayerTypeId)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.SelectedPlayerTypeId)
                                     @Html.DropDownListFor(m => m.SelectedPlayerTypeId, Model.playertypes, new { @Class = "form-control" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.PlayerNumber)
-                                @Html.TextBoxFor(m => m.PlayerNumber, new { @Class = "form-control" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.NewPlayerName)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.PlayerNumber)
+                                    @Html.TextBoxFor(m => m.PlayerNumber, new { @Class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.NewPlayerName)
                                     @Html.TextBoxFor(m => m.NewPlayerName, new { @Class = "form-control" })
 
-                                @Html.HiddenFor(m => m.TeamId)
+                                    @Html.HiddenFor(m => m.TeamId)
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
-                            <button type="submit" class="btn btn-primary">Uložit</button>
-                        </div>
-                    </form>
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+                                <button type="submit" class="btn btn-primary">Uložit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

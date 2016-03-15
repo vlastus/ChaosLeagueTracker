@@ -15,6 +15,34 @@ namespace CLTWebUI.Controllers
     {
         IUnitOfWork unitOfWork;
 
+        public static Dictionary<Races, int> RerollPrices = new Dictionary<Races, int>
+        {
+            {Races.Amazon, 50000},
+            {Races.Chaos, 60000},
+            {Races.ChaosDwarf, 70000},
+            {Races.DarkElf, 50000},
+            {Races.Dwarf, 50000},
+            {Races.Elf, 50000},
+            {Races.Goblin, 60000},
+            {Races.Halfling, 60000},
+            {Races.HighElf, 50000},
+            {Races.Human, 50000},
+            {Races.Khemri, 70000},
+            {Races.Lizardman, 60000},
+            {Races.Necromantic, 70000},
+            {Races.Norse, 60000},
+            {Races.Nurgle, 70000},
+            {Races.Ogre, 70000},
+            {Races.Orc, 60000},
+            {Races.Skaven, 60000},
+            {Races.Undead, 70000},
+            {Races.Vampire, 70000},
+            {Races.WoodElf, 50000},
+            {Races.ChaosPact, 70000},
+            {Races.Slann, 50000},
+            {Races.Underworld, 70000}
+        };
+
         public TeamController(IUnitOfWork uow)
         {
             unitOfWork = uow;
@@ -212,6 +240,41 @@ namespace CLTWebUI.Controllers
             AddApplicationMessage("Tým byl uložen", MessageSeverity.Success);
 
             return RedirectToAction("Index", "Team");
+        }
+
+        [Authorize]
+        public ActionResult Buy(int? teamid, string what)
+        {
+            var team = unitOfWork.TeamRepository.GetByID(teamid);
+            if (team == null)
+                AddApplicationMessage("Neznámé ID týmu", MessageSeverity.Danger);
+            else
+            {
+                switch(what)
+                {
+                    case "reroll":
+                        if (team.Treasury < RerollPrices[team.Race])
+                        {
+                            AddApplicationMessage("Na reroll nemá tým dost peněz", MessageSeverity.Danger);
+                        }
+                        else if (team.Rerolls > 7)
+                        {
+                            AddApplicationMessage("Více rerollů už není možno koupit", MessageSeverity.Danger);
+                        }
+                        else
+                        {
+                            team.Rerolls++;
+                            team.Treasury -= RerollPrices[team.Race];
+                            team.Value += RerollPrices[team.Race];
+                            unitOfWork.TeamRepository.Update(team);
+                            unitOfWork.Save();
+                            AddApplicationMessage("Nákup rerollu byl úspěšný", MessageSeverity.Success);
+                            return RedirectToAction("Detail", "Team", new { teamid = team.ID });
+                        }
+                        break;
+                }
+            }
+            return RedirectToAction("Index","Competitions");
         }
     }
 }

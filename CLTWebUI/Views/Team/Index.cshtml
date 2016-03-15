@@ -20,33 +20,36 @@
         @{ int i = 1;}
         @foreach (var team in Model.teams)
         {
-            <tr>
-                <td>@i</td>
-                <td>
-                    <div class="dropdown">
-                        <a id="dlabel_@team.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            @team.Name
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dlabel_@team.ID">
-                            <li>@Html.ActionLink("Detail", "Detail", "Team", new { teamid = team.ID }, null)</li>
-                            <li>@Html.ActionLink("Editace", "Edit", "Team", new { teamid = team.ID }, null)</li>
-                            <li><a href="@Url.Action("Delete","Team", new { teamid = team.ID })">Deaktivovat tým</a></li>
-                        </ul>
-                    </div>
-                </td>
-                <td>@team.Users.Name</td>
-                <td>
-                    @foreach(var ct in team.CompTeams)
-                    {
-                        if(ct.Groups.Competitions.Status == CLT.Data.Status.Active)
+            if (team.Race != CLT.Data.Races.Special)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        <div class="dropdown">
+                            <a id="dlabel_@team.ID" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                @team.Name
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dlabel_@team.ID">
+                                <li>@Html.ActionLink("Detail", "Detail", "Team", new { teamid = team.ID }, null)</li>
+                                <li>@Html.ActionLink("Editace", "Edit", "Team", new { teamid = team.ID }, null)</li>
+                                <li><a href="@Url.Action("Delete","Team", new { teamid = team.ID })">Deaktivovat tým</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>@team.Users.Name</td>
+                    <td>
+                        @foreach (var ct in team.CompTeams)
                         {
-                            <span>@ct.Groups.Competitions.Name</span>
+                            if (ct.Groups.Competitions.Status == CLT.Data.Status.Active)
+                            {
+                                <span>@ct.Groups.Competitions.Name</span>
+                            }
                         }
-                    }
-                </td>
-            </tr>
-            i++;
+                    </td>
+                </tr>
+                i++;
+            }
         }
     </tbody>
 </table>

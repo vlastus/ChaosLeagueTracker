@@ -21,10 +21,12 @@ namespace CLTWebUI.Controllers
         {
             var match = unitOfWork.MatchRepository.GetByID(matchid);
             var fixture = unitOfWork.FixtureRepository.GetByID(match.Fixture);
+            var starplayers = unitOfWork.PlayerRepository.Get(filter: p => p.Teams.Race == Races.Special);
             var model = new MatchViewModel()
             {
                 match = match,
-                fixture = fixture
+                fixture = fixture,
+                starplayers = new SelectList(starplayers, "ID", "Name")
             };
             return View(model);
         }
@@ -100,11 +102,15 @@ namespace CLTWebUI.Controllers
                     Gate = model.gate1,
                     Winnings = model.winning1,
                     FanFactorMod = model.fanfactor1,
-                    MVP = model.mvp1,
                     Score = model.score1,
                     SpirallingExpense = CalculateRollingExpenses(fixture.Teams)
                     //teaminducements
                 };
+                if (model.mvp1 != 0)
+                {
+                    teamData1.MVP = model.mvp1;
+                }
+
                 var teamData2 = new TeamMatchData()
                 {
                     Team = fixture.Team2,
@@ -112,11 +118,14 @@ namespace CLTWebUI.Controllers
                     Gate = model.gate2,
                     Winnings = model.winning2,
                     FanFactorMod = model.fanfactor2,
-                    MVP = model.mvp2,
                     Score = model.score2,
                     SpirallingExpense = CalculateRollingExpenses(fixture.Teams1)
                     //teaminducements
                 };
+                if (model.mvp2 != 0)
+                {
+                    teamData2.MVP = model.mvp2;
+                }
 
                 // pricteni penez, update ff, rolling expense
                 team1.Treasury += model.winning1;
@@ -156,7 +165,7 @@ namespace CLTWebUI.Controllers
                 }
 
                 //Inducementy
-                foreach(var ind in model.selectedInducements1)
+                if (model.selectedInducements1 != null) foreach(var ind in model.selectedInducements1)
                 {
                     var inducement = new TeamInducements()
                     {
@@ -165,7 +174,7 @@ namespace CLTWebUI.Controllers
                     };
                     teamData1.TeamInducements.Add(inducement);
                 }
-                foreach (var ind in model.selectedStarplayers1)
+                if (model.selectedStarplayers1 != null) foreach (var ind in model.selectedStarplayers1)
                 {
                     var inducement = new TeamInducements()
                     {
@@ -174,7 +183,7 @@ namespace CLTWebUI.Controllers
                     };
                     teamData1.TeamInducements.Add(inducement);
                 }
-                foreach (var ind in model.selectedInducements2)
+                if (model.selectedInducements2 != null) foreach (var ind in model.selectedInducements2)
                 {
                     var inducement = new TeamInducements()
                     {
@@ -183,7 +192,7 @@ namespace CLTWebUI.Controllers
                     };
                     teamData2.TeamInducements.Add(inducement);
                 }
-                foreach (var ind in model.selectedStarplayers2)
+                if (model.selectedStarplayers2 != null) foreach (var ind in model.selectedStarplayers2)
                 {
                     var inducement = new TeamInducements()
                     {
@@ -202,7 +211,7 @@ namespace CLTWebUI.Controllers
                 unitOfWork.Save();
 
                 // vyreseni match eventu
-                foreach (var mevent in model.events)
+                if (model.events != null) foreach (var mevent in model.events)
                 {
                     if (mevent.canceled)
                         continue;
@@ -264,6 +273,8 @@ namespace CLTWebUI.Controllers
                                     unitOfWork.TeamRepository.Update(tteam1);
                                     break;
                             }
+                            if (fixture.Groups.Playoff == 1)
+                                player1.MNG = 0;
                             break;
                         case MatchEventsTypes.Casualty:
                             player1.SPP += 2;
@@ -306,6 +317,9 @@ namespace CLTWebUI.Controllers
                                     unitOfWork.TeamRepository.Update(tteam2);
                                     break;
                             }
+                            if (fixture.Groups.Playoff == 1)
+                                player2.MNG = 0;
+                            unitOfWork.PlayerRepository.Update(player2);
                             break;
                     }
                     unitOfWork.MatchEventRepository.Insert(newEvent);
@@ -336,6 +350,8 @@ namespace CLTWebUI.Controllers
                 i++;
             }
             players1.Add(noplayer);
+            players1.AddRange(unitOfWork.PlayerRepository.GetSpecialsForEvent());
+            players2.AddRange(unitOfWork.PlayerRepository.GetSpecialsForEvent());
             i = 0;
             foreach (var player in players2)
             {

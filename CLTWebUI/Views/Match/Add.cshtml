@@ -23,7 +23,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2"><b>Gate</b></div>
-                    <div class="col-md-4">@Html.TextBoxFor(m => m.gate1, new { @Class="form-control"})</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.gate1, new { @Class = "form-control" })</div>
                     <div class="col-md-4">@Html.TextBoxFor(m => m.gate2, new { @Class = "form-control" })</div>
                 </div>
                 <div class="row">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2"><b>MVP</b></div>
-                    <div class="col-md-4">@Html.DropDownListFor(m => m.mvp1, Model.players1, new { @Class = "form-control"})</div>
+                    <div class="col-md-4">@Html.DropDownListFor(m => m.mvp1, Model.players1, new { @Class = "form-control" })</div>
                     <div class="col-md-4">@Html.DropDownListFor(m => m.mvp2, Model.players2, new { @Class = "form-control" })</div>
                 </div>
                 <div class="row">
@@ -57,54 +57,139 @@
                     <div class="col-md-4">@Html.ListBoxFor(m => m.selectedStarplayers2, Model.starplayers, new { @Class = "form-control" })</div>
                 </div>
                 <div id="events">
-                    @ViewBag.evcnt = 0;
-                    @foreach (var evnt in Model.events)
+                    @{ ViewBag.evcnt = 0; }
+                    @if (Model.events != null && Model.events.Count > 0)
                     {
-                        if (evnt.type == CLT.Data.MatchEventsTypes.Casualty)
+                        foreach (var evnt in Model.events)
                         {
+                            if (evnt.sourcePlayerTeam == Model.fixture.Team1)
+                            {
+                                ViewBag.sourceTeam = Model.players1;
+                                ViewBag.targetTeam = Model.players2;
+                            }
+                            else
+                            {
+                                ViewBag.sourceTeam = Model.players2;
+                                ViewBag.targetTeam = Model.players1;
+                            }
+                            if (evnt.type == CLT.Data.MatchEventsTypes.Casualty)
+                            {
 
-                            <div id="event_@ViewBag.evcnt">
-                                <h5>
-                                    Událost č.@ViewBag.evcnt - Casualty (@if (Model.events[0].sourcePlayerTeam == Model.fixture.Team1)
-                                    {<span>@Model.fixture.Teams.Name</span>}
-                                    else {<span>@Model.fixture.Teams1.Name</span>}) <a href="#" onclick="cancelEvent(@ViewBag.evcnt)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
-                                </h5>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="spselect_events_@ViewBag.evcnt">Kdo blokoval</label>
-                                            <select id="spselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].sourcePlayer">
-                                                @foreach (var player in Model.players1)
-                                                {
-                                                    <option value="@player.ID">@player.Number - @player.Name</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="tpselect_events_@Model.eventNo">Kdo byl zraněn</label>
-                                            <select id="tpselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].targetPlayer">
-                                                @foreach (var player in Model.players2)
-                                                {
-                                                    <option value="@player.ID">@player.Number - @player.Name</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="resselect_events_@Model.eventNo">Hod na zranění</label>
-                                            <select id="resselect_events_@Model.eventNo" class="form-control" name="events[@Model.eventNo].result">
-                                                @foreach (var result in CLTWebUI.Models.Match.MatchEventModel.CasualtyResult)
-                                                {
-                                                    <option value="@result.Key">@result.Value</option>
-                                                }
-                                            </select>
-                                            <input type="hidden" name="events[@Model.eventNo].eventNo" value="@Model.events[0].eventNo" />
-                                            <input type="hidden" name="events[@Model.eventNo].type" value="@Model.events[0].type" />
-                                            <input type="hidden" name="events[@Model.eventNo].sourcePlayerTeam" value="@Model.events[0].sourcePlayerTeam" />
-                                            <input type="hidden" name="events[@Model.eventNo].targetPlayerTeam" value="@Model.events[0].targetPlayerTeam" />
+                                <div id="event_@ViewBag.evcnt">
+                                    <h5>
+                                        Událost č.@ViewBag.evcnt - Casualty (@if (evnt.sourcePlayerTeam == Model.fixture.Team1)
+                                        {<span>@Model.fixture.Teams.Name</span>}
+                                        else {<span>@Model.fixture.Teams1.Name</span>}) <a href="#" onclick="cancelEvent(@ViewBag.evcnt)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
+                                    </h5>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="spselect_events_@ViewBag.evcnt">Kdo blokoval</label>
+                                                <select id="spselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].sourcePlayer">
+                                                    @foreach (var player in ViewBag.sourceTeam)
+                                                    {
+                                                        <option value="@player.Value" @if (player.Value == evnt.sourcePlayer.ToString()) { @Html.Raw("selected"); }>@player.Text</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="tpselect_events_@ViewBag.evcnt">Kdo byl zraněn</label>
+                                                <select id="tpselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].targetPlayer">
+                                                    @foreach (var player2 in ViewBag.targetTeam)
+                                                    {
+                                                        <option value="@player2.Value" @if (player2.Value == evnt.targetPlayer.ToString()) { @Html.Raw("selected"); }>@player2.Text</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="resselect_events_@ViewBag.evcnt">Hod na zranění</label>
+                                                <select id="resselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].result">
+                                                    @foreach (var result in CLTWebUI.Models.Match.MatchEventModel.CasualtyResult)
+                                                    {
+                                                        <option value="@result.Key" @if (result.Key == evnt.result) { @Html.Raw("selected"); }>@result.Value</option>
+                                                    }
+                                                </select>
+                                                <input type="hidden" name="events[@ViewBag.evcnt].eventNo" value="@Model.events[ViewBag.evcnt].eventNo" />
+                                                <input type="hidden" name="events[@ViewBag.evcnt].type" value="@Model.events[ViewBag.evcnt].type" />
+                                                <input type="hidden" name="events[@ViewBag.evcnt].sourcePlayerTeam" value="@Model.events[ViewBag.evcnt].sourcePlayerTeam" />
+                                                <input type="hidden" name="events[@ViewBag.evcnt].targetPlayerTeam" value="@Model.events[ViewBag.evcnt].targetPlayerTeam" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+                            if (evnt.type == CLT.Data.MatchEventsTypes.Completion
+                                || evnt.type == CLT.Data.MatchEventsTypes.Interception
+                                || evnt.type == CLT.Data.MatchEventsTypes.Touchdown)
+                            {
+                                <div id="event_@ViewBag.evcnt">
+                                    <h5>
+                                        Událost č.@ViewBag.evcnt - 
+                                        @if (evnt.type == CLT.Data.MatchEventsTypes.Completion) { <span>Completion (přihrávka)</span>} 
+                                        @if (evnt.type == CLT.Data.MatchEventsTypes.Interception){ <span>Interception</span>}
+                                        @if (evnt.type == CLT.Data.MatchEventsTypes.Touchdown){ <span>Touchdown</span>}
+                                        (@if (Model.events[ViewBag.evcnt].sourcePlayerTeam == Model.fixture.Team1)
+                                        {<span>@Model.fixture.Teams.Name</span>}
+                                        else {<span>@Model.fixture.Teams1.Name</span>}) <a href="#" onclick="cancelEvent(@ViewBag.evcnt)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
+                                    </h5>
+                                    <div class="form-group">
+                                        <label for="spselect_events_@ViewBag.evcnt">
+                                            @if (evnt.type == CLT.Data.MatchEventsTypes.Completion)
+                                            { <span>Kdo přihrál</span>}
+                                            @if (evnt.type == CLT.Data.MatchEventsTypes.Interception)
+                                            { <span>Kdo zachytil</span>}
+                                            @if (evnt.type == CLT.Data.MatchEventsTypes.Touchdown)
+                                            { <span>Kdo skóroval</span>}
+                                        </label>
+                                        <select id="spselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].sourcePlayer">
+                                            @foreach (var player in ViewBag.sourceTeam)
+                                            {
+                                                <option value="@player.Value"@if (player.Value == evnt.sourcePlayer.ToString()) { @Html.Raw("selected"); }>@player.Text</option>
+                                            }
+                                        </select>
+                                        <input type="hidden" name="events[@ViewBag.evcnt].eventNo" value="@Model.events[ViewBag.evcnt].eventNo" />
+                                        <input type="hidden" name="events[@ViewBag.evcnt].type" value="@Model.events[ViewBag.evcnt].type" />
+                                        <input type="hidden" name="events[@ViewBag.evcnt].sourcePlayerTeam" value="@Model.events[ViewBag.evcnt].sourcePlayerTeam" />
+                                    </div>
+                                </div>
+                            }
+                            if (evnt.type == CLT.Data.MatchEventsTypes.Injury)
+                            {
+                                <div id="event_@ViewBag.evcnt">
+                                    <h5>
+                                        Událost č.@ViewBag.evcnt - Zranění (@if (Model.events[ViewBag.evcnt].sourcePlayerTeam == Model.fixture.Team1)
+                                        {<span>@Model.fixture.Teams.Name</span>}
+                                        else {<span>@Model.fixture.Teams1.Name</span>}) <a href="#" onclick="cancelEvent(@ViewBag.evcnt)"><span class="glyphicon glyphicon-remove" title="Zrušit event"></span></a>
+                                    </h5>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+
+                                                <label for="spselect_events_@ViewBag.evcnt">Kdo se zranil</label>
+                                                <select id="spselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].sourcePlayer">
+                                                    @foreach (var player in ViewBag.sourceTeam)
+                                                    {
+                                                        <option value="@player.Value" @if (player.Value == evnt.sourcePlayer.ToString()) { @Html.Raw("selected") ; }>@player.Text</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="resselect_events_@ViewBag.evcnt">Hod na zranění</label>
+                                                <select id="resselect_events_@ViewBag.evcnt" class="form-control" name="events[@ViewBag.evcnt].result">
+                                                    @foreach (var result in CLTWebUI.Models.Match.MatchEventModel.CasualtyResult)
+                                                    {
+                                                        <option value="@result.Key" @if (result.Key == evnt.result) { @Html.Raw("selected")  ; }>@result.Value</option>
+                                                    }
+                                                </select>
+                                                <input type="hidden" name="events[@ViewBag.evcnt].eventNo" value="@Model.events[ViewBag.evcnt].eventNo" />
+                                                <input type="hidden" name="events[@ViewBag.evcnt].type" value="@Model.events[ViewBag.evcnt].type" />
+                                                <input type="hidden" name="events[@ViewBag.evcnt].sourcePlayerTeam" value="@Model.events[ViewBag.evcnt].sourcePlayerTeam" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            ViewBag.evcnt++;
                         }
                     }
                 </div>
