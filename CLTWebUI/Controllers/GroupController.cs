@@ -22,13 +22,19 @@ namespace CLTWebUI.Controllers
         public ActionResult Admin(int groupid)
         {
             //var teams = unitOfWork.TeamRepository.GetTeamsByGroup(groupid).ToList();
+            var group = unitOfWork.GroupRepository.GetByID(groupid);
             var allteams = unitOfWork.TeamRepository.Get(filter: t => t.Status == Status.Active).ToList();
             var teams = allteams.FindAll(t => t.CompTeams.Any(ct => ct.Competititon == groupid));
-            var availableTeams = allteams.FindAll(t => t.CompTeams.All(ct => ct.Groups.Competitions.Status == Status.Inactive) || t.CompTeams == null && t.CompTeams.All(ct => ct.Competititon != groupid));
+            List<Teams> availableTeams = null;
+            if (group.Playoff == 1)
+                availableTeams = allteams.FindAll(t => t.CompTeams.Any(ct => ct.Groups.Competitions.ID == group.Competitions.ID));
+            else
+                availableTeams = allteams.FindAll(t => t.CompTeams.All(ct => ct.Groups.Competitions.Status == Status.Inactive) || t.CompTeams == null && t.CompTeams.All(ct => ct.Competititon != groupid));
+            
 
             TeamListViewModel model = new TeamListViewModel()
             {
-                group = unitOfWork.GroupRepository.GetByID(groupid),
+                group = group,
                 teams = teams,
                 teams2join = availableTeams,
                 fixtures = unitOfWork.FixtureRepository.Get(filter: f => f.Group == groupid).GroupBy(f => f.Round)

@@ -207,18 +207,21 @@
                 <div class="float-left marginRight15">
                     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addPlayerModal">Přidat hráče</button>
                 </div>
+                <div class="dropdown float-left marginRight15">
+                    <a id="buyaddon" class="btn btn-primary btn-lg" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Koupit
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="buyaddon">
+                        <li><a href="@Url.Action("Buy", "Team", new { teamid = Model.TeamId, what = "reroll" })">Reroll (@CLTWebUI.Controllers.TeamController.RerollPrices[Model.Team.Race])</a></li>
+                        <li><a href="@Url.Action("Buy", "Team", new { teamid = Model.TeamId, what = "cheer" })">Cheerleaders (10000)</a></li>
+                        <li><a href="@Url.Action("Buy", "Team", new { teamid = Model.TeamId, what = "assist" })">Assistant Coach (10000)</a></li>
+                        <li><a href="@Url.Action("Buy", "Team", new { teamid = Model.TeamId, what = "apothecary" })">Apothecary (50000)</a></li>
+                    </ul>
+                </div>
             }
             <div class="float-left marginRight15">
                 <a href="@Url.Action("DetailForPrint","Team", new { teamid = Model.Team.ID})" class="btn btn-primary btn-lg" target="_blank">Vytisknout</a>
-            </div>
-            <div class="dropdown float-left marginRight15">
-                <a id="buyaddon" class="btn btn-primary btn-lg" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    Koupit
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="buyaddon">
-                    <li><a href="@Url.Action("Buy", "Team", new { teamid = Model.TeamId, what = "reroll" })">Reroll</a></li>
-                </ul>
             </div>
 
             <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addPlayerModalLabel">

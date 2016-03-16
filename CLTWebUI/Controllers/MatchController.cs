@@ -135,7 +135,9 @@ namespace CLTWebUI.Controllers
                 if (CalculateRollingExpenses(team2) > 0)
                     team2.Treasury = (team2.Treasury - CalculateRollingExpenses(team2) > 0) ? team2.Treasury -= CalculateRollingExpenses(team2) : 0;
                 team1.Fanfactor += model.fanfactor1;
+                team1.Value += model.fanfactor1 * 10000;
                 team2.Fanfactor += model.fanfactor2;
+                team2.Value += model.fanfactor2 * 10000;
 
                 // vlozeni zapasu
                 var match = new Matches()
@@ -239,42 +241,51 @@ namespace CLTWebUI.Controllers
                             player1.INT++;
                             break;
                         case MatchEventsTypes.Injury:
-                            switch(mevent.result)
+                            var tteam1 = unitOfWork.TeamRepository.GetByID(player1.Team);
+                            switch (mevent.result)
                             {
                                 case 1:
                                     break;
                                 case 2:
                                     player1.MNG = 1;
+                                    tteam1.Value -= player1.Value;
                                     break;
                                 case 3:
                                     player1.NI = 1;
                                     player1.MNG = 1;
+                                    tteam1.Value -= player1.Value;
                                     break;
                                 case 4:
                                     player1.MA--;
                                     player1.MNG = 1;
+                                    tteam1.Value -= player1.Value;
                                     break;
                                 case 5:
                                     player1.AV--;
                                     player1.MNG = 1;
+                                    tteam1.Value -= player1.Value;
                                     break;
                                 case 6:
                                     player1.AG--;
                                     player1.MNG = 1;
+                                    tteam1.Value -= player1.Value;
                                     break;
                                 case 7:
                                     player1.ST--;
                                     player1.MNG = 1;
+                                    tteam1.Value -= player1.Value;
                                     break;
                                 case 8:
                                     player1.Status = Status.Inactive;
-                                    var tteam1 = unitOfWork.TeamRepository.GetByID(player1.Team);
                                     tteam1.Value -= player1.Value;
-                                    unitOfWork.TeamRepository.Update(tteam1);
                                     break;
                             }
-                            if (fixture.Groups.Playoff == 1)
-                                player1.MNG = 0;
+                            if (fixture.Groups.Playoff == 1 && player1.MNG == 1 && player1.Status == Status.Active)
+                            {
+                                    player1.MNG = 0;
+                                    tteam1.Value += player1.Value;
+                            }
+                                unitOfWork.TeamRepository.Update(tteam1);
                             break;
                         case MatchEventsTypes.Casualty:
                             player1.SPP += 2;
@@ -282,44 +293,53 @@ namespace CLTWebUI.Controllers
                             player2 = unitOfWork.PlayerRepository.GetByID(mevent.targetPlayer);
                             newEvent.TargetPlayer = mevent.targetPlayer;
                             newEvent.Result = mevent.result;
+                            var tteam2 = unitOfWork.TeamRepository.GetByID(player2.Team);
                             switch (mevent.result)
                             {
                                 case 1:
                                     break;
                                 case 2:
                                     player2.MNG = 1;
+                                    tteam2.Value -= player2.Value;
                                     break;
                                 case 3:
                                     player2.NI = 1;
                                     player2.MNG = 1;
+                                    tteam2.Value -= player2.Value;
                                     break;
                                 case 4:
                                     player2.MA--;
                                     player2.MNG = 1;
+                                    tteam2.Value -= player2.Value;
                                     break;
                                 case 5:
                                     player2.AV--;
                                     player2.MNG = 1;
+                                    tteam2.Value -= player2.Value;
                                     break;
                                 case 6:
                                     player2.AG--;
                                     player2.MNG = 1;
+                                    tteam2.Value -= player2.Value;
                                     break;
                                 case 7:
                                     player2.ST--;
                                     player2.MNG = 1;
+                                    tteam2.Value -= player2.Value;
                                     break;
                                 case 8:
                                     player1.Kills++;
                                     player2.Status = Status.Inactive;
-                                    var tteam2 = unitOfWork.TeamRepository.GetByID(player2.Team);
                                     tteam2.Value -= player2.Value;
-                                    unitOfWork.TeamRepository.Update(tteam2);
                                     break;
                             }
-                            if (fixture.Groups.Playoff == 1)
+                            if (fixture.Groups.Playoff == 1 && player2.MNG == 1 && player2.Status == Status.Active)
+                            {
                                 player2.MNG = 0;
+                                tteam2.Value += player2.Value;
+                            }
                             unitOfWork.PlayerRepository.Update(player2);
+                            unitOfWork.TeamRepository.Update(tteam2);
                             break;
                     }
                     unitOfWork.MatchEventRepository.Insert(newEvent);
@@ -433,9 +453,14 @@ namespace CLTWebUI.Controllers
             var players = unitOfWork.PlayerRepository.Get(filter: p => p.Team == team.ID && p.MNG == 1);
             foreach(var player in players)
             {
-                player.MNG = 0;
-                unitOfWork.PlayerRepository.Update(player);
+                if (player.MNG == 1)
+                {
+                    player.MNG = 0;
+                    team.Value += player.Value;
+                    unitOfWork.PlayerRepository.Update(player);
+                }
             }
+            unitOfWork.TeamRepository.Update(team);
             unitOfWork.Save();
         }
     }

@@ -250,7 +250,7 @@ namespace CLTWebUI.Controllers
                 AddApplicationMessage("Neznámé ID týmu", MessageSeverity.Danger);
             else
             {
-                switch(what)
+                switch (what)
                 {
                     case "reroll":
                         if (team.Treasury < RerollPrices[team.Race])
@@ -269,10 +269,63 @@ namespace CLTWebUI.Controllers
                             unitOfWork.TeamRepository.Update(team);
                             unitOfWork.Save();
                             AddApplicationMessage("Nákup rerollu byl úspěšný", MessageSeverity.Success);
-                            return RedirectToAction("Detail", "Team", new { teamid = team.ID });
+                        }
+                        break;
+                    case "cheer":
+                        if (team.Treasury < 10000)
+                        {
+                            AddApplicationMessage("Na roztleskávačky nemá tým dost peněz", MessageSeverity.Danger);
+                        }
+                        else
+                        {
+                            team.Cheerleaders++;
+                            team.Treasury -= 10000;
+                            team.Value += 10000;
+                            unitOfWork.TeamRepository.Update(team);
+                            unitOfWork.Save();
+                            AddApplicationMessage("Nákup roztleskávaček byl úspěšný", MessageSeverity.Success);
+                        }
+                        break;
+                    case "assist":
+                        if (team.Treasury < 10000)
+                        {
+                            AddApplicationMessage("Na asistenty trenéra nemá tým dost peněz", MessageSeverity.Danger);
+                        }
+                        else
+                        {
+                            team.Asscoaches++;
+                            team.Treasury -= 10000;
+                            team.Value += 10000;
+                            unitOfWork.TeamRepository.Update(team);
+                            unitOfWork.Save();
+                            AddApplicationMessage("Nákup asistenta trenéra byl úspěšný", MessageSeverity.Success);
+                        }
+                        break;
+                    case "apothecary":
+                        if (team.Treasury < 50000)
+                        {
+                            AddApplicationMessage("Na felčara nemá tým dost peněz", MessageSeverity.Danger);
+                        }
+                        else if (team.Apothecary > 0)
+                        {
+                            AddApplicationMessage("Více felčarů už není možno koupit", MessageSeverity.Danger);
+                        }
+                        else if (team.Race == Races.Undead || team.Race == Races.Necromantic || team.Race == Races.Khemri)
+                        {
+                            AddApplicationMessage("Tento tým felčara mít nemůže", MessageSeverity.Danger);
+                        }
+                        else
+                        {
+                            team.Apothecary = 1;
+                            team.Treasury -= 50000;
+                            team.Value += 50000;
+                            unitOfWork.TeamRepository.Update(team);
+                            unitOfWork.Save();
+                            AddApplicationMessage("Nákup felčara byl úspěšný", MessageSeverity.Success);
                         }
                         break;
                 }
+                return RedirectToAction("Detail", "Team", new { teamid = team.ID });
             }
             return RedirectToAction("Index","Competitions");
         }
