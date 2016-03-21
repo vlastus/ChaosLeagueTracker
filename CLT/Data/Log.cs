@@ -18,5 +18,8 @@ namespace CLT.Data
         public Nullable<System.DateTime> Created { get; set; }
         public string Action { get; set; }
         public string Message { get; set; }
+        public int Author { get; set; }
+        public Nullable<int> EntityID { get; set; }
+        public string EntityType { get; set; }
     }
 }

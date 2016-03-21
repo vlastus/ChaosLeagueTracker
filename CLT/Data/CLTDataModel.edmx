@@ -48,6 +48,9 @@
           <Property Name="Created" Type="datetime" />
           <Property Name="Action" Type="varchar" MaxLength="50" />
           <Property Name="Message" Type="varchar" MaxLength="4000" />
+          <Property Name="Author" Type="int" Nullable="false" />
+          <Property Name="EntityID" Type="int" />
+          <Property Name="EntityType" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Matches">
           <Key>
@@ -645,6 +648,9 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <Property Name="Created" Type="DateTime" Precision="3" />
           <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="Author" Type="Int32" Nullable="false" />
+          <Property Name="EntityID" Type="Int32" />
+          <Property Name="EntityType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Matches">
           <Key>
@@ -1391,6 +1397,9 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <EntitySetMapping Name="Log">
             <EntityTypeMapping TypeName="CLTDataModel.Log">
               <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="EntityType" ColumnName="EntityType" />
+                <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Action" ColumnName="Action" />

@@ -21,6 +21,7 @@ namespace CLT.Data
         GenericRepository<Matches> MatchRepository { get; }
         GenericRepository<TeamMatchData> TeamMatchDataRepository { get; }
         GenericRepository<MatchEvents> MatchEventRepository { get; }
+        GenericRepository<Log> LogRepository { get; }
         GenericViewRepository<GroupTables> GroupTableRepository { get; }
         void Save();
         void Dispose(bool disposing);

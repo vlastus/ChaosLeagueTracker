@@ -1,5 +1,6 @@
 ﻿using CLT.Data;
 using CLTWebUI.Models.Account;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace CLTWebUI.Controllers
                 if (user != null)
                 {
 
+                    Log("Uživatel se přihlásil", "login", user.ID, user.ID, "users");
                     FormsAuthentication.SetAuthCookie(model.name, false);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
