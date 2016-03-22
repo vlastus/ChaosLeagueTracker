@@ -1,6 +1,7 @@
 ﻿using CLT.Data;
 using CLTWebUI.Models;
 using CLTWebUI.Models.Competitions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,7 @@ namespace CLTWebUI.Controllers
 
                 unitOfWork.CompetitionRepository.Insert(comp);
                 unitOfWork.Save();
+                Log(JsonConvert.SerializeObject(model), LogEvent.CompetitionAdd.ToString(), comp.ID, "competition");
                 AddApplicationMessage("Soutěž byla úspešně založena", MessageSeverity.Success);
 
                 return RedirectToAction("Admin", "Competitions");
@@ -109,6 +111,7 @@ namespace CLTWebUI.Controllers
 
                     unitOfWork.CompetitionRepository.Update(comp);
                     unitOfWork.Save();
+                    Log(JsonConvert.SerializeObject(model), LogEvent.CompetitionEdit.ToString(), comp.ID, "competition");
                     AddApplicationMessage("Soutěž byla úspešně změněna", MessageSeverity.Success);
 
                     return RedirectToAction("Admin", "Competitions");
@@ -136,6 +139,7 @@ namespace CLTWebUI.Controllers
 
                     unitOfWork.CompetitionRepository.Update(comp);
                     unitOfWork.Save();
+                    Log("", LogEvent.CompetitionDelete.ToString(), comp.ID, "competition");
                     AddApplicationMessage("Soutěž byla ukončena", MessageSeverity.Success);
                 }
             }
@@ -171,7 +175,6 @@ namespace CLTWebUI.Controllers
         [RoleAuthorize(Roles = "Admin, SuperAdmin")]
         public ActionResult AddGroup(AddGroupViewModel model)
         {
-            model.competition = unitOfWork.CompetitionRepository.GetByID(model.compid);
             if(ModelState.IsValid)
             {
                 var group = new Groups()
@@ -183,12 +186,15 @@ namespace CLTWebUI.Controllers
 
                 unitOfWork.GroupRepository.Insert(group);
                 unitOfWork.Save();
+                Log(JsonConvert.SerializeObject(model), LogEvent.GroupAdd.ToString(), group.ID, "group");
                 AddApplicationMessage("Skupina byla přidána", MessageSeverity.Success);
 
                 return RedirectToAction("Admin","Competitions");
             }
+            model.competition = unitOfWork.CompetitionRepository.GetByID(model.compid);
 
             AddApplicationMessage("Skupinu se nepodařilo uložit, zkontrolujte formulář", MessageSeverity.Danger);
+
             return View(model);
         }
 
@@ -236,6 +242,7 @@ namespace CLTWebUI.Controllers
 
                 unitOfWork.GroupRepository.Update(group);
                 unitOfWork.Save();
+                Log(JsonConvert.SerializeObject(model), LogEvent.GroupEdit.ToString(), group.ID, "group");
                 AddApplicationMessage("Skupina byla upravena", MessageSeverity.Success);
             }
 

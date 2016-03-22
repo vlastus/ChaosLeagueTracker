@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NLog;
+using System.Web.Security;
+using Newtonsoft.Json;
 
 namespace CLTWebUI.Controllers
 {
@@ -20,13 +22,16 @@ namespace CLTWebUI.Controllers
             TempData["AppMessages"] = messages;
         }
 
-        protected void Log(string message, string action, int author, int entityid, string entitytype)
+        protected void Log(string message, string action, int entityid, string entitytype)
         {
+            var userData = GetUserData();
+
             LogEventInfo levent = new LogEventInfo(LogLevel.Info, "", message);
             levent.Properties["action"] = action;
-            levent.Properties["author"] = author;
+            levent.Properties["author"] = userData.ID;
             levent.Properties["entityid"] = entityid;
             levent.Properties["entitytype"] = entitytype;
+
             dblog.Log(levent);
         }
 
@@ -39,6 +44,24 @@ namespace CLTWebUI.Controllers
             filelog.Error(filterContext.Exception, "An exception occured");
 
             filterContext.Result = RedirectToAction("Index", "Error");
+        }
+
+        public UserData GetUserData()
+        {
+            UserData userData = new UserData();
+            if (User.Identity.IsAuthenticated)
+            {
+                var cookie = ControllerContext.RequestContext.HttpContext.Request.Cookies[FormsAuthentication.FormsCookieName];
+                var decrypted = FormsAuthentication.Decrypt(cookie.Value);
+                if (!string.IsNullOrEmpty(decrypted.UserData))
+                    userData = JsonConvert.DeserializeObject<UserData>(decrypted.UserData);
+            }
+            else
+            {
+                userData.ID = 0;
+                userData.Name = "Neznámý";
+            }
+            return userData;
         }
     }
 }

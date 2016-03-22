@@ -42,6 +42,10 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -97,6 +101,9 @@
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Log.cs">
+      <DependentUpon>CLTDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LogEvent.cs">
       <DependentUpon>CLTDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Matches.cs">
@@ -183,6 +190,8 @@
       <DependentUpon>CLTDataModel.edmx</DependentUpon>
       <LastGenOutput>CLTDataModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\json-serialize.js" />
+    <Content Include="Scripts\json-serialize.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

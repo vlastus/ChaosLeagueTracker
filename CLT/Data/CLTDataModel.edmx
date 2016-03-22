@@ -1349,6 +1349,14 @@ warning 6002: The table/view 'BLOODBOWL.web.GroupTables' does not have a primary
           <Member Name="StarPlayer" Value="8" />
           <Member Name="Mercenary" Value="9" />
         </EnumType>
+        <EnumType Name="LogEvent">
+          <Member Name="Login" Value="1" />
+          <Member Name="CompetitionAdd" Value="2" />
+          <Member Name="CompetitionEdit" Value="3" />
+          <Member Name="CompetitionDelete" Value="4" />
+          <Member Name="GroupAdd" Value="5" />
+          <Member Name="GroupEdit" Value="6" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
